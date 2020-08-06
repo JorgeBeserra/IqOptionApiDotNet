@@ -9,7 +9,6 @@ Now we can talk about the issue on gitter here
 
 ```javascript
 PM> Install-Package IqOptionApiDotNet
-
 ```
 
 # How it work
