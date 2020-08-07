@@ -13,7 +13,7 @@ PM> Install-Package IqOptionApiDotNet
 
 ```
 
-# How it work
+# Como isso funciona
 
 Essa API usando o websocket para comunicar dados em tempo real ao servidor IqOption através do canal seguro do websocket, para que os metadados em tempo real que vêm neste canal sejam manipulados pela programação reativa .net chamada "Rx.NET", causa de centenas de fluxos de tipos de dados no apenas um canal, por isso precisamos assinar selecionado em um tópico específico.
 
@@ -58,36 +58,36 @@ if(await client.ConnectAsync()){
   var userId = ""; // <-- Id do Usuario aqui!
   var leader = await client.RequestLeaderboardUserinfoDealsClientAsync(countryes, userId);
 
-  // open order EurUsd in smallest period (1min)
+  // Abrir ordem EUR / USD no menor período (1min)
   var exp = DateTime.Now.AddMinutes(1);
   var buyResult = await api.BuyAsync(ActivePair.EURUSD, 1, OrderDirection.Call, exp);
 
-  // get candles data
+  // Obter dados de velas
   var candles = await api.GetCandlesAsync(ActivePair.EURUSD, TimeFrame.Min1, 100, DateTimeOffset.Now);
   _logger.LogInformation($"CandleCollections received {candles.Count}");
 
 
-  // subscribe to pair to get real-time data for tf1min and tf5min
+  // Assinar o par para obter dados em tempo real para tf1min e tf5min
   var streamMin1 = await api.SubscribeRealtimeDataAsync(ActivePair.EURUSD, TimeFrame.Min1);
   var streamMin5 = await api.SubscribeRealtimeDataAsync(ActivePair.EURUSD, TimeFrame.Min5);
 
   streamMin5.Merge(streamMin1)
       .Subscribe(candleInfo => {
-          _logger.LogInformation($"Now {ActivePair.EURUSD} {candleInfo.TimeFrame} : Bid={candleInfo.Bid}\t Ask={candleInfo.Ask}\t");
+          _logger.LogInformation($"Agora {ActivePair.EURUSD} {candleInfo.TimeFrame} : Bid={candleInfo.Bid}\t Ask={candleInfo.Ask}\t");
   });
 
-  // after this line no-more realtime data for min5 print on console
+  // Remove assinatura do par, e não irá mais receber dados em tempo real para impressão min5 no console
   await api.UnSubscribeRealtimeData(ActivePair.EURUSD, TimeFrame.Min5);
 
 }
 
 ```
 
-## Example Use Cases
+## Exemplos de casos de uso
 
-This is example use cases that this api could solve your problems
+Este é um exemplo de casos de uso em que esta API pode resolver seus problemas
 
-### Trading follower
+### Seguidor de negociação
 
 ```csharp
 public async Task TradingFollower_ExampleAsync() {
@@ -103,17 +103,17 @@ public async Task TradingFollower_ExampleAsync() {
 }
 ```
 
-## BuyAsync
+## Função BuyAsync
 
-To open turbo-option within (1M-5M) duration
+Para abrir a opção turbo dentro da duração (1M-5M)
 
 ```csharp
-var api = new IqOptionApiDotNetClient("email@email.com", "passcode");
+var api = new IqOptionApiDotNetClient("email@email.com", "senha");
 
 try {
-    //logging in
+    // Iniciando Seção
     if (await api.ConnectAsync()) {
-        //open order EurUsd in smallest period(1min)
+        //EUR / USD de ordem aberta no menor período (1min)
         var exp = DateTime.Now.AddMinutes(1);
         await api.BuyAsync(ActivePair.EURUSD, 1, OrderDirection.Call, exp);
     }
@@ -127,35 +127,35 @@ finally {
 
 ```
 
-## TradersMood
+## Função TradersMood (Humor dos Traders)
 
-To check traders mood on specific Instrument/ActivePair
+Para verificar o humor dos traders em Instrumento/Ativo específico
 ![Alt text](img/TraderMoodChanged_Portal.png)
 
 ```csharp
-var api = new IqOptionApiDotNetClient("email@email.com", "passcode");
+var api = new IqOptionApiDotNetClient("email@email.com", "senha");
 
 try {
     //logging in
     if (await api.ConnectAsync()) {
 
-        // call the subscribe to listening when mood changed
+        // Assina o canal para receber dados das alterações de Humor
         api.WsClient.TradersMoodObservable().Subscribe(x => {
 
-            // values goes here
+            // Impressão dos valores aqui!
             _logger.Information(
-                $"TradersMood on {x.InstrumentType} - {x.ActivePair} values Higher :{x.Higher}, Lower: {x.Lower}"
+                $"Humor dos traders em {x.InstrumentType} - {x.ActivePair} valores Superior :{x.Higher}, Baixo: {x.Lower}"
             );
         });
 
-        // begin subscribe 2 pairs
+        // Assinar o recebimento de dados em 2 Ativos
         api.SubscribeTradersMoodChanged(InstrumentType.BinaryOption, ActivePair.EURUSD);
         api.SubscribeTradersMoodChanged(InstrumentType.BinaryOption, ActivePair.GBPUSD);
 
-        //wait for 10 secs
+        // Uma pequena pausa para ver apresentação dos dados durante 10 segundos
         await Task.Delay(10000);
 
-        // after unsubscribe GBPUSD moods will not come anymore
+        // E agora remove assinatura GBPUSD e agora os humores não serão mais enviados
         api.UnSubscribeTradersMoodChanged(InstrumentType.BinaryOption, ActivePair.GBPUSD);
     }
 }
@@ -170,9 +170,9 @@ finally {
 
 ![Alt text](img/TraderMoodChanged.png)
 
-### Copy Trade
+### Copiar Traders
 
-now using ReactiveUI way for subscribe the changing of model following this
+Agora usando o modo ReactiveUI para assinar a alteração do modelo após esta
 
 ```csharp
 
@@ -187,8 +187,8 @@ now using ReactiveUI way for subscribe the changing of model following this
 
 ```
 
-# Support Me
+# Ajude-me
 
-If you've got value from any of the content which I have created, but pull requests are not your thing, then I would also very much appreciate your support by buying me a coffee.<br>
+Se de alguma forma ajudei você com qualquer um dos conteúdos que foi disponibilizado, favor ajude tambem criando um pullrequest más, também agradeceria muito seu apoio me pagando um café!!! :) . <br>
 <a href="https://buymeacoffee.com/jorgesouza" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/black_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a> Jorge Souza<br>
-<a href="https://www.buymeacoffee.com/6VF3XHb" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/black_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a> MongkonEiadon (Developer from Repository base) 
+<a href="https://www.buymeacoffee.com/6VF3XHb" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/black_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a> MongkonEiadon (Repositório Base) 
