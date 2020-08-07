@@ -8,15 +8,15 @@ namespace IqOptionApiDotNet.Samples.SampleRunners
     {
         public override async Task RunSample()
         {
-            if (await IqClientApi.ConnectAsync())
+            if (await IqClientApiDotNet.ConnectAsync())
             {
-                var profile = await IqClientApi.GetProfileAsync();
+                var profile = await IqClientApiDotNet.GetProfileAsync();
 
                 var demo = profile.Balances.FirstOrDefault(x => x.Type == BalanceType.Practice);
-                await IqClientApi.ChangeBalanceAsync(demo.Id);
+                await IqClientApiDotNet.ChangeBalanceAsync(demo.Id);
 
                 var real = profile.Balances.FirstOrDefault(x => x.Type == BalanceType.Real);
-                await IqClientApi.ChangeBalanceAsync(real.Id);
+                await IqClientApiDotNet.ChangeBalanceAsync(real.Id);
             }
         }
     }

@@ -22,16 +22,41 @@ This api using websocket to communicate realtime-data to IqOption server through
 - Subscribe to the channel
 - support open Long/Short for CFD contract (Digital Options)
 
+# Last Features
+- Get Financial Information
+- Get User Profile by User Id
+- Get Users Availabilty by  USer Id
+- Get Leaderboard (TOP TRADERS)
+- Get Leaderboard Details bu User Id
+
+
 # How to use
 
 ```csharp
-var client = new IqOptionApi("emailaddress", "password");
+var client = new IqOptionApiDotNetClient("emailaddress", "password");
 
 //begin connect
 if(await client.ConnectAsync()){
 
   //get user profile
   var profile = await client.GetProfileAsync();
+  
+  //Get Profile from User ID.
+  var userId = ""; // <-- Id do Usuario aqui!
+  var profile = await client.GetUserProfileClientAsync(userId);
+  
+  //Get Status from users id array.
+  long[] userId = { 0, 0, 0 }; // Substituir os zeros por IDS de usuarios
+  var profile = await client.GetUsersAvailabilityAsync(userId);
+  
+  //Get Top Traders.
+  var profile = await client.RequestLeaderboardDealsClientAsync(0, 191, 1, 10, 64, 64, 64, 64, 2);
+
+  //Get Top Traders Details from User Id.
+  long[] countryes = {0 };
+  var userId = ""; // <-- Id do Usuario aqui!
+  var leader = await client.RequestLeaderboardUserinfoDealsClientAsync(countryes, userId);
+
 
   // open order EurUsd in smallest period (1min)
   var exp = DateTime.Now.AddMinutes(1);
@@ -67,8 +92,8 @@ This is example use cases that this api could solve your problems
 ```csharp
 public async Task TradingFollower_ExampleAsync() {
 
-    var trader = new IqOptionClient("a@b.com", "changeme");
-    var follower = new IqOptionClient("b@c.com", "changeme");
+    var trader = new IqOptionApiDotNetClient("a@b.com", "changeme");
+    var follower = new IqOptionApiDotNetClient("b@c.com", "changeme");
 
     await Task.WhenAll(trader.ConnectAsync(), follower.ConnectAsync());
 
@@ -83,7 +108,7 @@ public async Task TradingFollower_ExampleAsync() {
 To open turbo-option within (1M-5M) duration
 
 ```csharp
-var api = new IqOptionApi("email@email.com", "passcode");
+var api = new IqOptionApiDotNetClient("email@email.com", "passcode");
 
 try {
     //logging in
@@ -108,7 +133,7 @@ To check traders mood on specific Instrument/ActivePair
 ![Alt text](img/TraderMoodChanged_Portal.png)
 
 ```csharp
-var api = new IqOptionApi("email@email.com", "passcode");
+var api = new IqOptionApiDotNetClient("email@email.com", "passcode");
 
 try {
     //logging in
@@ -151,8 +176,8 @@ now using ReactiveUI way for subscribe the changing of model following this
 
 ```csharp
 
-    var trader = new IqOptionClient("a@b.com", "changeme");
-    var follower = new IqOptionClient("b@c.com", "changeme");
+    var trader = new IqOptionApiDotNetClient("a@b.com", "changeme");
+    var follower = new IqOptionApiDotNetClient("b@c.com", "changeme");
 
     await Task.WhenAll(trader.ConnectAsync(), follower.ConnectAsync());
 

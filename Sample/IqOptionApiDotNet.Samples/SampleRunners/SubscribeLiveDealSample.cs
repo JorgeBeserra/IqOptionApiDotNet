@@ -15,14 +15,14 @@ namespace IqOptionApiDotNet.Samples.SampleRunners
         public override async Task RunSample()
         {
             
-            if (await IqClientApi.ConnectAsync())
+            if (await IqClientApiDotNet.ConnectAsync())
             {
                 // subscribe to pair to get real-time data for tf1min and tf5min
-                IqClientApi.SubscribeLiveDeal("live-deal-digital-option", ActivePair.EURUSD, DigitalOptionsExpiryType.PT1M);
-                IqClientApi.SubscribeLiveDeal("live-deal-digital-option", ActivePair.EURUSD, DigitalOptionsExpiryType.PT5M);
+                IqClientApiDotNet.SubscribeLiveDeal("live-deal-digital-option", ActivePair.EURUSD, DigitalOptionsExpiryType.PT1M);
+                IqClientApiDotNet.SubscribeLiveDeal("live-deal-digital-option", ActivePair.EURUSD, DigitalOptionsExpiryType.PT5M);
 
                 // call the subscribe to listening when mood changed
-                IqClientApi.WsClient.LiveDealObservable().Subscribe(x => {
+                IqClientApiDotNet.WsClient.LiveDealObservable().Subscribe(x => {
 
                     // values goes here
                     _logger.Information(
@@ -35,8 +35,8 @@ namespace IqOptionApiDotNet.Samples.SampleRunners
                 Thread.Sleep(2000);
 
                 // after this line no-more realtime data for min5 print on console
-                IqClientApi.UnSubscribeLiveDeal("live-deal-digital-option", ActivePair.EURUSD, DigitalOptionsExpiryType.PT1M);
-                IqClientApi.UnSubscribeLiveDeal("live-deal-digital-option", ActivePair.EURUSD, DigitalOptionsExpiryType.PT5M);
+                IqClientApiDotNet.UnSubscribeLiveDeal("live-deal-digital-option", ActivePair.EURUSD, DigitalOptionsExpiryType.PT1M);
+                IqClientApiDotNet.UnSubscribeLiveDeal("live-deal-digital-option", ActivePair.EURUSD, DigitalOptionsExpiryType.PT5M);
             }
         }
     }

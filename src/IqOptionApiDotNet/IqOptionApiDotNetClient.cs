@@ -14,13 +14,13 @@ using Microsoft.Extensions.Logging.Abstractions;
 
 namespace IqOptionApiDotNet
 {
-    public class IqOptionClient : IIqOptionClient
+    public class IqOptionApiDotNetClient : IIqOptionApiDotNetClient
     {
         private readonly ILogger _logger;
 
         #region [Ctor]
 
-        public IqOptionClient(string username, string password)
+        public IqOptionApiDotNetClient(string username, string password)
         {
             Username = username;
             Password = password;
@@ -76,6 +76,31 @@ namespace IqOptionApiDotNet
         {
             var result = await HttpClient.GetProfileAsync();
             return result.Result;
+        }
+		
+		public Task<UserProfileClientResult> GetUserProfileClientAsync(long userid)
+        {
+            return WsClient?.GetUserProfileClientAsync(userid);
+        }
+
+        public Task<LeaderBoardDealsClientResult> RequestLeaderboardDealsClientAsync(long countryId, long userCountryId, long fromPosition, long toPosition, long nearTradersCountryCount, long nearTradersCount, long topCountryCount, long topCount, long topType)
+        {
+            return WsClient?.LeaderBoardDealsClientRequest(countryId, userCountryId, fromPosition, toPosition, nearTradersCountryCount, nearTradersCount, topCountryCount, topCount, topType);
+        }
+
+        public Task<LeaderBoardUserinfoDealsClientMessageResult> RequestLeaderboardUserinfoDealsClientAsync(long[] countryId, int userId)
+        {
+            return WsClient?.LeaderBoardUserinfoDealsClientRequest(countryId, userId);
+        }
+
+        public Task<UsersAvailabilityResult> GetUsersAvailabilityAsync(long[] userId)
+        {
+            return WsClient?.GetUsersAvailabilityRequest(userId);
+        }
+		
+		public Task<FinancialInformationResult> GetFinancialInformationAsync(ActivePair pair)
+        {
+            return WsClient?.GetFinancialInformationRequest(pair);
         }
 
         public async Task<bool> ChangeBalanceAsync(long balanceId)

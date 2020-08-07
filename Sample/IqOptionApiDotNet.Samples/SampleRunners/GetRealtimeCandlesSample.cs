@@ -20,9 +20,9 @@ namespace IqOptionApiDotNet.Samples.SampleRunners
          */
         public override async Task RunSample()
         {
-            if (await IqClientApi.ConnectAsync())
+            if (await IqClientApiDotNet.ConnectAsync())
             {
-                var candleInfo = await IqClientApi.GetCandlesAsync(ActivePair.EURUSD_OTC, TimeFrame.Min1, 100, DateTimeOffset.Now.AddMinutes(-5));
+                var candleInfo = await IqClientApiDotNet.GetCandlesAsync(ActivePair.EURUSD_OTC, TimeFrame.Min1, 100, DateTimeOffset.Now.AddMinutes(-5));
                 _logger.Information(JsonConvert.SerializeObject(candleInfo));
                 
             }

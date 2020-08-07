@@ -8,8 +8,8 @@ namespace IqOptionApiDotNet.Samples.SampleRunners
     {
         public async Task RunSample()
         {           
-            var trader = new IqOptionClient("a@b.com", "changeme");
-            var follower = new IqOptionClient("b@c.com", "changeme"); 
+            var trader = new IqOptionApiDotNetClient("a@b.com", "changeme");
+            var follower = new IqOptionApiDotNetClient("b@c.com", "changeme"); 
 
             await Task.WhenAll(trader.ConnectAsync(), follower.ConnectAsync());
 

@@ -8,7 +8,7 @@ using IqOptionApiDotNet.Ws;
 
 namespace IqOptionApiDotNet
 {
-    public interface IIqOptionClient : IDisposable
+    public interface IIqOptionApiDotNetClient : IDisposable
     {
         IqOptionWebSocketClient WsClient { get; }
         IqOptionHttpClient HttpClient { get; }
@@ -19,11 +19,14 @@ namespace IqOptionApiDotNet
 
         Task<bool> ConnectAsync();
         Task<Profile> GetProfileAsync();
+		
+		Task<UserProfileClientResult> GetUserProfileClientAsync(long userId);
+        Task<LeaderBoardDealsClientResult> RequestLeaderboardDealsClientAsync(long countryId, long userCountryId, long fromPosition, long toPosition, long nearTradersCountryCount, long nearTradersCount, long topCountryCount, long topCount, long topType);
+        Task<LeaderBoardUserinfoDealsClientMessageResult> RequestLeaderboardUserinfoDealsClientAsync(long[] countryId, int userId);
+        Task<UsersAvailabilityResult> GetUsersAvailabilityAsync(long[] userId);
+		Task<FinancialInformationResult> GetFinancialInformationAsync(ActivePair pair);		
         Task<bool> ChangeBalanceAsync(long balanceId);
-
         Task<BinaryOptionsResult> BuyAsync(ActivePair pair, int size, OrderDirection direction, DateTimeOffset expiration);
-
-
         Task<CandleCollections> GetCandlesAsync(ActivePair pair, TimeFrame tf, int count, DateTimeOffset to);
         Task<IObservable<CurrentCandle>> SubscribeRealtimeQuoteAsync(ActivePair pair, TimeFrame tf);
 

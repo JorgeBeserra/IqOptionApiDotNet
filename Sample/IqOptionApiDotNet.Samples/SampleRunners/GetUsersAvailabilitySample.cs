@@ -1,17 +1,19 @@
+using System;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace IqOptionApiDotNet.Samples.SampleRunners
 {
-    public class GetProfileSample : SampleRunner
+    public class GetUsersAvailabilitySample : SampleRunner
     {
-
-
+        // Get Status from Users ID array
+        // By: Jorge Beserra
         public override async Task RunSample()
         {
             if (await IqClientApiDotNet.ConnectAsync())
             {
-                var profile = await IqClientApiDotNet.GetProfileAsync();
+                long[] userId = { 0, 0, 0 };
+                var profile = await IqClientApiDotNet.GetUsersAvailabilityAsync(userId);
                 _logger.Information(JsonConvert.SerializeObject(profile));
             }
         }

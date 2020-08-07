@@ -12,7 +12,7 @@ namespace IqOptionApiDotNet.Samples.SampleRunners
     public abstract class SampleRunner : ISampleRunner
     {
         protected readonly ILogger _logger = LogHelper.Log;
-        protected IqOptionClient IqClientApi = new IqOptionClient(
+        protected IqOptionApiDotNetClient IqClientApiDotNet = new IqOptionApiDotNetClient(
             Environment.GetEnvironmentVariable("IqOptionUserName"),
             Environment.GetEnvironmentVariable("IqOptionPassword"));
 

@@ -8,13 +8,13 @@ namespace IqOptionApiDotNet.Samples.SampleRunners
     {
         public override async Task RunSample()
         {
-            if (await IqClientApi.ConnectAsync())
+            if (await IqClientApiDotNet.ConnectAsync())
             {
                 while (true)
                 {
                     await Task.Delay(5000);
 
-                    var result = await IqClientApi.BuyAsync(ActivePair.EURUSD_OTC, 1, OrderDirection.Call,
+                    var result = await IqClientApiDotNet.BuyAsync(ActivePair.EURUSD_OTC, 1, OrderDirection.Call,
                         DateTimeOffset.Now);
 
                     Console.WriteLine($"PositionId = {result.PositionId}");

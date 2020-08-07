@@ -23,6 +23,7 @@ namespace IqOptionApiDotNet.Ws.Base
 
 
         public const string Getinstruments = "get-instruments";
+
         public const string Ssid = "ssid";
 
         public const string BalanceChanged = "balance-changed";
@@ -36,6 +37,16 @@ namespace IqOptionApiDotNet.Ws.Base
         public const string LiveDealDigitalOption = "live-deal-digital-option";
 
         public const string LiveDealBinaryOption = "live-deal-binary-option-placed";
+		
+        public const string UserProfileClient = "user-profile-client";
+
+        public const string UsersAvailability = "users-availability";
+
+        public const string LeaderboardDealsClient = "leaderboard-deals-client";
+
+        public const string LeaderboardUserinfoDealsClient = "leaderboard-userinfo-deals-client";
+
+        public const string FinancialInformation = "financial-information";		
 
     }
 }

@@ -10,11 +10,11 @@ namespace IqOptionApiDotNet.Samples.SampleRunners
     {
         public override async Task RunSample()
         {
-            if (await IqClientApi.ConnectAsync())
+            if (await IqClientApiDotNet.ConnectAsync())
             {
                 // subscribe to pair to get real-time data for tf1min and tf5min
-                var streamMin1 = await IqClientApi.SubscribeRealtimeQuoteAsync(ActivePair.EURUSD_OTC, TimeFrame.Min1);
-                var streamMin5 = await IqClientApi.SubscribeRealtimeQuoteAsync(ActivePair.EURUSD_OTC, TimeFrame.Min5);
+                var streamMin1 = await IqClientApiDotNet.SubscribeRealtimeQuoteAsync(ActivePair.EURUSD_OTC, TimeFrame.Min1);
+                var streamMin5 = await IqClientApiDotNet.SubscribeRealtimeQuoteAsync(ActivePair.EURUSD_OTC, TimeFrame.Min5);
 
                 streamMin5.Merge(streamMin1)
                     .Subscribe(candleInfo =>
@@ -28,7 +28,7 @@ namespace IqOptionApiDotNet.Samples.SampleRunners
                 Thread.Sleep(2000);
 
                 // after this line no-more realtime data for min5 print on console
-                await IqClientApi.UnSubscribeRealtimeData(ActivePair.EURUSD_OTC, TimeFrame.Min5);
+                await IqClientApiDotNet.UnSubscribeRealtimeData(ActivePair.EURUSD_OTC, TimeFrame.Min5);
             }
         }
     }
