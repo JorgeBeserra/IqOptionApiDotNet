@@ -18,11 +18,7 @@
     <RepositoryUrl>https://github.com/JorgeBeserra/IqOptionApiDotNet</RepositoryUrl>
     <PackageProjectUrl>https://github.com/JorgeBeserra/IqOptionApiDotNet</PackageProjectUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <PackageReleaseNotes>Request Leaderboard Top Traders
-Request Leaderboard User Info
-Get User Availability
-Get User Profile by Id
-Get Financial Information</PackageReleaseNotes>
+    <PackageReleaseNotes>Requirement to define the request identifier to improve returns.</PackageReleaseNotes>
     <NoWarn>1701;1702;1705;1591</NoWarn>
     <RootNamespace>IqOptionApiDotNet</RootNamespace>
     <AssemblyName>IqOptionApiDotNet</AssemblyName>
@@ -30,6 +26,7 @@ Get Financial Information</PackageReleaseNotes>
     <AssemblyVersion>1.0.0.3</AssemblyVersion>
     <FileVersion>1.0.0.3</FileVersion>
     <Version>1.0.3</Version>
+    <ApplicationIcon>logoapi.ico</ApplicationIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
