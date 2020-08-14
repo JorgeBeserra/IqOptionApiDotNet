@@ -16,9 +16,9 @@ namespace IqOptionApiDotNet.Ws
         /// </summary>
         /// <param name="userid">User Id to request</param>
         /// <returns></returns>
-        public Task<UsersAvailabilityResult> GetUsersAvailabilityRequest(long[] userId)
+        public Task<UsersAvailabilityResult> GetUsersAvailabilityRequest(string requestId, long[] userId)
         {
-            return SendMessageAsync(new UsersAvailabilityRequestMessage(userId), UsersAvailabilityResultObservable);
+            return SendMessageAsync(requestId, new UsersAvailabilityRequestMessage(userId), UsersAvailabilityResultObservable);
         }
 
         #endregion

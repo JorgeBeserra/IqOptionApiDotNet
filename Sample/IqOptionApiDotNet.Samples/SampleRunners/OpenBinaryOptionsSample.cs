@@ -10,11 +10,12 @@ namespace IqOptionApiDotNet.Samples.SampleRunners
         {
             if (await IqClientApiDotNet.ConnectAsync())
             {
+                string requestId;
                 while (true)
                 {
                     await Task.Delay(5000);
-
-                    var result = await IqClientApiDotNet.BuyAsync(ActivePair.EURUSD_OTC, 1, OrderDirection.Call,
+                    requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+                    var result = await IqClientApiDotNet.BuyAsync(requestId, ActivePair.EURUSD_OTC, 1, OrderDirection.Call,
                         DateTimeOffset.Now);
 
                     Console.WriteLine($"PositionId = {result.PositionId}");

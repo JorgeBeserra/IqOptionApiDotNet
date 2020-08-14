@@ -50,24 +50,24 @@ namespace IqOptionApiDotNet.Ws
         /// To subscribe the order changed support for "Forex", "Digital-Option"
         /// </summary>
         /// <returns></returns>
-        public async Task SubscribePositionChanged(InstrumentType instrumentType)
+        public async Task SubscribePositionChanged(string requestId, InstrumentType instrumentType)
         {
             if (Profile == null)
             {
-                await SendMessageAsync(new SsidWsMessageBase(SecureToken)).ConfigureAwait(false);
+                await SendMessageAsync(requestId, new SsidWsMessageBase(SecureToken)).ConfigureAwait(false);
                 await Task.Delay(500);
             }
 
-            await UnSubscribePositionChanged(instrumentType);
+            await UnSubscribePositionChanged(requestId, instrumentType);
 
-            await SendMessageAsync(new SubscribePortfolioPositionChangedRequest(Profile.UserId,
+            await SendMessageAsync(requestId, new SubscribePortfolioPositionChangedRequest(Profile.UserId,
                     Profile.BalanceId, instrumentType))
                 .ConfigureAwait(false);
         }
 
-        public async Task UnSubscribePositionChanged(InstrumentType instrumentType)
+        public async Task UnSubscribePositionChanged(string requestId, InstrumentType instrumentType)
         {
-            await SendMessageAsync(new UnSubscribePositionChangedRequest(Profile.UserId,
+            await SendMessageAsync(requestId, new UnSubscribePositionChangedRequest(Profile.UserId,
                     Profile.BalanceId, instrumentType))
                 .ConfigureAwait(false);
         }

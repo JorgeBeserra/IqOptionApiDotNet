@@ -20,6 +20,7 @@ namespace IqOptionApiDotNet.Ws
         /// <param name="expiration">The expira</param>
         /// <returns></returns>
         public Task<BinaryOptionsResult> BuyAsync(
+            string requestId,
             ActivePair pair,
             int size,
             OrderDirection direction,
@@ -36,6 +37,7 @@ namespace IqOptionApiDotNet.Ws
                 optionType = OptionType.Binary;
 
             return SendMessageAsync(
+                requestId,
                 new BuyV2WsMessage(
                     Profile.BalanceId,
                     pair,

@@ -27,9 +27,9 @@ namespace IqOptionApiDotNet.Ws
         /// <param name="message"></param>
         /// <param name="pair"></param>
         /// <param name="duration"></param>
-        public void SubscribeLiveDeal(string message, ActivePair pair, DigitalOptionsExpiryType duration)
+        public void SubscribeLiveDeal(string requestId, string message, ActivePair pair, DigitalOptionsExpiryType duration)
         {
-            SendMessageAsync(new SubscribeLiveDealRequest(message, pair, duration), "s_").ConfigureAwait(false);
+            SendMessageAsync(requestId, new SubscribeLiveDealRequest(requestId, message, pair, duration), "s_").ConfigureAwait(false);
         }
 
         /// <summary>
@@ -38,9 +38,9 @@ namespace IqOptionApiDotNet.Ws
         /// <param name="message">The Instrument type.</param>
         /// <param name="pair">The Instrument type.</param>
         /// <param name="duration">The Active pair</param>
-        public void UnSubscribeLiveDeal(string message, ActivePair pair, DigitalOptionsExpiryType duration)
+        public void UnSubscribeLiveDeal(string requestId, string message, ActivePair pair, DigitalOptionsExpiryType duration)
         {
-            SendMessageAsync(new UnsubscribeLiveDealRequest(message, pair, duration), "s_").ConfigureAwait(false);
+            SendMessageAsync(requestId, new UnsubscribeLiveDealRequest(message, pair, duration), "s_").ConfigureAwait(false);
         }
     }
 }

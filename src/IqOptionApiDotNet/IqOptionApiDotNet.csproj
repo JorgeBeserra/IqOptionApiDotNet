@@ -27,13 +27,17 @@ Get Financial Information</PackageReleaseNotes>
     <RootNamespace>IqOptionApiDotNet</RootNamespace>
     <AssemblyName>IqOptionApiDotNet</AssemblyName>
     <PackageId>IqOptionApiDotNet</PackageId>
-    <AssemblyVersion>1.0.0.2</AssemblyVersion>
-    <FileVersion>1.0.0.2</FileVersion>
-    <Version>1.0.2</Version>
+    <AssemblyVersion>1.0.0.3</AssemblyVersion>
+    <FileVersion>1.0.0.3</FileVersion>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <DefineConstants>Release</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   
   <ItemGroup>

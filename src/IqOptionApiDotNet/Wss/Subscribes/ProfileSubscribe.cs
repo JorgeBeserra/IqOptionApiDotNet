@@ -33,7 +33,8 @@ namespace IqOptionApiDotNet.Ws
                 //InstrumentType.FxOption
             })
             {
-                SubscribePositionChanged(instru).ConfigureAwait(false);
+                var requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+                SubscribePositionChanged(requestId, instru).ConfigureAwait(false);
             }
         }
 

@@ -36,17 +36,17 @@ using IqOptionApiDotNet.Ws.Request;
         public IObservable<string> MessageReceivedObservable { get; private set; }
         private readonly AsyncLock _asyncLock = new AsyncLock();
 
-        private long _requestCounter = 0;
+        private string _requestCounter;
         /// <summary>
         /// Commit the message with Fire-And-Forgot style
         /// </summary>
         /// <param name="messageCreator"></param>
         /// <returns></returns>
-        public async Task SendMessageAsync(IWsIqOptionMessageCreator messageCreator, string requestPrefix = "")
+        public async Task SendMessageAsync(string requestId, IWsIqOptionMessageCreator messageCreator, string requestPrefix = "")
         {
             using (await _asyncLock.WaitAsync(CancellationToken.None).ConfigureAwait(false))
             {
-                _requestCounter = _requestCounter + 1;
+                _requestCounter = requestId;
                 var payload = messageCreator.CreateIqOptionMessage($"{requestPrefix}{_requestCounter}");
                 WebSocketClient.Send(payload);
                 _logger.LogDebug("⬆ {payload}", payload);
@@ -61,6 +61,7 @@ using IqOptionApiDotNet.Ws.Request;
         /// <typeparam name="TResult">The expected result</typeparam>
         /// <returns></returns>
         public Task<TResult> SendMessageAsync<TResult>(
+            string requestId,
             IWsIqOptionMessageCreator messageCreator,
             IObservable<TResult> observableResult)
         {
@@ -85,7 +86,7 @@ using IqOptionApiDotNet.Ws.Request;
                     .Subscribe(x => { tcs.TrySetResult(x); }, token);
 
                 // send message
-                SendMessageAsync(messageCreator).ConfigureAwait(false);
+                SendMessageAsync(requestId, messageCreator).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -111,9 +112,9 @@ using IqOptionApiDotNet.Ws.Request;
         /// <param name="pair">The Active pair to subscribe</param>
         /// <param name="timeFrame">The Time frame to subscribe</param>
         /// <returns></returns>
-        public Task SubscribeQuoteAsync(ActivePair pair, TimeFrame timeFrame)
+        public Task SubscribeQuoteAsync(string requestId, ActivePair pair, TimeFrame timeFrame)
         {
-            return SendMessageAsync(new SubscribeMessageRequest(pair, timeFrame), "s_");
+            return SendMessageAsync(requestId, new SubscribeMessageRequest(pair, timeFrame), "s_");
         }
 
         /// <summary>
@@ -123,15 +124,16 @@ using IqOptionApiDotNet.Ws.Request;
         /// <param name="pair">The Active pair to unsubscribe</param>
         /// <param name="timeFrame">The Time frame to unsubscribe</param>
         /// <returns></returns>
-        public Task UnsubscribeCandlesAsync(ActivePair pair, TimeFrame timeFrame)
+        public Task UnsubscribeCandlesAsync(string requestId, ActivePair pair, TimeFrame timeFrame)
         {
-            return SendMessageAsync(new UnSubscribeMessageRequest(pair, timeFrame));
+            return SendMessageAsync(requestId, new UnSubscribeMessageRequest(pair, timeFrame));
         }
 
         #endregion
 
         protected virtual void InitialSocket(string secureToken)
         {
+            string requestId;
             WebSocketClient = new WebSocket("wss://iqoption.com/echo/websocket");
             WebSocketClient.OnError += (sender, args) =>
             {
@@ -160,11 +162,13 @@ using IqOptionApiDotNet.Ws.Request;
             SystemReconnectionTimer.Elapsed += (sender, args) =>
             {
                 _logger.LogWarning("System try to reconnect");
-                SendMessageAsync(new SsidWsMessageBase(secureToken)).ConfigureAwait(false);
+                requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+                SendMessageAsync(requestId, new SsidWsMessageBase(secureToken)).ConfigureAwait(false);
             };
-            
+
             // send secure token to connect to server
-            SendMessageAsync(new SsidWsMessageBase(secureToken), ProfileObservable).Wait();
+            requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+            SendMessageAsync(requestId, new SsidWsMessageBase(secureToken), ProfileObservable).Wait();
 
             // send order changed subscribe
             InitialSubscribeOrderChanged();

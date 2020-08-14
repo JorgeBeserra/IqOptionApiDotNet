@@ -9,7 +9,7 @@ namespace IqOptionApiDotNet.Wss.Request.SubscribeMessages
     {
         public override string Name => "subscribeMessage";
 
-        public SubscribeLiveDealRequest(string message, ActivePair pair, DigitalOptionsExpiryType duration)
+        public SubscribeLiveDealRequest(string requestId, string message, ActivePair pair, DigitalOptionsExpiryType duration)
         {
             base.Message = new
             {

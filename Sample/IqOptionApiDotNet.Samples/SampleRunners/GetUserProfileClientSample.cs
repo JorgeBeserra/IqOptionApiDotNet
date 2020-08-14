@@ -10,9 +10,11 @@ namespace IqOptionApiDotNet.Samples.SampleRunners
         // By: Jorge Beserra
         public override async Task RunSample()
         {
+            string requestId;
             if (await IqClientApiDotNet.ConnectAsync())
             {
-                var profile = await IqClientApiDotNet.GetUserProfileClientAsync(0);
+                requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+                var profile = await IqClientApiDotNet.GetUserProfileClientAsync(requestId, 0);
                 
                 _logger.Information(JsonConvert.SerializeObject(profile));
             }

@@ -14,11 +14,12 @@ namespace IqOptionApiDotNet.Ws
         /// <summary>
         /// Get Informations By User ID
         /// </summary>
+        /// <param name="requestId">Request identifier<example>5f2c370145a047c7b87f2680556b3b93</example></param>
         /// <param name="activieId">Activies Id to request</param>
         /// <returns></returns>
-        public Task<FinancialInformationResult> GetFinancialInformationRequest(ActivePair pair)
+        public Task<FinancialInformationResult> GetFinancialInformationRequest(string requestId, ActivePair pair)
         {
-            return SendMessageAsync(new FinancialInformationRequestMessage(pair), FinancialInformationResultObservable);
+            return SendMessageAsync(requestId, new FinancialInformationRequestMessage(pair), FinancialInformationResultObservable);
         }
 
         #endregion

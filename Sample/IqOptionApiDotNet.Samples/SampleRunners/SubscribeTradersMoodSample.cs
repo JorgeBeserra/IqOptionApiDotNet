@@ -20,15 +20,21 @@ namespace IqOptionApiDotNet.Samples.SampleRunners
 
                 });
 
+                string requestId;
+
                 // begin subscribe 2 pairs
-                IqClientApiDotNet.SubscribeTradersMoodChanged(InstrumentType.BinaryOption, ActivePair.EURUSD);
-                IqClientApiDotNet.SubscribeTradersMoodChanged(InstrumentType.BinaryOption, ActivePair.GBPUSD);
+                requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+                IqClientApiDotNet.SubscribeTradersMoodChanged(requestId, InstrumentType.BinaryOption, ActivePair.EURUSD);
+
+                requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+                IqClientApiDotNet.SubscribeTradersMoodChanged(requestId, InstrumentType.BinaryOption, ActivePair.GBPUSD);
 
                 //wait for 10 secs
                 await Task.Delay(10000);
 
                 // after unsubscribe GBPUSD moods will not come anymore
-                IqClientApiDotNet.UnSubscribeTradersMoodChanged(InstrumentType.BinaryOption, ActivePair.GBPUSD);
+                requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+                IqClientApiDotNet.UnSubscribeTradersMoodChanged(requestId, InstrumentType.BinaryOption, ActivePair.GBPUSD);
 
             }
         }

@@ -8,6 +8,7 @@ using IqOptionApiDotNet.Ws.Request;
 // ReSharper disable once CheckNamespace
 namespace IqOptionApiDotNet.Ws
 {
+    
     public partial class IqOptionWebSocketClient
     {
         #region [Instruments]
@@ -19,7 +20,7 @@ namespace IqOptionApiDotNet.Ws
             _instrumentResultSetSubject.Publish().RefCount();
 
 
-        public Task<InstrumentResultSet> SendInstrumentsRequestAsync(params InstrumentType[] instrumentTypes)
+        public Task<InstrumentResultSet> SendInstrumentsRequestAsync(string requestId, params InstrumentType[] instrumentTypes)
         {
             var tcs = new TaskCompletionSource<InstrumentResultSet>();
             try
@@ -30,11 +31,11 @@ namespace IqOptionApiDotNet.Ws
 
                 //clear before query new 
                 _instrumentResultSet = new InstrumentResultSet();
-
+                
                 Task.WhenAll(
-                    SendMessageAsync(new GetInstrumentWsRequest(InstrumentType.Forex)),
-                    SendMessageAsync(new GetInstrumentWsRequest(InstrumentType.CFD)),
-                    SendMessageAsync(new GetInstrumentWsRequest(InstrumentType.Crypto))
+                    SendMessageAsync(requestId, new GetInstrumentWsRequest(InstrumentType.Forex)),
+                    SendMessageAsync(requestId, new GetInstrumentWsRequest(InstrumentType.CFD)),
+                    SendMessageAsync(requestId, new GetInstrumentWsRequest(InstrumentType.Crypto))
                 );
             }
 

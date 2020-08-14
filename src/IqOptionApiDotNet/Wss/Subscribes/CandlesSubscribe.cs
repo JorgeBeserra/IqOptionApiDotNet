@@ -21,7 +21,7 @@ namespace IqOptionApiDotNet.Ws
         public IObservable<CandleCollections> CandelsCollectionsObservable => _candelsCollections.AsObservable();
 
 
-        public Task<CandleCollections> GetCandlesAsync(ActivePair pair, TimeFrame tf, int count, DateTimeOffset to)
+        public Task<CandleCollections> GetCandlesAsync(string requestId, ActivePair pair, TimeFrame tf, int count, DateTimeOffset to)
         {
             var tcs = new TaskCompletionSource<CandleCollections>();
             try
@@ -34,7 +34,7 @@ namespace IqOptionApiDotNet.Ws
                     return t.Result;
                 });
 
-                SendMessageAsync(new GetCandleItemRequestMessage(pair, tf, count, to)).ConfigureAwait(false);
+                SendMessageAsync(requestId, new GetCandleItemRequestMessage(pair, tf, count, to)).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

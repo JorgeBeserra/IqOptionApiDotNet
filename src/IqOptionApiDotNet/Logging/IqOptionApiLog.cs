@@ -15,7 +15,7 @@ namespace IqOptionApiDotNet.Logging
         /// <summary>
         /// Gets the global logger component.
         /// </summary>
-        public static Microsoft.Extensions.Logging.ILogger Logger => IqOptionApiLog.LoggerFactory.CreateLogger("IqOptionApi");
+        public static Microsoft.Extensions.Logging.ILogger Logger => IqOptionApiLog.LoggerFactory.CreateLogger("IqOptionApiDotNet");
 
         /// <summary>
         /// Responsible for instantiating a new Logger Factory.

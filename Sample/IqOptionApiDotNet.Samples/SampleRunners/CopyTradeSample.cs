@@ -13,16 +13,18 @@ namespace IqOptionApiDotNet.Samples.SampleRunners
 
             await Task.WhenAll(trader.ConnectAsync(), follower.ConnectAsync());
 
+            string requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
             // for binary
             trader.WsClient.OpenOptionObservable().Subscribe(x => {
-                follower.BuyAsync(x.Active, (int) x.Amount, x.Direction, x.ExpirationTime);
+                follower.BuyAsync(requestId, x.Active, (int) x.Amount, x.Direction, x.ExpirationTime);
             });
 
             // for digitals forex and others
             trader.WsClient.PositionChangedObservable().Subscribe(x =>
             {
+                requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
                 if (x.InstrumentType == InstrumentType.DigitalOption)
-                    follower.PlaceDigitalOptions(x.InstrumentId, x.InvestAmount);
+                    follower.PlaceDigitalOptions(requestId, x.InstrumentId, x.InvestAmount);
             });
         }
     }

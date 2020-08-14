@@ -72,38 +72,38 @@ namespace IqOptionApiDotNet
             return tcs.Task;
         }
 
-        public async Task<Profile> GetProfileAsync()
+        public async Task<Profile> GetProfileAsync(string requestId)
         {
-            var result = await HttpClient.GetProfileAsync();
+            var result = await HttpClient.GetProfileAsync(requestId);
             return result.Result;
         }
 		
-		public Task<UserProfileClientResult> GetUserProfileClientAsync(long userid)
+		public Task<UserProfileClientResult> GetUserProfileClientAsync(string requestId, long userid)
         {
-            return WsClient?.GetUserProfileClientAsync(userid);
+            return WsClient?.GetUserProfileClientAsync(requestId, userid);
         }
 
-        public Task<LeaderBoardDealsClientResult> RequestLeaderboardDealsClientAsync(long countryId, long userCountryId, long fromPosition, long toPosition, long nearTradersCountryCount, long nearTradersCount, long topCountryCount, long topCount, long topType)
+        public Task<LeaderBoardDealsClientResult> RequestLeaderboardDealsClientAsync(string requestId, long countryId, long userCountryId, long fromPosition, long toPosition, long nearTradersCountryCount, long nearTradersCount, long topCountryCount, long topCount, long topType)
         {
-            return WsClient?.LeaderBoardDealsClientRequest(countryId, userCountryId, fromPosition, toPosition, nearTradersCountryCount, nearTradersCount, topCountryCount, topCount, topType);
+            return WsClient?.LeaderBoardDealsClientRequest(requestId, countryId, userCountryId, fromPosition, toPosition, nearTradersCountryCount, nearTradersCount, topCountryCount, topCount, topType);
         }
 
-        public Task<LeaderBoardUserinfoDealsClientMessageResult> RequestLeaderboardUserinfoDealsClientAsync(long[] countryId, int userId)
+        public Task<LeaderBoardUserinfoDealsClientMessageResult> RequestLeaderboardUserinfoDealsClientAsync(string requestId, long[] countryId, int userId)
         {
-            return WsClient?.LeaderBoardUserinfoDealsClientRequest(countryId, userId);
+            return WsClient?.LeaderBoardUserinfoDealsClientRequest(requestId, countryId, userId);
         }
 
-        public Task<UsersAvailabilityResult> GetUsersAvailabilityAsync(long[] userId)
+        public Task<UsersAvailabilityResult> GetUsersAvailabilityAsync(string requestId, long[] userId)
         {
-            return WsClient?.GetUsersAvailabilityRequest(userId);
+            return WsClient?.GetUsersAvailabilityRequest(requestId, userId);
         }
 		
-		public Task<FinancialInformationResult> GetFinancialInformationAsync(ActivePair pair)
+		public Task<FinancialInformationResult> GetFinancialInformationAsync(string requestId, ActivePair pair)
         {
-            return WsClient?.GetFinancialInformationRequest(pair);
+            return WsClient?.GetFinancialInformationRequest(requestId, pair);
         }
 
-        public async Task<bool> ChangeBalanceAsync(long balanceId)
+        public async Task<bool> ChangeBalanceAsync(string requestId, long balanceId)
         {
             var result = await HttpClient.ChangeBalanceAsync(balanceId);
 
@@ -117,22 +117,22 @@ namespace IqOptionApiDotNet
             return true;
         }
 
-        public Task<BinaryOptionsResult> BuyAsync(ActivePair pair, int size, OrderDirection direction,
+        public Task<BinaryOptionsResult> BuyAsync(string requestId, ActivePair pair, int size, OrderDirection direction,
             DateTimeOffset expiration)
         {
-            return WsClient?.BuyAsync(pair, size, direction, expiration);
+            return WsClient?.BuyAsync(requestId, pair, size, direction, expiration);
         }
 
 
-        public Task<CandleCollections> GetCandlesAsync(ActivePair pair, TimeFrame timeFrame, int count,
+        public Task<CandleCollections> GetCandlesAsync(string requestId, ActivePair pair, TimeFrame timeFrame, int count,
             DateTimeOffset to)
         {
-            return WsClient?.GetCandlesAsync(pair, timeFrame, count, to);
+            return WsClient?.GetCandlesAsync(requestId, pair, timeFrame, count, to);
         }
 
-        public Task<IObservable<CurrentCandle>> SubscribeRealtimeQuoteAsync(ActivePair pair, TimeFrame tf)
+        public Task<IObservable<CurrentCandle>> SubscribeRealtimeQuoteAsync(string requestId, ActivePair pair, TimeFrame tf)
         {
-            WsClient?.SubscribeQuoteAsync(pair, tf).ConfigureAwait(false);
+            WsClient?.SubscribeQuoteAsync(requestId, pair, tf).ConfigureAwait(false);
 
             var stream = WsClient?
                 .RealTimeCandleInfoObservable
@@ -143,35 +143,35 @@ namespace IqOptionApiDotNet
 
 
         /// <inheritdoc/>
-        public void SubscribeTradersMoodChanged(InstrumentType instrumentType, ActivePair active)
-            => WsClient?.SubscribeTradersMoodChanged(instrumentType, active);
+        public void SubscribeTradersMoodChanged(string requestId, InstrumentType instrumentType, ActivePair active)
+            => WsClient?.SubscribeTradersMoodChanged(requestId, instrumentType, active);
 
         /// <inheritdoc/>
-        public void UnSubscribeTradersMoodChanged(InstrumentType instrumentType, ActivePair active)
-            => WsClient?.UnSubscribeTradersMoodChanged(instrumentType, active);
+        public void UnSubscribeTradersMoodChanged(string requestId, InstrumentType instrumentType, ActivePair active)
+            => WsClient?.UnSubscribeTradersMoodChanged(requestId, instrumentType, active);
 
         /// <inheritdoc/>
-        public Task UnSubscribeRealtimeData(ActivePair pair, TimeFrame tf)
-            => WsClient?.UnsubscribeCandlesAsync(pair, tf);
+        public Task UnSubscribeRealtimeData(string requestId, ActivePair pair, TimeFrame tf)
+            => WsClient?.UnsubscribeCandlesAsync(requestId, pair, tf);
 
 
         /// <inheritdoc/>
-        public Task<DigitalOptionsPlacedResult> PlaceDigitalOptions(ActivePair pair, OrderDirection direction,
+        public Task<DigitalOptionsPlacedResult> PlaceDigitalOptions(string requestId, ActivePair pair, OrderDirection direction,
             DigitalOptionsExpiryDuration duration, double amount)
-            => WsClient?.PlaceDigitalOptions(pair, direction, duration, amount);
+            => WsClient?.PlaceDigitalOptions(requestId, pair, direction, duration, amount);
 
 
         /// <inheritdoc/>
-        public Task<DigitalOptionsPlacedResult> PlaceDigitalOptions(string instrumentId, double amount)
-            => WsClient?.PlaceDigitalOptions(instrumentId, amount);
+        public Task<DigitalOptionsPlacedResult> PlaceDigitalOptions(string requestId, string instrumentId, double amount)
+            => WsClient?.PlaceDigitalOptions(requestId, instrumentId, amount);
 
         /// <inheritdoc/>
-        public void SubscribeLiveDeal(String message, ActivePair pair, DigitalOptionsExpiryType duration)
-            => WsClient?.SubscribeLiveDeal(message, pair, duration);
+        public void SubscribeLiveDeal(string requestId, String message, ActivePair pair, DigitalOptionsExpiryType duration)
+            => WsClient?.SubscribeLiveDeal(requestId, message, pair, duration);
 
         /// <inheritdoc/>
-        public void UnSubscribeLiveDeal(String message, ActivePair pair, DigitalOptionsExpiryType duration)
-            => WsClient?.UnSubscribeLiveDeal(message, pair, duration);
+        public void UnSubscribeLiveDeal(string requestId, String message, ActivePair pair, DigitalOptionsExpiryType duration)
+            => WsClient?.UnSubscribeLiveDeal(requestId, message, pair, duration);
 
 
         public void Dispose()

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using IqOptionApiDotNet.Models;
@@ -8,15 +9,21 @@ namespace IqOptionApiDotNet.Samples.SampleRunners
     {
         public override async Task RunSample()
         {
+            string requestId;
             if (await IqClientApiDotNet.ConnectAsync())
             {
-                var profile = await IqClientApiDotNet.GetProfileAsync();
+                requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+                var profile = await IqClientApiDotNet.GetProfileAsync(requestId);
 
                 var demo = profile.Balances.FirstOrDefault(x => x.Type == BalanceType.Practice);
-                await IqClientApiDotNet.ChangeBalanceAsync(demo.Id);
+
+                requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+                await IqClientApiDotNet.ChangeBalanceAsync(requestId, demo.Id);
 
                 var real = profile.Balances.FirstOrDefault(x => x.Type == BalanceType.Real);
-                await IqClientApiDotNet.ChangeBalanceAsync(real.Id);
+
+                requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+                await IqClientApiDotNet.ChangeBalanceAsync(requestId, real.Id);
             }
         }
     }

@@ -10,9 +10,11 @@ namespace IqOptionApiDotNet.Samples.SampleRunners
         // By: Jorge Beserra
         public override async Task RunSample()
         {
+            string requestId;
             if (await IqClientApiDotNet.ConnectAsync())
             {
-                var financialinformation = await IqClientApiDotNet.GetFinancialInformationAsync(Models.ActivePair.EURUSD);
+                requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+                var financialinformation = await IqClientApiDotNet.GetFinancialInformationAsync(requestId, Models.ActivePair.EURUSD);
                 _logger.Information(JsonConvert.SerializeObject(financialinformation));
             }
         }

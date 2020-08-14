@@ -12,9 +12,11 @@ namespace IqOptionApiDotNet.Samples.SampleRunners
         {
             if (await IqClientApiDotNet.ConnectAsync())
             {
+                string requestId;
                 long[] countryes = {0 };
                 var userId = 0;
-                var leader = await IqClientApiDotNet.RequestLeaderboardUserinfoDealsClientAsync(countryes, userId);
+                requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+                var leader = await IqClientApiDotNet.RequestLeaderboardUserinfoDealsClientAsync(requestId, countryes, userId);
                 _logger.Information(JsonConvert.SerializeObject(leader));
             }
         }

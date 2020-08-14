@@ -103,9 +103,9 @@ namespace IqOptionApiDotNet.Http
             return tcs.Task;
         }
 
-        public Task<IqHttpResult<Profile>> GetProfileAsync()
+        public Task<IqHttpResult<Profile>> GetProfileAsync(string requestId)
         {
-            return Client.ExecuteGetAsync(new GetProfileRequest()).ContinueWith(t =>
+            return Client.ExecuteGetAsync(new GetProfileRequest(requestId)).ContinueWith(t =>
             {
                 if (t.Result != null && t.Result.StatusCode == HttpStatusCode.OK)
                     return t.Result.Content.JsonAs<IqHttpResult<Profile>>();
