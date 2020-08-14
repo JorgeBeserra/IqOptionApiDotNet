@@ -24,6 +24,7 @@ Essa API usando o websocket para comunicar dados em tempo real ao servidor IqOpt
 - suporte aberto Longo / Curto para contrato de CFD (Opções Digitais)
 
 # Últimos recursos
+- Obrigatoriedade de definição de um identificador para requisições
 - Obter informações financeiras
 - Obter perfil de usuário por ID de usuário
 - Obtenha disponibilidade dos usuários por ID de usuário
@@ -35,41 +36,50 @@ Essa API usando o websocket para comunicar dados em tempo real ao servidor IqOpt
 
 ```csharp
 var client = new IqOptionApiDotNetClient("contaiqoptio", "senhaiqoption");
+string requestId; // Novo
 
 //Inicia conexão
 if(await client.ConnectAsync()){
 
   //Pega Profile do seu Usuario.
-  var profile = await client.GetProfileAsync();
+  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // Novo
+  var profile = await client.GetProfileAsync(requestId);
   
   //Pega Profile de acordo com os ID.
+  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // Novo
   var userId = ""; // <-- Id do Usuario aqui!
-  var profile = await client.GetUserProfileClientAsync(userId);
+  var profile = await client.GetUserProfileClientAsync(requestId, userId);
   
   //Pega Estado de varios usuarios com uma lista de ID.
+  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // Novo
   long[] userId = { 0, 0, 0 }; // Substituir os zeros por IDS de usuarios
-  var profile = await client.GetUsersAvailabilityAsync(userId);
+  var profile = await client.GetUsersAvailabilityAsync(requestId, userId);
   
   //Pega a Relação Top Traders.
   var profile = await client.RequestLeaderboardDealsClientAsync(0, 191, 1, 10, 64, 64, 64, 64, 2);
 
   //Pega um detalhado do usuario pelo id.
+  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // Novo
   long[] countryes = {0 };
   var userId = ""; // <-- Id do Usuario aqui!
-  var leader = await client.RequestLeaderboardUserinfoDealsClientAsync(countryes, userId);
+  var leader = await client.RequestLeaderboardUserinfoDealsClientAsync(requestId, countryes, userId);
 
   // Abrir ordem EUR / USD no menor período (1min)
+  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // Novo
   var exp = DateTime.Now.AddMinutes(1);
-  var buyResult = await api.BuyAsync(ActivePair.EURUSD, 1, OrderDirection.Call, exp);
+  var buyResult = await api.BuyAsync(requestId, ActivePair.EURUSD, 1, OrderDirection.Call, exp);
 
   // Obter dados de velas
-  var candles = await api.GetCandlesAsync(ActivePair.EURUSD, TimeFrame.Min1, 100, DateTimeOffset.Now);
+  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // Novo
+  var candles = await api.GetCandlesAsync(requestId, ActivePair.EURUSD, TimeFrame.Min1, 100, DateTimeOffset.Now);
   _logger.LogInformation($"CandleCollections received {candles.Count}");
 
 
   // Assinar o par para obter dados em tempo real para tf1min e tf5min
+  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // Novo
   var streamMin1 = await api.SubscribeRealtimeDataAsync(ActivePair.EURUSD, TimeFrame.Min1);
-  var streamMin5 = await api.SubscribeRealtimeDataAsync(ActivePair.EURUSD, TimeFrame.Min5);
+  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // Novo
+  var streamMin5 = await api.SubscribeRealtimeDataAsync(requestId, ActivePair.EURUSD, TimeFrame.Min5);
 
   streamMin5.Merge(streamMin1)
       .Subscribe(candleInfo => {
@@ -77,7 +87,8 @@ if(await client.ConnectAsync()){
   });
 
   // Remove assinatura do par, e não irá mais receber dados em tempo real para impressão min5 no console
-  await api.UnSubscribeRealtimeData(ActivePair.EURUSD, TimeFrame.Min5);
+  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // Novo
+  await api.UnSubscribeRealtimeData(requestId, ActivePair.EURUSD, TimeFrame.Min5);
 
 }
 
@@ -98,7 +109,8 @@ public async Task TradingFollower_ExampleAsync() {
     await Task.WhenAll(trader.ConnectAsync(), follower.ConnectAsync());
 
     trader.WsClient.OpenOptionObservable().Subscribe(x => {
-        follower.BuyAsync(x.Active, (int) x.Amount, x.Direction, x.ExpirationTime);
+        requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // Novo
+        follower.BuyAsync(requestId, x.Active, (int) x.Amount, x.Direction, x.ExpirationTime);
     });
 }
 ```
@@ -114,8 +126,9 @@ try {
     // Iniciando Seção
     if (await api.ConnectAsync()) {
         //EUR / USD de ordem aberta no menor período (1min)
+        requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // Novo
         var exp = DateTime.Now.AddMinutes(1);
-        await api.BuyAsync(ActivePair.EURUSD, 1, OrderDirection.Call, exp);
+        await api.BuyAsync(requestId, ActivePair.EURUSD, 1, OrderDirection.Call, exp);
     }
 }
 catch (Exception ex) {
@@ -149,14 +162,18 @@ try {
         });
 
         // Assinar o recebimento de dados em 2 Ativos
-        api.SubscribeTradersMoodChanged(InstrumentType.BinaryOption, ActivePair.EURUSD);
-        api.SubscribeTradersMoodChanged(InstrumentType.BinaryOption, ActivePair.GBPUSD);
+        requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // Novo
+        api.SubscribeTradersMoodChanged(requestId, InstrumentType.BinaryOption, ActivePair.EURUSD);
+        
+        requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // Novo
+        api.SubscribeTradersMoodChanged(requestId, InstrumentType.BinaryOption, ActivePair.GBPUSD);
 
         // Uma pequena pausa para ver apresentação dos dados durante 10 segundos
         await Task.Delay(10000);
 
         // E agora remove assinatura GBPUSD e agora os humores não serão mais enviados
-        api.UnSubscribeTradersMoodChanged(InstrumentType.BinaryOption, ActivePair.GBPUSD);
+        requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // Novo
+        api.UnSubscribeTradersMoodChanged(requestId, InstrumentType.BinaryOption, ActivePair.GBPUSD);
     }
 }
 catch (Exception ex) {
@@ -182,6 +199,7 @@ Agora usando o modo ReactiveUI para assinar a alteração do modelo após esta
     await Task.WhenAll(trader.ConnectAsync(), follower.ConnectAsync());
 
     trader.WsClient.OpenOptionObservable().Subscribe(x => {
+        requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // Novo
         follower.BuyAsync(x.Active, (int) x.Amount, x.Direction, x.ExpirationTime);
     });
 
