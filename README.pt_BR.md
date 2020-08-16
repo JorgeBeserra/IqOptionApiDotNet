@@ -1,3 +1,5 @@
+<img src="https://github.com/JorgeBeserra/IqOptionApiDotNet/blob/master/img/logoapi.png" width="64" align="left" />
+
 # IqOptionApiDotNet
 
 IqOption Api para conectar-se a www.iqoption.com (não oficial), com o .netcore.
