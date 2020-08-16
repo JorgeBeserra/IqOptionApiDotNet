@@ -1,3 +1,5 @@
+<img src="https://github.com/JorgeBeserra/IqOptionApiDotNet/blob/master/img/logoapi.png" width="64" align="left" />
+
 # IqOptionApiDotNet
 
 IqOption Api to connect to www.iqoption.com (unofficial), with .netcore based for another framework you can suggest, 
