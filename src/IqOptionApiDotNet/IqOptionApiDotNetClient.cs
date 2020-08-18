@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using IqOptionApiDotNet.Http;
 using IqOptionApiDotNet.Logging;
 using IqOptionApiDotNet.Models;
 using IqOptionApiDotNet.Models.BinaryOptions;
 using IqOptionApiDotNet.Models.DigitalOptions;
 using IqOptionApiDotNet.Ws;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 
 namespace IqOptionApiDotNet
 {
@@ -233,7 +232,6 @@ namespace IqOptionApiDotNet
         public IObservable<Profile> ProfileObservable => _profileSubject.AsObservable();
         public IObservable<bool> ConnectedObservable => connectedSubject.AsObservable();
         public IObservable<BinaryOptionsResult> BuyResultObservable => WsClient?.BinaryOptionPlacedResultObservable;
-
 
         #endregion
     }

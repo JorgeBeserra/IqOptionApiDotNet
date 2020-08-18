@@ -4,6 +4,10 @@ namespace IqOptionApiDotNet.Ws.Request
     {
         public const string GetCandles = "get-candles";
 
+        public const string GetPosition = "get-position";
+
+        public const string GetPositionHistory = "get-position-history";
+
         public const string OpenOptions = "binary-options.open-option";
 		
         public const string GetUserProfileClient = "get-user-profile-client";

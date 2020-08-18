@@ -6,6 +6,8 @@ namespace IqOptionApiDotNet.Models
 {
     public class UserProfileClientResult
     {
+        [JsonProperty("balances")] public object[] Balances { get; set; }
+        [JsonProperty("client_category_id")] public long ClientCategoryId { get; set; }
         [JsonProperty("country_id")] public long CountryId { get; set; }
         [JsonProperty("flag")] public string Flag { get; set; }
         [JsonProperty("img_url")] public string ImgUrl { get; set; }

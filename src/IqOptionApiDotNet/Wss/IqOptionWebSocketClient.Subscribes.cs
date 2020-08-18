@@ -7,6 +7,7 @@ using IqOptionApiDotNet.utilities;
 using IqOptionApiDotNet.Utilities;
 using IqOptionApiDotNet.Ws.Base;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace IqOptionApiDotNet.Ws
 {

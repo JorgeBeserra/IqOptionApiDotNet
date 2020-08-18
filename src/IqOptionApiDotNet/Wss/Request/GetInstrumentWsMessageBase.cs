@@ -1,6 +1,7 @@
 using IqOptionApiDotNet.Models;
 using IqOptionApiDotNet.Ws.Base;
 using Newtonsoft.Json;
+using System;
 
 namespace IqOptionApiDotNet.Ws.Request
 {
@@ -14,6 +15,7 @@ namespace IqOptionApiDotNet.Ws.Request
     {
         internal GetInstrumentWsRequest(InstrumentType instrumentType)
         {
+
             Message = new RequestBody<GetInstrumentMessageRequest>
             {
                 RequestBodyType = "get-instruments",

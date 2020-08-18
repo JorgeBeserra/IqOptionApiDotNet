@@ -18,15 +18,22 @@
     <RepositoryUrl>https://github.com/JorgeBeserra/IqOptionApiDotNet</RepositoryUrl>
     <PackageProjectUrl>https://github.com/JorgeBeserra/IqOptionApiDotNet</PackageProjectUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <PackageReleaseNotes>Requirement to define the request identifier to improve returns.</PackageReleaseNotes>
+    <PackageReleaseNotes>News
+- Addition of Icon
+- Creation of more variables for PositionChanged (Version, UserId, UserBalanceId, PlataformId, ExternalId, ActivePair, Source, Status, OpenQuote, InvestAmount, InvestEnrolled, Pnl, PnlRealized, PnlNet, RawEvent)
+
+BugFix
+- LiveDeal 
+** Change ExpirationType (string) -&gt; (DigitalOptionsExpiryType)</PackageReleaseNotes>
     <NoWarn>1701;1702;1705;1591</NoWarn>
     <RootNamespace>IqOptionApiDotNet</RootNamespace>
     <AssemblyName>IqOptionApiDotNet</AssemblyName>
     <PackageId>IqOptionApiDotNet</PackageId>
-    <AssemblyVersion>1.0.0.3</AssemblyVersion>
-    <FileVersion>1.0.0.3</FileVersion>
-    <Version>1.0.3</Version>
+    <AssemblyVersion>1.0.0.4</AssemblyVersion>
+    <FileVersion>1.0.0.4</FileVersion>
+    <Version>1.0.4</Version>
     <ApplicationIcon>logoapi.ico</ApplicationIcon>
+	<PackageIcon>LogoApi128x128.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -45,5 +52,12 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="System.Reactive" Version="4.4.1" />
     <PackageReference Include="Restsharp" Version="106.11.4" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="LogoApi128x128.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 </Project>

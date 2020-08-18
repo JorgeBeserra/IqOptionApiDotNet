@@ -1,4 +1,5 @@
 using IqOptionApiDotNet.Converters.JsonConverters;
+using IqOptionApiDotNet.Models.DigitalOptions;
 using IqOptionApiDotNet.Utilities;
 using Newtonsoft.Json;
 using System;
@@ -19,7 +20,7 @@ namespace IqOptionApiDotNet.Models
         public DateTimeOffset? CreatedAt { get; set; }
 
         [JsonProperty("expiration_type")]
-        public string ExpirationType { get; set; }
+        public DigitalOptionsExpiryType ExpirationType { get; set; }
 
         [JsonProperty("flag")]
         public string Flag { get; set; }
@@ -28,13 +29,15 @@ namespace IqOptionApiDotNet.Models
         public ActivePair ActiveId { get; set; }
 
         [JsonProperty("instrument_dir")]
-        public string InstrumentDir { get; set; }
+        public OrderDirection InstrumentDir { get; set; }
 
         [JsonProperty("instrument_expiration")]
-        public string InstrumentExpiration { get; set; }
+        [JsonConverter(typeof(UnixDateTimeJsonConverter))]
+        public DateTimeOffset? InstrumentExpiration { get; set; }
+
 
         [JsonProperty("is_big")]
-        public string IsBig { get; set; }
+        public bool IsBig { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }

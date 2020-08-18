@@ -15,7 +15,6 @@ namespace IqOptionApiDotNet.Samples.SampleRunners
         protected IqOptionApiDotNetClient IqClientApiDotNet = new IqOptionApiDotNetClient(
             Environment.GetEnvironmentVariable("IqOptionUserName"),
             Environment.GetEnvironmentVariable("IqOptionPassword"));
-
         public abstract Task RunSample();
     }
 }
