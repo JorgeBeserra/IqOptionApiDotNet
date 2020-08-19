@@ -11,27 +11,21 @@
     <Company>Jorge Beserra</Company>
     <Copyright>Copyright (c) Jorge Beserra 2020</Copyright>
     <Description>Iqoption Api for DOTNET - https://github.com/JorgeBeserra/IqOptionApiDotNet
-(Base in Iqoption Api for DOTNET - https://github.com/MongkonEiadon/Iqoption.Net)</Description>
+based in Iqoption Api for DOTNET - https://github.com/MongkonEiadon/Iqoption.Net)</Description>
     <PackageTags>IqOption Api DOT NET</PackageTags>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/JorgeBeserra/IqOptionApiDotNet</RepositoryUrl>
     <PackageProjectUrl>https://github.com/JorgeBeserra/IqOptionApiDotNet</PackageProjectUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <PackageReleaseNotes>News
-- Addition of Icon
-- Creation of more variables for PositionChanged (Version, UserId, UserBalanceId, PlataformId, ExternalId, ActivePair, Source, Status, OpenQuote, InvestAmount, InvestEnrolled, Pnl, PnlRealized, PnlNet, RawEvent)
-
-BugFix
-- LiveDeal 
-** Change ExpirationType (string) -&gt; (DigitalOptionsExpiryType)</PackageReleaseNotes>
+    <PackageReleaseNotes>Change compiler Type to ANYCPU</PackageReleaseNotes>
     <NoWarn>1701;1702;1705;1591</NoWarn>
     <RootNamespace>IqOptionApiDotNet</RootNamespace>
     <AssemblyName>IqOptionApiDotNet</AssemblyName>
     <PackageId>IqOptionApiDotNet</PackageId>
-    <AssemblyVersion>1.0.0.4</AssemblyVersion>
-    <FileVersion>1.0.0.4</FileVersion>
-    <Version>1.0.4</Version>
+    <AssemblyVersion>1.0.0.5</AssemblyVersion>
+    <FileVersion>1.0.0.5</FileVersion>
+    <Version>1.0.5</Version>
     <ApplicationIcon>logoapi.ico</ApplicationIcon>
 	<PackageIcon>LogoApi128x128.png</PackageIcon>
   </PropertyGroup>
@@ -41,7 +35,7 @@ BugFix
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   
   <ItemGroup>
