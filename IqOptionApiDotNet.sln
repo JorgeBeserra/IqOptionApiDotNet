@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IqOptionApiDotNet.Samples",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IqOptionApiDotNet", "src\IqOptionApiDotNet\IqOptionApiDotNet.csproj", "{925CAFCB-016F-407C-869A-3DA9A1157946}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IqOptionApiDotNet.Tests", "tests\IqOptionApi.Tests\IqOptionApiDotNet.Tests.csproj", "{72988539-D915-4DBA-909A-A99C121ADF04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IqOptionApiDotNet.Tests", "tests\IqOptionApiDotNet.Tests\IqOptionApiDotNet.Tests.csproj", "{72988539-D915-4DBA-909A-A99C121ADF04}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{900633CE-8D1B-43E6-BEC7-9942E75610F8}"
 EndProject
