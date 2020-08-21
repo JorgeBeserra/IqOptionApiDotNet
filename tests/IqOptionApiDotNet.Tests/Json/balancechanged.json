@@ -1,0 +1,21 @@
+﻿{
+  "name": "balance-changed",
+  "microserviceName": "internal-billing",
+  "msg": {
+    "id": 356288299,
+    "user_id": 72572501,
+    "current_balance": {
+      "id": 356288299,
+      "type": 4,
+      "index": 28194576588,
+      "amount": 5080.88,
+      "is_fiat": true,
+      "currency": "USD",
+      "new_amount": 5080.88,
+      "is_marginal": false,
+      "bonus_amount": 0,
+      "enrolled_amount": 5080.886433,
+      "bonus_total_amount": 0
+    }
+  }
+}

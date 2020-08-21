@@ -24,6 +24,17 @@ namespace IqOptionApiDotNet.Samples.SampleRunners
 
                 requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
                 await IqClientApiDotNet.ChangeBalanceAsync(requestId, real.Id);
+
+                /*
+                Don't forget to check if it is in the live account or in training 
+                before taking your Balance Changed tests
+                */
+                IqClientApiDotNet.BalanceChangedObservable.Subscribe(x => {
+                    // values goes here
+                    _logger.Information(
+                        $"Balance Changed on UserId: {x.UserId} - Amount: {x.CurrentBalance.Amount}, Enrolled Amount: {x.CurrentBalance.EnrolledAmount}"
+                    );
+                });
             }
         }
     }

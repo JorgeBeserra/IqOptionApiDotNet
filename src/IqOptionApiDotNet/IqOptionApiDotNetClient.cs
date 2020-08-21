@@ -232,6 +232,7 @@ namespace IqOptionApiDotNet
         public IObservable<Profile> ProfileObservable => _profileSubject.AsObservable();
         public IObservable<bool> ConnectedObservable => connectedSubject.AsObservable();
         public IObservable<BinaryOptionsResult> BuyResultObservable => WsClient?.BinaryOptionPlacedResultObservable;
+        public IObservable<BalanceChanged> BalanceChangedObservable => WsClient?.BalanceChangedObservable;
 
         #endregion
     }

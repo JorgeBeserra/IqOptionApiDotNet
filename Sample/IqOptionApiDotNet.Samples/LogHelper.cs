@@ -11,7 +11,7 @@ namespace IqOptionApiDotNet.Samples
                 .MinimumLevel.Verbose()
                 .WriteTo.Console(
                     outputTemplate:
-                    "{Timestamp:HH:mm:ss} {Level:u4} | IqOptionAPI | {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}",
+                    "{Timestamp:HH:mm:ss} {Level:u4} | IqOptionApiDotNet | {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}",
                     theme: AnsiConsoleTheme.Literate).CreateLogger());
 
         public static ILogger Log => LazyLog.Value;

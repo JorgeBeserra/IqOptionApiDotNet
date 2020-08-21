@@ -11,12 +11,21 @@ namespace IqOptionApiDotNet.Ws
 {
     public partial class IqOptionWebSocketClient
     {
+        private readonly Subject<BalanceChanged> _balanceChangedSubject = new Subject<BalanceChanged>();
         public Balance CurrentBalance { get; private set; }
+        public IObservable<BalanceChanged> BalanceChangedObservable => _balanceChangedSubject.AsObservable();
 
         [SubscribeForTopicName(MessageType.BalanceChanged, typeof(BalanceChanged))]
         public void Subscribe(BalanceChanged type)
         {
             CurrentBalance = type.CurrentBalance;
+            _balanceChangedSubject.OnNext(type);
+        }
+
+        [Predisposable]
+        internal void OnBalanceChangedDisposal()
+        {
+            _balanceChangedSubject.OnCompleted();
         }
     }
 
