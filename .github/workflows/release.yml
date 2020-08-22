@@ -16,11 +16,9 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.301
-    - name: Install dependencies
-      run: dotnet restore
     - name: Create Nuget Package
       run: dotnet pack -c Release /p:Version=${{ github.event.release.tag_name }} /p:PackageReleasesNotes="See https://github.com/JorgeBeserra/IqOptionApiDotNet/releases/tag/${{ github.event.release.tag_name }}"
-      working-directory: ./IqOptionApiDotNet
+      working-directory: ./JorgeBeserra.IqOptionApiDotNet
     - name: Archive Nuget Package
       uses: actions/upload-artifact@v2
       with:
