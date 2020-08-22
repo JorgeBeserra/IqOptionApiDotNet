@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using IqOptionApiDotNet.Models;
 using Newtonsoft.Json;
 
 namespace IqOptionApiDotNet.Samples.SampleRunners
@@ -13,7 +14,7 @@ namespace IqOptionApiDotNet.Samples.SampleRunners
             if (await IqClientApiDotNet.ConnectAsync())
             {
                 string requestId;
-                long[] countryes = {0 };
+                CountryType[] countryes = {CountryType.Worldwide, };
                 var userId = 0;
                 requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
                 var leader = await IqClientApiDotNet.RequestLeaderboardUserinfoDealsClientAsync(requestId, countryes, userId);

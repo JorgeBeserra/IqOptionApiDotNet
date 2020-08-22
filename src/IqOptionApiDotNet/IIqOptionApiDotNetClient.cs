@@ -21,8 +21,8 @@ namespace IqOptionApiDotNet
         Task<Profile> GetProfileAsync(string requestId);
 		
 		Task<UserProfileClientResult> GetUserProfileClientAsync(string requestId, long userId);
-        Task<LeaderBoardDealsClientResult> RequestLeaderboardDealsClientAsync(string requestId, long countryId, long userCountryId, long fromPosition, long toPosition, long nearTradersCountryCount, long nearTradersCount, long topCountryCount, long topCount, long topType);
-        Task<LeaderBoardUserinfoDealsClientMessageResult> RequestLeaderboardUserinfoDealsClientAsync(string requestId, long[] countryId, int userId);
+        Task<LeaderBoardDealsClientResult> RequestLeaderboardDealsClientAsync(string requestId, CountryType countryId, long fromPosition, long toPosition, CountryType userCountryId, long nearTradersCountryCount, long nearTradersCount, long topCountryCount, long topCount, long topType);
+        Task<LeaderBoardUserinfoDealsClientMessageResult> RequestLeaderboardUserinfoDealsClientAsync(string requestId, CountryType[] countryId, int userId);
         Task<UsersAvailabilityResult> GetUsersAvailabilityAsync(string requestId, long[] userId);
 		Task<FinancialInformationResult> GetFinancialInformationAsync(string requestId, ActivePair pair);
         Task<bool> ChangeBalanceAsync(string requestId, long balanceId);

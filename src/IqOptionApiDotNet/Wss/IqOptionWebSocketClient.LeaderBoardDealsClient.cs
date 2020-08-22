@@ -17,7 +17,7 @@ namespace IqOptionApiDotNet.Ws
         /// <param name="requestId">Request identifier<example>5f2c370145a047c7b87f2680556b3b93</example></param>
         /// <param name="userid">User Id to request</param>
         /// <returns></returns>
-        public Task<LeaderBoardDealsClientResult> LeaderBoardDealsClientRequest(string requestId, long countryId,long userCountryId,long fromPosition,long toPosition,long nearTradersCountryCount,long nearTradersCount,long topCountryCount, long topCount, long topType)
+        public Task<LeaderBoardDealsClientResult> LeaderBoardDealsClientRequest(string requestId, CountryType countryId,CountryType userCountryId,long fromPosition,long toPosition,long nearTradersCountryCount,long nearTradersCount,long topCountryCount, long topCount, long topType)
         {
             return SendMessageAsync(requestId, new LeaderBoardDealsClientRequestMessage(countryId,userCountryId,fromPosition,toPosition,nearTradersCountryCount,nearTradersCount, topCountryCount, topCount, topType), LeaderBoardDealsClientResultObservable);
         }

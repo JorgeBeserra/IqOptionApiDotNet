@@ -2,13 +2,16 @@
 
 # IqOptionApiDotNet
 
-IqOption Api para conectar-se a www.iqoption.com (não oficial), com o .netcore.
+<p align="center">
+<a href="https://github.com/JorgeBeserra/IqOptionApiDotNet/actions"><img src="https://github.com/JorgeBeserra/IqOptionApiDotNet/workflows/.NET%20Core/badge.svg" alt="Action Build"></a>
+<a href="https://www.nuget.org/packages/IqOptionApiDotNet/"><img src="https://buildstats.info/nuget/iqoptionapidotnet?includePreReleases=true" alt="Nuget Downloads"></a>
+<a href="https://gitter.im/IqOptionApiDotNet/Developers"><img src="https://badges.gitter.im/IqOptionApiDotNet/Developers.svg" alt="Nuget Downloads"></a>
+</p>
 
-Favor entrar em contato via Gitter (Sugestões ou Duvidas)
-
-[![Join the chat at https://gitter.im/IqOptionApiDotNet/Developers](https://badges.gitter.im/IqOptionApiDotNet/Developers.svg)](https://gitter.im/IqOptionApiDotNet/Developers?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+IqOption Api .Net Core para conectar-se a www.iqoption.com (não oficial).
 
 # Intalação do Pacote
+Favor não deixem de instalar usado 
 
 ```javascript
 PM> Install-Package IqOptionApiDotNet
@@ -17,7 +20,7 @@ PM> Install-Package IqOptionApiDotNet
 
 # Como isso funciona
 
-Essa API usando o websocket para comunicar dados em tempo real ao servidor IqOption através do canal seguro do websocket, para que os metadados em tempo real que vêm neste canal sejam manipulados pela programação reativa .net chamada "Rx.NET", causa de centenas de fluxos de tipos de dados no apenas um canal, por isso precisamos assinar selecionado em um tópico específico.
+Essa API esta usando o WebSocket para se comunicar em tempo real ao servidor da IqOption através de canal seguro (WebSocket Secure), para que os metadados em tempo real que vêm neste canal sejam manipulados pela programação reativa .net chamada "Rx.NET", que acaba causando um fluxo de  centenas de tipos de dados por apenas um canal, então se faz a necessidade de escolher e assinar os tópicos desejados para isso olhe a seção Assinar (**Subscribes**), e sem seguida capture os dados através dos Observadores (**Observables**)
 
 # Marco histórico
 
@@ -34,7 +37,7 @@ Essa API usando o websocket para comunicar dados em tempo real ao servidor IqOpt
 - Obter detalhes do placar com o ID do usuário
 
 
-# Como User
+# Como Usar
 
 ```csharp
 var client = new IqOptionApiDotNetClient("contaiqoptio", "senhaiqoption");
@@ -50,20 +53,24 @@ if(await client.ConnectAsync()){
   //Pega Profile de acordo com os ID.
   requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // Novo
   var userId = ""; // <-- Id do Usuario aqui!
-  var profile = await client.GetUserProfileClientAsync(requestId, userId);
+  var profileUser = await client.GetUserProfileClientAsync(requestId, userId);
   
   //Pega Estado de varios usuarios com uma lista de ID.
   requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // Novo
   long[] userId = { 0, 0, 0 }; // Substituir os zeros por IDS de usuarios
-  var profile = await client.GetUsersAvailabilityAsync(requestId, userId);
+  var userAvailability = await client.GetUsersAvailabilityAsync(requestId, userId);
   
   //Pega a Relação Top Traders.
-  var profile = await client.RequestLeaderboardDealsClientAsync(0, 191, 1, 10, 64, 64, 64, 64, 2);
+  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // New
+  CountryType country = CountryType.Worldwide;
+  long from_position = 1;
+  long to_position = 10;
+  var leader = await client.RequestLeaderboardDealsClientAsync(requestId, country, from_position, to_position);
 
-  //Pega um detalhado do usuario pelo id.
-  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // Novo
-  long[] countryes = {0 };
-  var userId = ""; // <-- Id do Usuario aqui!
+  // Pega um detalhado do usuario pelo id.
+  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // New
+  CountryType[] countryes = {CountryType.Worldwide, };
+  var userId = ""; // <-- User ID here!
   var leader = await client.RequestLeaderboardUserinfoDealsClientAsync(requestId, countryes, userId);
 
   // Abrir ordem EUR / USD no menor período (1min)
@@ -209,6 +216,6 @@ Agora usando o modo ReactiveUI para assinar a alteração do modelo após esta
 
 # Ajude-me
 
-Se de alguma forma ajudei você com qualquer um dos conteúdos que foi disponibilizado, favor ajude tambem criando um pullrequest más, também agradeceria muito seu apoio me pagando um café!!! :) . <br>
-<a href="https://buymeacoffee.com/jorgesouza" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/black_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a> Jorge Souza<br>
+Se de alguma forma ajudei você com qualquer um dos conteúdos que foi disponibilizado, favor ajude também criando um pull-request más, também agradeceria muito seu apoio me pagando um café!!! :) . <br>
+<a href="https://buymeacoffee.com/jorgesouza" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/black_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a> Jorge Beserra (Este Repositório)<br>
 <a href="https://www.buymeacoffee.com/6VF3XHb" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/black_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a> MongkonEiadon (Repositório Base) 

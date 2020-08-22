@@ -82,12 +82,12 @@ namespace IqOptionApiDotNet
             return WsClient?.GetUserProfileClientAsync(requestId, userid);
         }
 
-        public Task<LeaderBoardDealsClientResult> RequestLeaderboardDealsClientAsync(string requestId, long countryId, long userCountryId, long fromPosition, long toPosition, long nearTradersCountryCount, long nearTradersCount, long topCountryCount, long topCount, long topType)
+        public Task<LeaderBoardDealsClientResult> RequestLeaderboardDealsClientAsync(string requestId, CountryType countryId,  long fromPosition, long toPosition, CountryType userCountryId = CountryType.BR, long nearTradersCountryCount = 0, long nearTradersCount = 0, long topCountryCount = 0, long topCount = 0, long topType = 2)
         {
             return WsClient?.LeaderBoardDealsClientRequest(requestId, countryId, userCountryId, fromPosition, toPosition, nearTradersCountryCount, nearTradersCount, topCountryCount, topCount, topType);
         }
 
-        public Task<LeaderBoardUserinfoDealsClientMessageResult> RequestLeaderboardUserinfoDealsClientAsync(string requestId, long[] countryId, int userId)
+        public Task<LeaderBoardUserinfoDealsClientMessageResult> RequestLeaderboardUserinfoDealsClientAsync(string requestId, CountryType[] countryId, int userId)
         {
             return WsClient?.LeaderBoardUserinfoDealsClientRequest(requestId, countryId, userId);
         }

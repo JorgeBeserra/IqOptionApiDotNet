@@ -19,15 +19,15 @@ based in Iqoption Api for DOTNET - https://github.com/MongkonEiadon/Iqoption.Net
     <PackageProjectUrl>https://github.com/JorgeBeserra/IqOptionApiDotNet</PackageProjectUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
     <PackageReleaseNotes>News
-- Creation BalanceChangedObservable
-Little adjustments in Samples</PackageReleaseNotes>
+- CountryType
+</PackageReleaseNotes>
     <NoWarn>1701;1702;1705;1591</NoWarn>
     <RootNamespace>IqOptionApiDotNet</RootNamespace>
     <AssemblyName>IqOptionApiDotNet</AssemblyName>
     <PackageId>IqOptionApiDotNet</PackageId>
-    <AssemblyVersion>1.0.0.6</AssemblyVersion>
-    <FileVersion>1.0.0.6</FileVersion>
-    <Version>1.0.6</Version>
+    <AssemblyVersion>1.0.0.7</AssemblyVersion>
+    <FileVersion>1.0.0.7</FileVersion>
+    <Version>1.0.7</Version>
     <ApplicationIcon>logoapi.ico</ApplicationIcon>
 	<PackageIcon>LogoApi128x128.png</PackageIcon>
   </PropertyGroup>

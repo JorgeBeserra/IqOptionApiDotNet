@@ -2,11 +2,14 @@
 
 # IqOptionApiDotNet
 
-IqOption Api to connect to www.iqoption.com (unofficial), with .netcore based for another framework you can suggest, 
+<p align="center">
+<a href="https://github.com/JorgeBeserra/IqOptionApiDotNet/actions"><img src="https://github.com/JorgeBeserra/IqOptionApiDotNet/workflows/.NET%20Core/badge.svg" alt="Action Build"></a>
+<a href="https://www.nuget.org/packages/IqOptionApiDotNet/"><img src="https://buildstats.info/nuget/iqoptionapidotnet?includePreReleases=true" alt="Nuget Downloads"></a>
+<a href="https://gitter.im/IqOptionApiDotNet/Developers"><img src="https://badges.gitter.im/IqOptionApiDotNet/Developers.svg" alt="Nuget Downloads"></a>
+</p>
 
-Now we can talk about the issue on gitter here
+IqOption Api Dot Net to connect to www.iqoption.com (unofficial). 
 
-[![Join the chat at https://gitter.im/IqOptionApiDotNet/Developers](https://badges.gitter.im/IqOptionApiDotNet/Developers.svg)](https://gitter.im/IqOptionApiDotNet/Developers?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 # Package Installation
 
 ```javascript
@@ -57,14 +60,16 @@ if(await client.ConnectAsync()){
   
   //Get Top Traders.
   requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // New
-  var profile = await client.RequestLeaderboardDealsClientAsync(requestId, 0, 191, 1, 10, 64, 64, 64, 64, 2);
+  CountryType country = CountryType.Worldwide;
+  long from_position = 1;
+  long to_position = 10;
+  var leader = await client.RequestLeaderboardDealsClientAsync(requestId, country, from_position, to_position);
 
   //Get Top Traders Details from User Id.
   requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // New
-  long[] countryes = {0 };
-  var userId = ""; // <-- Id do Usuario aqui!
+  CountryType[] countryes = {CountryType.Worldwide, };
+  var userId = ""; // <-- User ID here!
   var leader = await client.RequestLeaderboardUserinfoDealsClientAsync(requestId, countryes, userId);
-
 
   // open order EurUsd in smallest period (1min)
   requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // New
@@ -75,7 +80,6 @@ if(await client.ConnectAsync()){
   requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // New
   var candles = await api.GetCandlesAsync(requestId, ActivePair.EURUSD, TimeFrame.Min1, 100, DateTimeOffset.Now);
   _logger.LogInformation($"CandleCollections received {candles.Count}");
-
 
   // subscribe to pair to get real-time data for tf1min and tf5min
   requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // New

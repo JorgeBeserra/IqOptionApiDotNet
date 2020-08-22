@@ -13,8 +13,8 @@ namespace IqOptionApiDotNet.Ws.Request
 {
     internal class LeaderBoardDealsClientModel
     {
-        [JsonProperty("country_id")] public long CountryId { get; set; }
-        [JsonProperty("user_country_id")] public long UserCountryId { get; set; }
+        [JsonProperty("country_id")] public CountryType CountryId { get; set; }
+        [JsonProperty("user_country_id")] public CountryType UserCountryId { get; set; }
         [JsonProperty("from_position")] public long FromPosition { get; set; }
         [JsonProperty("to_position")] public long ToPosition { get; set; }
         [JsonProperty("near_traders_country_count")] public long NearTradersCountryCount { get; set; }
@@ -28,8 +28,8 @@ namespace IqOptionApiDotNet.Ws.Request
     internal sealed class LeaderBoardDealsClientRequestMessage : WsSendMessageBase<LeaderBoardDealsClientModel>
     {
         public LeaderBoardDealsClientRequestMessage(
-            long countryId,
-            long userCountryId,
+            CountryType countryId,
+            CountryType userCountryId,
             long fromPosition,
             long toPosition,
             long nearTradersCountryCount,

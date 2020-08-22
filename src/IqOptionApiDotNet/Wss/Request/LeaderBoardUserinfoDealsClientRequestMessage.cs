@@ -13,7 +13,7 @@ namespace IqOptionApiDotNet.Ws.Request
 {
     internal class LeaderBoardUserinfoDealsClientModel
     {
-        [JsonProperty("country_ids")] public long[] CountryIds { get; set; }
+        [JsonProperty("country_ids")] public CountryType[] CountryIds { get; set; }
         [JsonProperty("requested_user_id")] public int UserId { get; set; }
     }
 
@@ -21,7 +21,7 @@ namespace IqOptionApiDotNet.Ws.Request
     internal sealed class LeaderBoardUserinfoDealsClientRequestMessage : WsSendMessageBase<LeaderBoardUserinfoDealsClientModel>
     {
         public LeaderBoardUserinfoDealsClientRequestMessage(
-            long[] countryIds,
+            CountryType[] countryIds,
             int userId)
         {
             Message = new RequestBody<LeaderBoardUserinfoDealsClientModel>

@@ -16,7 +16,7 @@ namespace IqOptionApiDotNet.Ws
         /// </summary>
         /// <param name="userid">User Id to request</param>
         /// <returns></returns>
-        public Task<LeaderBoardUserinfoDealsClientMessageResult> LeaderBoardUserinfoDealsClientRequest(string requestId, long[] countryId, int userId)
+        public Task<LeaderBoardUserinfoDealsClientMessageResult> LeaderBoardUserinfoDealsClientRequest(string requestId, CountryType[] countryId, int userId)
         {
             return SendMessageAsync(requestId, new LeaderBoardUserinfoDealsClientRequestMessage(countryId, userId), LeaderBoardUserinfoDealsClientResultObservable);
         }
