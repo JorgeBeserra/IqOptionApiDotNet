@@ -19,8 +19,11 @@ namespace IqOptionApiDotNet
 
         Task<bool> ConnectAsync();
         Task<Profile> GetProfileAsync(string requestId);
-		
-		Task<UserProfileClientResult> GetUserProfileClientAsync(string requestId, long userId);
+        Task<Alerts> GetAlerts(string requestId, ActivePair activeId, string type);
+        Task<Alert> CreateAlert(string requestId, ActivePair activeId, InstrumentType instrumentType, double value, int activations, string type = "price");
+        Task<Alert> UpdateAlert(string requestId, long id, ActivePair activeId, InstrumentType instrumentType, double value, int activations, string type = "price");
+        Task<Alert> DeleteAlert(string requestId, long id);
+        Task<UserProfileClientResult> GetUserProfileClientAsync(string requestId, long userId);
         Task<LeaderBoardDealsClientResult> RequestLeaderboardDealsClientAsync(string requestId, CountryType countryId, long fromPosition, long toPosition, CountryType userCountryId, long nearTradersCountryCount, long nearTradersCount, long topCountryCount, long topCount, long topType);
         Task<LeaderBoardUserinfoDealsClientMessageResult> RequestLeaderboardUserinfoDealsClientAsync(string requestId, CountryType[] countryId, int userId);
         Task<UsersAvailabilityResult> GetUsersAvailabilityAsync(string requestId, long[] userId);

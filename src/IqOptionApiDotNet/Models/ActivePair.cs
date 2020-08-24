@@ -4,6 +4,7 @@ namespace IqOptionApiDotNet.Models
 {
     public enum ActivePair : int
     {
+        ALL = 0,
         EURRUB = 9,
         COMMBK = 13,
         DAIM = 14,

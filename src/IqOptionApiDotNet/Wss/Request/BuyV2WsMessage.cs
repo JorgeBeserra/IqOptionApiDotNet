@@ -7,7 +7,7 @@ using IqOptionApiDotNet.Ws.Base;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-[assembly: InternalsVisibleTo("IqOptionApi.Unit", AllInternalsVisible = true)]
+[assembly: InternalsVisibleTo("IqOptionApiDotNet.Unit", AllInternalsVisible = true)]
 
 namespace IqOptionApiDotNet.Ws.Request
 {

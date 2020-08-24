@@ -11,7 +11,7 @@
 IqOption Api .Net Core para conectar-se a www.iqoption.com (não oficial).
 
 # Intalação do Pacote
-Favor não deixem de instalar usado 
+Favor não deixem de instalar usando o Gerenciador de Pacotes NUGET 
 
 ```javascript
 PM> Install-Package IqOptionApiDotNet
@@ -29,18 +29,24 @@ Essa API esta usando o WebSocket para se comunicar em tempo real ao servidor da 
 - suporte aberto Longo / Curto para contrato de CFD (Opções Digitais)
 
 # Últimos recursos
+- Resetar o saldo da conta de Treinamento
+- Alertas (Listar, Criar, Deletar, Alterar, Observar Alterações e Observar alerta Atingido)
+
+# Recursos
 - Obrigatoriedade de definição de um identificador para requisições
+- Resetar o Saldo da conta de Treinamento
 - Obter informações financeiras
 - Obter perfil de usuário por ID de usuário
 - Obtenha disponibilidade dos usuários por ID de usuário
 - Obtenha tabela de classificação (TOP TRADERS)
 - Obter detalhes do placar com o ID do usuário
-
+- Resetar o saldo da conta de Treinamento
+- Alertas (Listar, Criar, Deletar, Alterar, Observar Alterações e Observar alerta Atingido)
 
 # Como Usar
 
 ```csharp
-var client = new IqOptionApiDotNetClient("contaiqoptio", "senhaiqoption");
+var client = new IqOptionApiDotNetClient("emailIqOption", "senhaIqOption");
 string requestId; // Novo
 
 //Inicia conexão
@@ -76,19 +82,19 @@ if(await client.ConnectAsync()){
   // Abrir ordem EUR / USD no menor período (1min)
   requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // Novo
   var exp = DateTime.Now.AddMinutes(1);
-  var buyResult = await api.BuyAsync(requestId, ActivePair.EURUSD, 1, OrderDirection.Call, exp);
+  var buyResult = await client.BuyAsync(requestId, ActivePair.EURUSD, 1, OrderDirection.Call, exp);
 
   // Obter dados de velas
   requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // Novo
-  var candles = await api.GetCandlesAsync(requestId, ActivePair.EURUSD, TimeFrame.Min1, 100, DateTimeOffset.Now);
+  var candles = await client.GetCandlesAsync(requestId, ActivePair.EURUSD, TimeFrame.Min1, 100, DateTimeOffset.Now);
   _logger.LogInformation($"CandleCollections received {candles.Count}");
 
 
   // Assinar o par para obter dados em tempo real para tf1min e tf5min
   requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // Novo
-  var streamMin1 = await api.SubscribeRealtimeDataAsync(ActivePair.EURUSD, TimeFrame.Min1);
+  var streamMin1 = await client.SubscribeRealtimeDataAsync(ActivePair.EURUSD, TimeFrame.Min1);
   requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // Novo
-  var streamMin5 = await api.SubscribeRealtimeDataAsync(requestId, ActivePair.EURUSD, TimeFrame.Min5);
+  var streamMin5 = await client.SubscribeRealtimeDataAsync(requestId, ActivePair.EURUSD, TimeFrame.Min5);
 
   streamMin5.Merge(streamMin1)
       .Subscribe(candleInfo => {
@@ -98,6 +104,35 @@ if(await client.ConnectAsync()){
   // Remove assinatura do par, e não irá mais receber dados em tempo real para impressão min5 no console
   requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // Novo
   await api.UnSubscribeRealtimeData(requestId, ActivePair.EURUSD, TimeFrame.Min5);
+
+  // Pega a lista de todos os alertas definidos
+  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+  var alerts = await client.GetAlerts(requestId);
+  _logger.Information(JsonConvert.SerializeObject(alerts))
+
+  // Cria Alerta
+  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+  ActivePair activeId = ActivePair.EURAUD;
+  InstrumentType instrumentType = InstrumentType.DigitalOption;
+  double value = 200.10;
+  int activations = 0; // 1 - For one time OR 2 - For all time
+  var alertCreated = await client.CreateAlert(requestId
+
+  // Altera alerta pelo ID
+  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+  long alertId = alertCreated.Id; // Get id alert created this sample
+  ActivePair newActiveId = ActivePair.EURAUD;
+  InstrumentType newInstrumentType = InstrumentType.DigitalOption;
+  double newValue = 300.51;
+  int newActivations = 0; // 1 - For one time OR 2 - For all time
+  var alertUpdated = await client.UpdateAlert(requestId, alertId, newActiveId, newInstrumentType, newValue, newActivations);
+  _logger.Information(JsonConvert.SerializeObject(alertUpdated));
+
+  // Deletar Alerta
+  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+  alertId = alertCreated.Id; // Get id alert created this sample
+  var alertDelete = await client.DeleteAlert(requestId, alertId);
+  _logger.Information(JsonConvert.SerializeObject(alertDelete));
 
 }
 

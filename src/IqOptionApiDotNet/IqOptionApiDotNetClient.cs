@@ -76,8 +76,13 @@ namespace IqOptionApiDotNet
             var result = await HttpClient.GetProfileAsync(requestId);
             return result.Result;
         }
-		
-		public Task<UserProfileClientResult> GetUserProfileClientAsync(string requestId, long userid)
+
+        public async void ResetTrainingBalanceAsync(string requestId)
+        {
+            await WsClient?.ResetTrainingBalanceAsync(requestId);
+        }
+
+        public Task<UserProfileClientResult> GetUserProfileClientAsync(string requestId, long userid)
         {
             return WsClient?.GetUserProfileClientAsync(requestId, userid);
         }
@@ -96,8 +101,38 @@ namespace IqOptionApiDotNet
         {
             return WsClient?.GetUsersAvailabilityRequest(requestId, userId);
         }
-		
-		public Task<FinancialInformationResult> GetFinancialInformationAsync(string requestId, ActivePair pair)
+
+
+        public Task<Alerts> GetAlerts(string requestId, ActivePair activeId = ActivePair.ALL, string type = "")
+        {
+            return WsClient?.GetAlertsRequest(requestId, activeId, type);
+        }
+
+        /// <summary>
+        /// The main <c>CreateAlert()</c> class.
+        /// </summary>
+        /// <param name="requestId">template</param>
+        /// <param name="activeId">template</param>
+        /// <param name="instrumentType">template</param>
+        /// <param name="type">template</param>
+        /// <param name="value">template</param>
+        /// <param name="activations">template</param>
+        public Task<Alert> CreateAlert(string requestId, ActivePair activeId,InstrumentType instrumentType, double value, int activations, string type = "price")
+        {
+            return WsClient?.CreateAlertRequest(requestId, activeId, instrumentType, type, value, activations);
+        }
+
+        public Task<Alert> UpdateAlert(string requestId, long id, ActivePair activeId, InstrumentType instrumentType, double value, int activations, string type = "price")
+        {
+            return WsClient?.UpdateAlertRequest(requestId, id, activeId, instrumentType, type, value, activations);
+        }
+
+        public Task<Alert> DeleteAlert(string requestId, long id)
+        {
+            return WsClient?.DeleteAlertRequest(requestId, id);
+        }
+
+        public Task<FinancialInformationResult> GetFinancialInformationAsync(string requestId, ActivePair pair)
         {
             return WsClient?.GetFinancialInformationRequest(requestId, pair);
         }
@@ -195,6 +230,14 @@ namespace IqOptionApiDotNet
             //subscribe for instrument updated
             WsClient.InstrumentResultSetObservable
                 .Subscribe(x => Instruments = x);
+
+            string requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+            //subscribe for Alerts Changed
+            WsClient.SubscribeAlertChangedChanged(requestId);
+
+            //subscribe for Alerts Triggered
+            requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+            WsClient.SubscribeAlertTriggeredChanged(requestId);
         }
 
         #region [Privates]
@@ -233,6 +276,8 @@ namespace IqOptionApiDotNet
         public IObservable<bool> ConnectedObservable => connectedSubject.AsObservable();
         public IObservable<BinaryOptionsResult> BuyResultObservable => WsClient?.BinaryOptionPlacedResultObservable;
         public IObservable<BalanceChanged> BalanceChangedObservable => WsClient?.BalanceChangedObservable;
+        public IObservable<AlertChanged> AlertChangedObservable => WsClient?.AlertChangedResultObservable;
+        public IObservable<AlertTriggered> AlertTriggeredObservable => WsClient?.AlertTriggeredResultObservable;
 
         #endregion
     }

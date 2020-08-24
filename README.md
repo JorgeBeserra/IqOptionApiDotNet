@@ -1,3 +1,4 @@
+
 <img src="https://github.com/JorgeBeserra/IqOptionApiDotNet/blob/master/img/logoapi.png" width="64" align="left" />
 
 # IqOptionApiDotNet
@@ -11,6 +12,8 @@
 IqOption Api Dot Net to connect to www.iqoption.com (unofficial). 
 
 # Package Installation
+
+Please be sure to install using the NUGET Package Manager
 
 ```javascript
 PM> Install-Package IqOptionApiDotNet
@@ -26,18 +29,24 @@ This api using websocket to communicate realtime-data to IqOption server through
 - support open Long/Short for CFD contract (Digital Options)
 
 # Last Features
+- Reset Balance Practice
+- Alerts (List, Create, Delete, Update)
+
+# Features
 - Requirement to define the request identifier to improve returns.
+- Reset Balance Practice
 - Get Financial Information
 - Get User Profile by User Id
 - Get Users Availabilty by  USer Id
 - Get Leaderboard (TOP TRADERS)
 - Get Leaderboard Details bu User Id
-
+- Reset Balance Practice
+- Alerts (List, Create, Delete, Update, ObservableChanged and ObservableTriggered)
 
 # How to use
 
 ```csharp
-var client = new IqOptionApiDotNetClient("emailaddress", "password");
+var client = new IqOptionApiDotNetClient("emailIqOption", "passwordIqOption");
 
 string requestId; // this is new
 
@@ -47,6 +56,10 @@ if(await client.ConnectAsync()){
   //get user profile
   requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // New
   var profile = await client.GetProfileAsync(requestId);
+  
+  // Reset Training Balance
+  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+  client.ResetTrainingBalanceAsync(requestId);
   
   //Get Profile from User ID.
   requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // New
@@ -96,6 +109,36 @@ if(await client.ConnectAsync()){
   requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
   await api.UnSubscribeRealtimeData(requestId, ActivePair.EURUSD, TimeFrame.Min5);
 
+  // Get list Alerts
+  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+  var alerts = await IqClientApiDotNet.GetAlerts(requestId);
+  _logger.Information(JsonConvert.SerializeObject(alerts))
+
+  // Create Alert
+  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+  ActivePair activeId = ActivePair.EURAUD;
+  InstrumentType instrumentType = InstrumentType.DigitalOption;
+  double value = 200.10;
+  int activations = 0; // 1 - For one time OR 2 - For all time
+  var alertCreated = await client.CreateAlert(requestId
+
+  // Update Alert
+  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+  long alertId = alertCreated.Id; // Get id alert created this sample
+  ActivePair newActiveId = ActivePair.EURAUD;
+  InstrumentType newInstrumentType = InstrumentType.DigitalOption;
+  double newValue = 300.51;
+  int newActivations = 0; // 1 - For one time OR 2 - For all time
+  var alertUpdated = await client.UpdateAlert(requestId, alertId, newActiveId, newInstrumentType, newValue, newActivations);
+  _logger.Information(JsonConvert.SerializeObject(alertUpdated));
+
+  // Delete Alert
+  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+  alertId = alertCreated.Id; // Get id alert created this sample
+  var alertDelete = await client.DeleteAlert(requestId, alertId);
+  _logger.Information(JsonConvert.SerializeObject(alertDelete));
+
+  
 }
 ```
 
@@ -149,7 +192,7 @@ finally {
 ## TradersMood
 
 To check traders mood on specific Instrument/ActivePair
-![Alt text](img/TraderMoodChanged_Portal.png)
+![Print Trader Mood](img/TraderMoodChanged_Portal.png)
 
 ```csharp
 var api = new IqOptionApiDotNetClient("email@email.com", "passcode");
@@ -190,7 +233,7 @@ finally {
 }
 ```
 
-![Alt text](img/TraderMoodChanged.png)
+![PrintCopyTrader](img/TraderMoodChanged.png)
 
 ### Copy Trade
 
@@ -211,5 +254,5 @@ now using ReactiveUI way for subscribe the changing of model following this
 # Support Me
 
 If you've got value from any of the content which I have created, but pull requests are not your thing, then I would also very much appreciate your support by buying me a coffee.<br>
-<a href="https://buymeacoffee.com/jorgesouza" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/black_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a> Jorge Souza<br>
+<a href="https://buymeacoffee.com/jorgesouza" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/black_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a> Jorge Beserra (Este Repositorio)<br>
 <a href="https://www.buymeacoffee.com/6VF3XHb" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/black_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a> MongkonEiadon (Developer from Repository base) 
