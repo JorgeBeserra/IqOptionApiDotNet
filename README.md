@@ -30,7 +30,7 @@ This api using websocket to communicate realtime-data to IqOption server through
 
 # Last Features
 - Reset Balance Practice
-- Alerts (List, Create, Delete, Update)
+- Alerts (List, Create, Delete, Update, ObservableChanged and ObservableTriggered)
 
 # Features
 - Requirement to define the request identifier to improve returns.
