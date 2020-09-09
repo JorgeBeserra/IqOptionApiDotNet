@@ -44,7 +44,7 @@ To resolve bugs in WebSocket updates dependences
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.7" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.8" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.1.7" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.7" />
     <PackageReference Include="WebSocketSharp.Standard" Version="1.0.3" />
