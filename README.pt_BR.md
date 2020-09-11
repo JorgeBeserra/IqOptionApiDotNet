@@ -172,7 +172,7 @@ try {
         //EUR / USD de ordem aberta no menor período (1min)
         requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // Novo
         var exp = DateTime.Now.AddMinutes(1);
-        await api.BuyAsync(requestId, ActivePair.EURUSD, 1, OrderDirection.Call, exp);
+        await api.BuyAsync(requestId, ActivePair.EURUSD, (decimal)1.5, OrderDirection.Call, exp);
     }
 }
 catch (Exception ex) {
