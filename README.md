@@ -29,8 +29,7 @@ This api using websocket to communicate realtime-data to IqOption server through
 - support open Long/Short for CFD contract (Digital Options)
 
 # Last Features
-- Reset Balance Practice
-- Alerts (List, Create, Delete, Update, ObservableChanged and ObservableTriggered)
+- Get Top Assets
 
 # Features
 - Requirement to define the request identifier to improve returns.
@@ -87,7 +86,7 @@ if(await client.ConnectAsync()){
   // open order EurUsd in smallest period (1min)
   requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // New
   var exp = DateTime.Now.AddMinutes(1);
-  var buyResult = await api.BuyAsync(requestId, ActivePair.EURUSD, 1, OrderDirection.Call, exp);
+  var buyResult = await api.BuyAsync(requestId, ActivePair.EURUSD, (decimal)1.5, OrderDirection.Call, exp);
 
   // get candles data
   requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // New
