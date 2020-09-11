@@ -8,6 +8,8 @@ namespace IqOptionApiDotNet.Ws.Base
         public const string Heartbeat = "heartbeat";
         public const string SendMessage = "sendMessage";
         public const string TimeSync = "timeSync";
+        public const string TopAssets = "top-assets";
+        public const string TopAssetsUpdated = "top-assets-updated";
         public const string OptionOpened = "option-opened";
         public const string OptionClosed = "option-closed";
         public const string OptionArchived = "option-archived";

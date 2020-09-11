@@ -22,7 +22,7 @@ namespace IqOptionApiDotNet.Ws
         public Task<BinaryOptionsResult> BuyAsync(
             string requestId,
             ActivePair pair,
-            int size,
+            decimal size,
             OrderDirection direction,
             DateTimeOffset expiration)
         {

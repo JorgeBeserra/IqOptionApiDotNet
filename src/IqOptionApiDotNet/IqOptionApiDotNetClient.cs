@@ -87,6 +87,11 @@ namespace IqOptionApiDotNet
             return WsClient?.GetUserProfileClientAsync(requestId, userid);
         }
 
+        public Task<TopAssets> GetTopAssetsAsync(string requestId, InstrumentType instrumentType)
+        {
+            return WsClient?.GetTopAssetsAsync(requestId, instrumentType);
+        }
+
         public Task<LeaderBoardDealsClientResult> RequestLeaderboardDealsClientAsync(string requestId, CountryType countryId,  long fromPosition, long toPosition, CountryType userCountryId = CountryType.BR, long nearTradersCountryCount = 0, long nearTradersCount = 0, long topCountryCount = 0, long topCount = 0, long topType = 2)
         {
             return WsClient?.LeaderBoardDealsClientRequest(requestId, countryId, userCountryId, fromPosition, toPosition, nearTradersCountryCount, nearTradersCount, topCountryCount, topCount, topType);
@@ -151,7 +156,7 @@ namespace IqOptionApiDotNet
             return true;
         }
 
-        public Task<BinaryOptionsResult> BuyAsync(string requestId, ActivePair pair, int size, OrderDirection direction,
+        public Task<BinaryOptionsResult> BuyAsync(string requestId, ActivePair pair, decimal size, OrderDirection direction,
             DateTimeOffset expiration)
         {
             return WsClient?.BuyAsync(requestId, pair, size, direction, expiration);
@@ -198,6 +203,10 @@ namespace IqOptionApiDotNet
         /// <inheritdoc/>
         public Task<DigitalOptionsPlacedResult> PlaceDigitalOptions(string requestId, string instrumentId, double amount)
             => WsClient?.PlaceDigitalOptions(requestId, instrumentId, amount);
+
+        /// <inheritdoc/>
+        public void SubscribeTopAssetsUpdated(string requestId, InstrumentType instrumentType)
+            => WsClient?.SubscribeTopAssetsUpdated(requestId, instrumentType);
 
         /// <inheritdoc/>
         public void SubscribeLiveDeal(string requestId, String message, ActivePair pair, DigitalOptionsExpiryType duration)

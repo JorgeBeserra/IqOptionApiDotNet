@@ -14,7 +14,7 @@ namespace IqOptionApiDotNet.Ws.Request
     internal class BuyV2RequestModel
     {
         [JsonProperty("price", Required = Required.Always)]
-        public long Price { get; set; }
+        public decimal Price { get; set; }
 
         [JsonProperty("active_id", Required = Required.Always)]
         public ActivePair ActivePair { get; set; }
@@ -48,7 +48,7 @@ namespace IqOptionApiDotNet.Ws.Request
             OptionType optionType,
             OrderDirection direction,
             DateTimeOffset expiration,
-            int price)
+            decimal price)
         {
             Message = new RequestBody<BuyV2RequestModel>
             {

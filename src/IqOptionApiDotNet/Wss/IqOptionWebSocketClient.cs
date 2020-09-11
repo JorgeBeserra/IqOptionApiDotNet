@@ -37,6 +37,7 @@ using IqOptionApiDotNet.Ws.Request;
         private readonly AsyncLock _asyncLock = new AsyncLock();
 
         private string _requestCounter;
+        //private long _requestCounter = 0;
         /// <summary>
         /// Commit the message with Fire-And-Forgot style
         /// </summary>
@@ -46,6 +47,7 @@ using IqOptionApiDotNet.Ws.Request;
         {
             using (await _asyncLock.WaitAsync(CancellationToken.None).ConfigureAwait(false))
             {
+                //_requestCounter = _requestCounter + 1;
                 _requestCounter = requestId;
                 var payload = messageCreator.CreateIqOptionMessage($"{requestPrefix}{_requestCounter}");
                 WebSocketClient.Send(payload);

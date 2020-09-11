@@ -23,14 +23,15 @@ namespace IqOptionApiDotNet.Samples
                 //Task.Run(() => new CopyTradeSample().RunSample());
                 //Task.Run(() => new GetFinancialInformationSample().RunSample());
                 //Task.Run(() => new GetProfileSample().RunSample());
-                //Task.Run(() => new ResetTrainingBalanceSample().RunSample());
                 //Task.Run(() => new GetCandlesSample().RunSample());
+                //Task.Run(() => new GetTopAssetsSample().RunSample());
                 //Task.Run(() => new GetUserProfileClientSample().RunSample());
                 //Task.Run(() => new GetUsersAvailabilitySample().RunSample());
                 //Task.Run(() => new OpenBinaryOptionsSample().RunSample());
                 //Task.Run(() => new PlaceDigitalOptionSample().RunSample());
                 //Task.Run(() => new RequestLeaderboardDealsClientSample().RunSample());
                 //Task.Run(() => new RequestLeaderboardUserinfoDealsClientSample().RunSample());
+                //Task.Run(() => new ResetTrainingBalanceSample().RunSample());
                 //Task.Run(() => new SubscribeLiveDealSample().RunSample());
                 //Task.Run(() => new SubscribeRealtimeCandlesSample().RunSample());
                 //Task.Run(() => new SubscribeTradersMoodSample().RunSample());

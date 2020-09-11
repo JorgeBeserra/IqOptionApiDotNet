@@ -15,9 +15,8 @@ namespace IqOptionApiDotNet.Samples.SampleRunners
                 {
                     await Task.Delay(5000);
                     requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
-                    var result = await IqClientApiDotNet.BuyAsync(requestId, ActivePair.EURUSD_OTC, 1, OrderDirection.Call,
+                    var result = await IqClientApiDotNet.BuyAsync(requestId, ActivePair.EURUSD_OTC, (decimal)1.5, OrderDirection.Call,
                         DateTimeOffset.Now);
-
                     Console.WriteLine($"PositionId = {result.PositionId}");
                 }
             }

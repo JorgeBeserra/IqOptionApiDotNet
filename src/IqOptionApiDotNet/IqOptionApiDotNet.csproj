@@ -18,19 +18,17 @@ based in Iqoption Api for DOTNET - https://github.com/MongkonEiadon/Iqoption.Net
     <RepositoryUrl>https://github.com/JorgeBeserra/IqOptionApiDotNet</RepositoryUrl>
     <PackageProjectUrl>https://github.com/JorgeBeserra/IqOptionApiDotNet</PackageProjectUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <PackageReleaseNotes>News
-- ResetPracticeBalance
-- Alerts (List, Create, Delete, Update, ObservableChanged and ObservableTriggered )
-
-To resolve bugs in WebSocket updates dependences
-</PackageReleaseNotes>
+    <PackageReleaseNotes>Changes
+- BuyAsync (Change size from int to decimal and work to currencies)
+News
+- Get Top Assets</PackageReleaseNotes>
     <NoWarn>1701;1702;1705;1591</NoWarn>
     <RootNamespace>IqOptionApiDotNet</RootNamespace>
     <AssemblyName>IqOptionApiDotNet</AssemblyName>
     <PackageId>IqOptionApiDotNet</PackageId>
-    <AssemblyVersion>1.0.0.8</AssemblyVersion>
-    <FileVersion>1.0.0.8</FileVersion>
-    <Version>1.0.8</Version>
+    <AssemblyVersion>1.0.0.9</AssemblyVersion>
+    <FileVersion>1.0.0.9</FileVersion>
+    <Version>1.0.9</Version>
     <ApplicationIcon>logoapi.ico</ApplicationIcon>
 	<PackageIcon>LogoApi128x128.png</PackageIcon>
   </PropertyGroup>

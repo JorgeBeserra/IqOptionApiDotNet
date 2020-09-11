@@ -11,7 +11,7 @@ namespace IqOptionApiDotNet.Models.BinaryOptions
         
         [JsonProperty("refund_value")] public long RefundValue { get; set; }
         
-        [JsonProperty("price")] public long Amount { get; set; }
+        [JsonProperty("price")] public decimal Amount { get; set; }
         
         [JsonProperty("exp")]
         [JsonConverter(typeof(UnixSecondsDateTimeJsonConverter))]
