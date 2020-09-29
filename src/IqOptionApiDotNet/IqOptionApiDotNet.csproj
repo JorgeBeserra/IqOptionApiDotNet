@@ -48,7 +48,7 @@ News
     <PackageReference Include="WebSocketSharp.Standard" Version="1.0.3" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="System.Reactive" Version="4.4.1" />
-    <PackageReference Include="Restsharp" Version="106.11.4" />
+    <PackageReference Include="Restsharp" Version="106.11.5" />
   </ItemGroup>
   
   <ItemGroup>
