@@ -45,8 +45,9 @@ namespace IqOptionApiDotNet
                     {
                         if (t.Result != null && t.Result.IsSuccessful)
                         {
-                            _logger.LogInformation($"{Username} logged in success!");
 
+                            _logger.LogInformation($"{Username} logged in success!");
+                            
                             if (WsClient != null) WsClient.Dispose();
                             WsClient = new IqOptionWebSocketClient(t.Result.Data.Ssid);
 

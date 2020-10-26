@@ -19,10 +19,10 @@ namespace IqOptionApiDotNet.Samples
                 // Uncomment the lines below to run the examples
 
                 //Task.Run(() => new AlertsSample().RunSample());
-                Task.Run(() => new ChangeBalanceSample().RunSample());
+                //Task.Run(() => new ChangeBalanceSample().RunSample());
                 //Task.Run(() => new CopyTradeSample().RunSample());
                 //Task.Run(() => new GetFinancialInformationSample().RunSample());
-                //Task.Run(() => new GetProfileSample().RunSample());
+                Task.Run(() => new GetProfileSample().RunSample());
                 //Task.Run(() => new GetCandlesSample().RunSample());
                 //Task.Run(() => new GetTopAssetsSample().RunSample());
                 //Task.Run(() => new GetUserProfileClientSample().RunSample());

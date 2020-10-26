@@ -27,7 +27,7 @@ namespace IqOptionApiDotNet.Samples.SampleRunners
                     await Task.Delay(TimeSpan.FromSeconds(10));
                     requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
                     var position = await IqClientApi.PlaceDigitalOptions(requestId, ActivePair.EURUSD,
-                        OrderDirection.Call, DigitalOptionsExpiryDuration.M1, 1);
+                        OrderDirection.Call, DigitalOptionsExpiryDuration.M1, 1.5);
 
                     Console.WriteLine($"Placed position Id: {position.Id}");
                 }

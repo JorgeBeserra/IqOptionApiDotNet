@@ -61,6 +61,7 @@ namespace IqOptionApiDotNet.Http
 
     public class SsidResultMessage : IHttpResultMessage
     {
+        [JsonProperty("code")] public string Code { get; set; }
         [JsonProperty("ssid")] public string Ssid { get; set; }
     }
 }

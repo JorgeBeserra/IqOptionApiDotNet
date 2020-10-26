@@ -7,7 +7,7 @@ namespace IqOptionApiDotNet.Http
     {
         public LoginV2Request(LoginModel loginModel) : base("login", Method.POST)
         {
-            AddParameter("email", loginModel.Email);
+            AddParameter("identifier", loginModel.Email);
             AddParameter("password", loginModel.Password);
         }
     }

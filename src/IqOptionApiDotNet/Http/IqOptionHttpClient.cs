@@ -58,28 +58,37 @@ namespace IqOptionApiDotNet.Http
             var tcs = new TaskCompletionSource<IqHttpResult<SsidResultMessage>>();
             try
             {
-                var client = new RestClient("https://auth.iqoption.com/api/v1.0/login");
-                var request = new RestRequest(Method.POST) {RequestFormat = DataFormat.Json}
-                    .AddHeader("Content-Type", "application/x-www-form-urlencoded")
-                    .AddHeader("content-type", "multipart/form-data")
+                var body = new
+                {
+                    identifier = LoginModel.Email,
+                    password = LoginModel.Password
+                };
+
+                var client = new RestClient("https://auth.iqoption.com/api/v2/login");
+                var request = new RestRequest(Method.POST) { RequestFormat = DataFormat.Json }
+                    .AddHeader("content-type", "application/json")
                     .AddHeader("Accept", "application/json")
-                    .AddParameter("email", LoginModel.Email, ParameterType.QueryString)
-                    .AddParameter("password", LoginModel.Password, ParameterType.QueryString);
+                    .AddJsonBody(body);               
 
                 client.ExecuteAsync(request)
                     .ContinueWith(t =>
                     {
+                        
                         switch (t.Result.StatusCode)
                         {
                             case HttpStatusCode.OK:
                             {
+
+                                var resultSsid = t.Result.Content.JsonAs<SsidResultMessage>();
                                 var result = t.Result.Content.JsonAs<IqHttpResult<SsidResultMessage>>();
-                                result.IsSuccessful = true;
-                                SecuredToken = result.Data;
+
+                                result.Data = t.Result.Content.JsonAs<SsidResultMessage>();
+                                SecuredToken = resultSsid;
+                                
 
                                 Client.CookieContainer = new CookieContainer();
                                 Client.CookieContainer.Add(new Cookie("ssid", SecuredToken.Ssid, "/", "iqoption.com"));
-
+                                result.IsSuccessful = true;
                                 tcs.TrySetResult(result);
                                 break;
                             }
