@@ -32,7 +32,7 @@ namespace IqOptionApiDotNet
         Task<BinaryOptionsResult> BuyAsync(string requestId, ActivePair pair, Decimal size, OrderDirection direction, DateTimeOffset expiration);
         Task<CandleCollections> GetCandlesAsync(string requestId, ActivePair pair, TimeFrame tf, int count, DateTimeOffset to);
         Task<InitializationData> GetInitializationData(string requestId);
-        Task<double> GetProfitAsync(string requestId, InstrumentType instrument, ActivePair pair);
+        Task<double> GetProfitAsync(string requestId, OptionType option, ActivePair pair);
         Task<IObservable<CurrentCandle>> SubscribeRealtimeQuoteAsync(string requestId, ActivePair pair, TimeFrame tf);
 
         Task UnSubscribeRealtimeData(string requestId, ActivePair pair, TimeFrame tf);

@@ -175,21 +175,17 @@ namespace IqOptionApiDotNet
             return WsClient?.GetInitializationDataAsync(requestId);
         }
 
-        public async Task<double> GetProfitAsync(string requestId, InstrumentType instrument, ActivePair pair)
+        public async Task<double> GetProfitAsync(string requestId, OptionType option, ActivePair pair)
         {
-            if (instrument == InstrumentType.BinaryOption ||
-                instrument == InstrumentType.TurboOption)
-            {
-                var initializationData = await GetInitializationData(requestId);
-                var instrumentData = (instrument == InstrumentType.BinaryOption)
-                    ? initializationData.BinaryOption
-                    : initializationData.TurboOption;
+            var initializationData = await GetInitializationData(requestId);
+            var instrumentData = (option == OptionType.Binary)
+                ? initializationData.BinaryOption
+                : initializationData.TurboOption;
 
-                if (instrumentData.Actives.ContainsKey(pair))
-                {
-                    return (100 - instrumentData.Actives[pair].Option.Profit.Commission) / 100;
-                }
-            }
+            if (instrumentData.Actives.ContainsKey(pair))
+            {
+                return (100 - instrumentData.Actives[pair].Option.Profit.Commission) / 100;
+            }            
             return -1;
         }
 
