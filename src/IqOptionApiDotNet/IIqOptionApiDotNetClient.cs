@@ -23,6 +23,7 @@ namespace IqOptionApiDotNet
         Task<Alert> CreateAlert(string requestId, ActivePair activeId, InstrumentType instrumentType, double value, int activations, string type = "price");
         Task<Alert> UpdateAlert(string requestId, long id, ActivePair activeId, InstrumentType instrumentType, double value, int activations, string type = "price");
         Task<Alert> DeleteAlert(string requestId, long id);
+        Task<ExposureResult> GetExposureAsync(string requestId, InstrumentType instrumentType, ActivePair activeId, CurrencyCode currency, DateTimeOffset time);
         Task<UserProfileClientResult> GetUserProfileClientAsync(string requestId, long userId);
         Task<LeaderBoardDealsClientResult> RequestLeaderboardDealsClientAsync(string requestId, CountryType countryId, long fromPosition, long toPosition, CountryType userCountryId, long nearTradersCountryCount, long nearTradersCount, long topCountryCount, long topCount, long topType);
         Task<LeaderBoardUserinfoDealsClientMessageResult> RequestLeaderboardUserinfoDealsClientAsync(string requestId, CountryType[] countryId, int userId);

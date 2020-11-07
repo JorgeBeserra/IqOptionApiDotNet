@@ -25,6 +25,7 @@ namespace IqOptionApiDotNet.Ws.Base
         public const string BalanceChanged = "balance-changed";
         public const string Candles = "candles";
         public const string Quotes = "candle-generated";
+        public const string Exposure = "active-exposure";
         public const string PlacedDigitalOptions = "digital-option-placed";
         public const string PlacedBinaryOptions = "option";
         public const string LiveDealDigitalOption = "live-deal-digital-option";

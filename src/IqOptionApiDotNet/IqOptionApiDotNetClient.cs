@@ -108,6 +108,10 @@ namespace IqOptionApiDotNet
             return WsClient?.GetUsersAvailabilityRequest(requestId, userId);
         }
 
+        public Task<ExposureResult> GetExposureAsync(string requestId, InstrumentType instrumentType, ActivePair activeId, CurrencyCode currency, DateTimeOffset time)
+        {
+            return WsClient?.GetExposureAsync(requestId, instrumentType, activeId, currency, time);
+        }
 
         public Task<Alerts> GetAlerts(string requestId, ActivePair activeId = ActivePair.ALL, string type = "")
         {
