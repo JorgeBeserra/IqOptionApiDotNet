@@ -170,6 +170,29 @@ namespace IqOptionApiDotNet
             return WsClient?.GetCandlesAsync(requestId, pair, timeFrame, count, to);
         }
 
+        public Task<InitializationData> GetInitializationData(string requestId)
+        {
+            return WsClient?.GetInitializationDataAsync(requestId);
+        }
+
+        public async Task<double> GetProfitAsync(string requestId, InstrumentType instrument, ActivePair pair)
+        {
+            if (instrument == InstrumentType.BinaryOption ||
+                instrument == InstrumentType.TurboOption)
+            {
+                var initializationData = await GetInitializationData(requestId);
+                var instrumentData = (instrument == InstrumentType.BinaryOption)
+                    ? initializationData.BinaryOption
+                    : initializationData.TurboOption;
+
+                if (instrumentData.Actives.ContainsKey(pair))
+                {
+                    return (100 - instrumentData.Actives[pair].Option.Profit.Commission) / 100;
+                }
+            }
+            return -1;
+        }
+
         public Task<IObservable<CurrentCandle>> SubscribeRealtimeQuoteAsync(string requestId, ActivePair pair, TimeFrame tf)
         {
             WsClient?.SubscribeQuoteAsync(requestId, pair, tf).ConfigureAwait(false);

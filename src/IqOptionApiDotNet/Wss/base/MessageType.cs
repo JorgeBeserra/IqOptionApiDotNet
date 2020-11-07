@@ -3,6 +3,7 @@ namespace IqOptionApiDotNet.Ws.Base
     public struct MessageType
     {
         public const string Front = "front";
+        public const string InitializationData = "initialization-data";
         public const string Profile = "profile";
         public const string ProfileChanged = "profile-changed";
         public const string Heartbeat = "heartbeat";
