@@ -22,6 +22,7 @@ namespace IqOptionApiDotNet.Ws.Base
         public const string UserTournamentPositionChanged = "user-tournament-position-changed";
         public const string Getinstruments = "get-instruments";
         public const string Ssid = "ssid";
+        public const string Balances = "balances";
         public const string BalanceChanged = "balance-changed";
         public const string Candles = "candles";
         public const string Quotes = "candle-generated";
