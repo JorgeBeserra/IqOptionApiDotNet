@@ -44,6 +44,8 @@ namespace IqOptionApiDotNet.Ws.Request
 
         public const string RequestLeaderboardUserinfoDealsClient = "request-leaderboard-userinfo-deals-client";
 
+        public const string GetBalances = "get-balances";
+
         public const string ResetTrainingBalance = "reset-training-balance";
 
         public const string GetAlerts = "get-alerts";

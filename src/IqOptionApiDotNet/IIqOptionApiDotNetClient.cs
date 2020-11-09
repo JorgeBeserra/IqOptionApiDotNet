@@ -1,4 +1,5 @@
 ﻿﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using IqOptionApiDotNet.Http;
 using IqOptionApiDotNet.Models;
@@ -28,6 +29,7 @@ namespace IqOptionApiDotNet
         Task<LeaderBoardUserinfoDealsClientMessageResult> RequestLeaderboardUserinfoDealsClientAsync(string requestId, CountryType[] countryId, int userId);
         Task<UsersAvailabilityResult> GetUsersAvailabilityAsync(string requestId, long[] userId);
 		Task<FinancialInformationResult> GetFinancialInformationAsync(string requestId, ActivePair pair);
+        Task<IEnumerable<Balance>> GetBalancesAsync(string requestId, IEnumerable<BalanceType> types);
         Task<bool> ChangeBalanceAsync(string requestId, long balanceId);
         Task<BinaryOptionsResult> BuyAsync(string requestId, ActivePair pair, Decimal size, OrderDirection direction, DateTimeOffset expiration);
         Task<CandleCollections> GetCandlesAsync(string requestId, ActivePair pair, TimeFrame tf, int count, DateTimeOffset to);

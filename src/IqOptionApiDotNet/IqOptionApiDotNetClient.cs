@@ -143,6 +143,11 @@ namespace IqOptionApiDotNet
             return WsClient?.GetFinancialInformationRequest(requestId, pair);
         }
 
+        public Task<IEnumerable<Balance>> GetBalancesAsync(string requestId, IEnumerable<BalanceType> types)
+        {
+            return WsClient?.GetBalancesAsync(requestId, types);
+        }
+
         public async Task<bool> ChangeBalanceAsync(string requestId, long balanceId)
         {
             var result = await HttpClient.ChangeBalanceAsync(balanceId);
