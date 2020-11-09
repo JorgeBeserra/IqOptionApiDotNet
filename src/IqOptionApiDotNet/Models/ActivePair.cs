@@ -26,7 +26,7 @@ namespace IqOptionApiDotNet.Models
         NK = 70,
         SP = 71,
         BTCX = 73,
-        
+
         [EnumMember(Value = "EURUSD-OTC")] EURUSD_OTC = 76,
         [EnumMember(Value = "EURGBP-OTC")] EURGBP_OTC = 77,
         [EnumMember(Value = "USDCHF-OTC")] USDCHF_OTC = 78,
@@ -43,7 +43,7 @@ namespace IqOptionApiDotNet.Models
 
         PAN = 97,
 
-        
+
         [EnumMember(Value = "GBPCHF")] GBPCHF = 103,
         [EnumMember(Value = "GBPAUD")] GBPAUD = 104,
 
@@ -122,6 +122,7 @@ namespace IqOptionApiDotNet.Models
         [EnumMember(Value = "AUDNZD")] AUDNZD = 944,
         [EnumMember(Value = "CADJPY")] CADJPY = 945,
         [EnumMember(Value = "EURCHF")] EURCHF = 946,
+        [EnumMember(Value = "GBPNZD")] GBPNZD = 947,
         [EnumMember(Value = "NZDCAD")] NZDCAD = 948,
         [EnumMember(Value = "NZDJPY")] NZDJPY = 949,
         [EnumMember(Value = "EURNOK")] EURNOK = 951,

@@ -147,6 +147,11 @@ namespace IqOptionApiDotNet
             return WsClient?.GetFinancialInformationRequest(requestId, pair);
         }
 
+        public Task<IEnumerable<Balance>> GetBalancesAsync(string requestId, IEnumerable<BalanceType> types)
+        {
+            return WsClient?.GetBalancesAsync(requestId, types);
+        }
+
         public async Task<bool> ChangeBalanceAsync(string requestId, long balanceId)
         {
             var result = await HttpClient.ChangeBalanceAsync(balanceId);
@@ -172,6 +177,25 @@ namespace IqOptionApiDotNet
             DateTimeOffset to)
         {
             return WsClient?.GetCandlesAsync(requestId, pair, timeFrame, count, to);
+        }
+
+        public Task<InitializationData> GetInitializationData(string requestId)
+        {
+            return WsClient?.GetInitializationDataAsync(requestId);
+        }
+
+        public async Task<double> GetProfitAsync(string requestId, OptionType option, ActivePair pair)
+        {
+            var initializationData = await GetInitializationData(requestId);
+            var instrumentData = (option == OptionType.Binary)
+                ? initializationData.BinaryOption
+                : initializationData.TurboOption;
+
+            if (instrumentData.Actives.ContainsKey(pair))
+            {
+                return (100 - instrumentData.Actives[pair].Option.Profit.Commission) / 100;
+            }            
+            return -1;
         }
 
         public Task<IObservable<CurrentCandle>> SubscribeRealtimeQuoteAsync(string requestId, ActivePair pair, TimeFrame tf)

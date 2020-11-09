@@ -37,12 +37,16 @@ namespace IqOptionApiDotNet.Ws.Request
         public const string GetTopAssets = "get-top-assets";
 
         public const string GetActiveExposure = "get-active-exposure";
+      
+        public const string GetInitializationData = "get-initialization-data";
 
         public const string TopAssetsUpdate = "top-assets-update";
 
         public const string RequestLeaderboardDealsClient = "request-leaderboard-deals-client";
 
         public const string RequestLeaderboardUserinfoDealsClient = "request-leaderboard-userinfo-deals-client";
+
+        public const string GetBalances = "get-balances";
 
         public const string ResetTrainingBalance = "reset-training-balance";
 
