@@ -24,6 +24,10 @@ namespace IqOptionApiDotNet.Converters.JsonConverters
                     return InstrumentType.CFD;
                 case "crypto":
                     return InstrumentType.Crypto;
+                case "turbo-option":
+                    return InstrumentType.TurboOption;
+                case "binary-option":
+                    return InstrumentType.BinaryOption;
                 default:
                     return InstrumentType.Unknown;
             }
@@ -42,6 +46,12 @@ namespace IqOptionApiDotNet.Converters.JsonConverters
                     break;
                 case InstrumentType.Crypto:
                     writer.WriteValue("crypto");
+                    break;
+                case InstrumentType.TurboOption:
+                    writer.WriteValue("turbo-option");
+                    break;
+                case InstrumentType.BinaryOption:
+                    writer.WriteValue("binary-option");
                     break;
                 default:
                     writer.WriteValue("");

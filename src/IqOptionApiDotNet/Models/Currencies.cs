@@ -2,9 +2,19 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
 using System.Globalization;
+using System.Runtime.Serialization;
 
 namespace IqOptionApiDotNet.Models
 {
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum CurrencyCode: int {
+        [EnumMember(Value="EUR")] EUR = 1,
+        [EnumMember(Value="GBP")] GBP = 2,
+        [EnumMember(Value="RUB")] RUB = 4,
+        [EnumMember(Value="USD")] USD = 5,
+        [EnumMember(Value="BRL")] BRL = 6,
+    }
+
     public partial class Currencies
     {
         [JsonProperty("currencies")]

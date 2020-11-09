@@ -36,6 +36,8 @@ namespace IqOptionApiDotNet.Ws.Request
 
         public const string GetTopAssets = "get-top-assets";
 
+        public const string GetActiveExposure = "get-active-exposure";
+      
         public const string GetInitializationData = "get-initialization-data";
 
         public const string TopAssetsUpdate = "top-assets-update";
