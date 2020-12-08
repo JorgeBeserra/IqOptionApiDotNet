@@ -6,7 +6,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.10.3" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
     <PackageReference Include="Microsoft.VisualStudio.SlowCheetah" Version="3.2.26" />
     <PackageReference Include="AutoFixture.AutoMoq" Version="4.14.0" />
     <PackageReference Include="Moq" Version="4.15.2" />
