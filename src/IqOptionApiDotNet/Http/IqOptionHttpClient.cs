@@ -76,9 +76,10 @@ namespace IqOptionApiDotNet.Http
                         
                         switch (t.Result.StatusCode)
                         {
+                            
                             case HttpStatusCode.OK:
                             {
-
+                                    
                                 var resultSsid = t.Result.Content.JsonAs<SsidResultMessage>();
                                 var result = t.Result.Content.JsonAs<IqHttpResult<SsidResultMessage>>();
 
@@ -97,7 +98,6 @@ namespace IqOptionApiDotNet.Http
                                 var error = t.Result.Content.JsonAs<IqHttpResult<SsidResultMessage>>();
                                 error.IsSuccessful = false;
                                 tcs.TrySetResult(error);
-
                                 break;
                             }
                         }

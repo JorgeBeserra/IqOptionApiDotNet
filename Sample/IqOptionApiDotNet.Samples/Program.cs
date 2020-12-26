@@ -14,7 +14,7 @@ namespace IqOptionApiDotNet.Samples
                 // Projects > IqOptionApiDotNet.Sampes Properties (Debug option)
                 // In Environment Variables, the following options
                 // IqOptionUserName:
-                // IqOptionPassord:
+                // IqOptionPassword:
 
                 // Uncomment the lines below to run the examples
 

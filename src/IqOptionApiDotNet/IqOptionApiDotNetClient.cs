@@ -58,7 +58,6 @@ namespace IqOptionApiDotNet
                             tcs.TrySetResult(true);
                             return;
                         }
-
                         _logger.LogInformation(
                             $"{Username} logged in failed due to {t.Result?.Errors?.GetErrorMessage()}");
                         tcs.TrySetResult(false);

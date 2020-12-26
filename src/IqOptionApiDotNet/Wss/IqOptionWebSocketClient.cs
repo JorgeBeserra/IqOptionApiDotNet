@@ -137,8 +137,8 @@ using IqOptionApiDotNet.Ws.Request;
         {
             string requestId;
 
-            WebSocketClient.SslConfiguration.EnabledSslProtocols = System.Security.Authentication.SslProtocols.Tls12;
             WebSocketClient = new WebSocket("wss://iqoption.com/echo/websocket");
+            WebSocketClient.SslConfiguration.EnabledSslProtocols = System.Security.Authentication.SslProtocols.Tls12;
             WebSocketClient.OnError += (sender, args) =>
             {
                 _logger.LogError($"WebSocket Error : {args.Message}");
