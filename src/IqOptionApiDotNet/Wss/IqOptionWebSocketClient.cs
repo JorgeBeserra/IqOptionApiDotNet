@@ -136,6 +136,8 @@ using IqOptionApiDotNet.Ws.Request;
         protected virtual void InitialSocket(string secureToken)
         {
             string requestId;
+
+            WebSocketClient.SslConfiguration.EnabledSslProtocols = System.Security.Authentication.SslProtocols.Tls12;
             WebSocketClient = new WebSocket("wss://iqoption.com/echo/websocket");
             WebSocketClient.OnError += (sender, args) =>
             {
