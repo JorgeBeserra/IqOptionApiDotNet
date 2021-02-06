@@ -1,8 +1,8 @@
-using System;
-using System.Threading.Tasks;
 using IqOptionApiDotNet.Models;
 using IqOptionApiDotNet.Models.BinaryOptions;
 using IqOptionApiDotNet.Ws.Request;
+using System;
+using System.Threading.Tasks;
 
 namespace IqOptionApiDotNet.Ws
 {
@@ -33,7 +33,7 @@ namespace IqOptionApiDotNet.Ws
 
             // incasse of non-binary options
             var optionType = OptionType.Turbo;
-            if (expiration.Subtract(ServerTime).Minutes >= 5)
+            if (expiration.Subtract(ServerTime).Minutes > 5)
                 optionType = OptionType.Binary;
 
             return SendMessageAsync(
