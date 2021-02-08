@@ -18,15 +18,15 @@ based in Iqoption Api for DOTNET - https://github.com/MongkonEiadon/Iqoption.Net
     <RepositoryUrl>https://github.com/JorgeBeserra/IqOptionApiDotNet</RepositoryUrl>
     <PackageProjectUrl>https://github.com/JorgeBeserra/IqOptionApiDotNet</PackageProjectUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <PackageReleaseNotes>Bug fix issue #54
-- Set SSL Protocol tls (Thanks @jeffersonmello)</PackageReleaseNotes>
+    <PackageReleaseNotes>Bug fix issue #62
+- Erro ao abrir operação binária de 5M nos segundos finais ao inicio da vela (Thanks @andreptcosta)</PackageReleaseNotes>
     <NoWarn>1701;1702;1705;1591</NoWarn>
     <RootNamespace>IqOptionApiDotNet</RootNamespace>
     <AssemblyName>IqOptionApiDotNet</AssemblyName>
     <PackageId>IqOptionApiDotNet</PackageId>
-    <AssemblyVersion>1.0.0.12</AssemblyVersion>
-    <FileVersion>1.0.0.12</FileVersion>
-    <Version>1.0.12</Version>
+    <AssemblyVersion>1.0.0.13</AssemblyVersion>
+    <FileVersion>1.0.0.13</FileVersion>
+    <Version>1.0.13</Version>
     <ApplicationIcon>logoapi.ico</ApplicationIcon>
 	<PackageIcon>LogoApi128x128.png</PackageIcon>
   </PropertyGroup>
