@@ -22,7 +22,8 @@ namespace IqOptionApiDotNet.Samples
                 //Task.Run(() => new ChangeBalanceSample().RunSample());
                 //Task.Run(() => new CopyTradeSample().RunSample());
                 //Task.Run(() => new GetFinancialInformationSample().RunSample());
-                Task.Run(() => new GetProfileSample().RunSample());
+                //Task.Run(() => new GetProfileSample().RunSample());
+                Task.Run(() => new GetInitializationDataSample().RunSample());
                 //Task.Run(() => new GetCandlesSample().RunSample());
                 //Task.Run(() => new GetTopAssetsSample().RunSample());
                 //Task.Run(() => new GetUserProfileClientSample().RunSample());
