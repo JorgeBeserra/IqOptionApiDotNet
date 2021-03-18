@@ -30,6 +30,10 @@ namespace IqOptionApiDotNet.Models
 
                 [JsonProperty("id")] public int Id { get; set; }
 
+                [JsonProperty("enabled")] public bool Enabled { get; set; }
+
+                [JsonProperty("is_suspended")] public bool IsSuspended { get; set; }
+
                 [JsonProperty("option")] public OptionData Option { get; set; }
 
             }
@@ -49,7 +53,7 @@ namespace IqOptionApiDotNet.Models
 
                 public override void WriteJson(JsonWriter writer, Dictionary<ActivePair, ActiveData> value, JsonSerializer serializer)
                 {
-                    throw new NotImplementedException();
+                    //throw new NotImplementedException();
                 }
 
             }
