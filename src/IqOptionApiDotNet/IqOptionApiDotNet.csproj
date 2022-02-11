@@ -46,7 +46,7 @@ based in Iqoption Api for DOTNET - https://github.com/MongkonEiadon/Iqoption.Net
     <PackageReference Include="WebSocketSharp.Standard" Version="1.0.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Reactive" Version="5.0.0" />
-    <PackageReference Include="Restsharp" Version="106.11.8-alpha.0.13" />
+    <PackageReference Include="Restsharp" Version="107.3.0" />
   </ItemGroup>
   
   <ItemGroup>
