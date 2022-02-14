@@ -68,7 +68,7 @@ using IqOptionApiDotNet.Ws.Request;
             IObservable<TResult> observableResult)
         {
             var tcs = new TaskCompletionSource<TResult>();
-            var token = new CancellationTokenSource(5000).Token;
+            var token = new CancellationTokenSource(60000).Token;
 
             try
             {
@@ -79,7 +79,7 @@ using IqOptionApiDotNet.Ws.Request;
                     {
                         _logger.LogWarning(string.Format(
                             "Wait result for type '{0}', took long times {1} seconds. The result will send back with default {0}\n{2}",
-                            typeof(TResult), 5000, messageCreator));
+                            typeof(TResult), 60000, messageCreator));
                     }
                 });
                 
