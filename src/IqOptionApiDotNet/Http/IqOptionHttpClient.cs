@@ -19,6 +19,7 @@ namespace IqOptionApiDotNet.Http
         public IqOptionHttpClient(string username, string password, string host = "iqoption.com")
         {
             Client = new RestClient(ApiEndPoint(host));
+
             LoginModel = new LoginModel {Email = username, Password = password};
 
             _logger = IqOptionApiLog.Logger;
@@ -26,7 +27,7 @@ namespace IqOptionApiDotNet.Http
 
         public LoginModel LoginModel { get; }
         public SsidResultMessage SecuredToken { get; private set; }
-        public IRestClient Client { get; }
+        public RestClient Client { get; }
 
         protected static Uri ApiEndPoint(string host)
         {
@@ -60,17 +61,22 @@ namespace IqOptionApiDotNet.Http
             {
                 var body = new
                 {
-                    identifier = LoginModel.Email,
-                    password = LoginModel.Password
+                    identifier = "jorgebeserrasouza@gmail.com",
+                    password = "js123@#$DINHEIRO"
                 };
 
                 var client = new RestClient("https://auth.iqoption.com/api/v2/login");
-                var request = new RestRequest(Method.POST) { RequestFormat = DataFormat.Json }
-                    .AddHeader("content-type", "application/json")
+                var request = new RestRequest() { RequestFormat = DataFormat.Json }
                     .AddHeader("Accept", "application/json")
+                    .AddHeader("Accept-Encoding", "gzip, deflate, br")
+                    .AddHeader("Accept-Language", "pt-BR,pt;q=0.8,en-US;q=0.5,en;q=0.3")
+                    .AddHeader("content-type", "application/json")
+                    .AddHeader("Host", "auth.iqoption.com")
+                    .AddHeader("Origin", "login.iqoption.com")
+                    .AddHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:98.0) Gecko/20100101 Firefox/98.0")
                     .AddJsonBody(body);               
 
-                client.ExecuteAsync(request)
+                client.PostAsync(request)
                     .ContinueWith(t =>
                     {
                         
@@ -86,8 +92,7 @@ namespace IqOptionApiDotNet.Http
                                 result.Data = t.Result.Content.JsonAs<SsidResultMessage>();
                                 SecuredToken = resultSsid;
                                 
-
-                                Client.CookieContainer = new CookieContainer();
+                                //Client.CookieContainer = new CookieContainer();
                                 Client.CookieContainer.Add(new Cookie("ssid", SecuredToken.Ssid, "/", "iqoption.com"));
                                 result.IsSuccessful = true;
                                 tcs.TrySetResult(result);

@@ -24,7 +24,7 @@ namespace IqOptionApiDotNet
             Username = username;
             Password = password;
             _logger = IqOptionApiLog.Logger;
-
+            _logger.LogInformation($"{Username} Init Connection..!");
             //set up client
             HttpClient = new IqOptionHttpClient(username, password);
         }
@@ -35,6 +35,8 @@ namespace IqOptionApiDotNet
         {
             connectedSubject.OnNext(false);
             IsConnected = false;
+            
+            
 
             var tcs = new TaskCompletionSource<bool>();
             try

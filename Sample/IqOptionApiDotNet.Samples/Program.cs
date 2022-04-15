@@ -19,11 +19,11 @@ namespace IqOptionApiDotNet.Samples
                 // Uncomment the lines below to run the examples
 
                 //Task.Run(() => new AlertsSample().RunSample());
-                //Task.Run(() => new ChangeBalanceSample().RunSample());
-                //Task.Run(() => new CopyTradeSample().RunSample());
+                //Task.Run(() => new ChangeBalanceSample().RunSample()); -> Not Working
+                //Task.Run(() => new CopyTradeSample().RunSample()); -> Not Working IqOption has disabled Features necessary
                 //Task.Run(() => new GetFinancialInformationSample().RunSample());
-                //Task.Run(() => new GetProfileSample().RunSample());
-                Task.Run(() => new GetInitializationDataSample().RunSample());
+                Task.Run(() => new GetProfileSample().RunSample());
+                //Task.Run(() => new GetInitializationDataSample().RunSample());
                 //Task.Run(() => new GetCandlesSample().RunSample());
                 //Task.Run(() => new GetTopAssetsSample().RunSample());
                 //Task.Run(() => new GetUserProfileClientSample().RunSample());

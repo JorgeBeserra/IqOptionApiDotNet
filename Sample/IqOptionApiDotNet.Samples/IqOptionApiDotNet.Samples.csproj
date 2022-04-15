@@ -1,17 +1,38 @@
-<Project Sdk="Microsoft.NET.Sdk.Worker">
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
 
-    <PropertyGroup>
+
+	<PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
         <UserSecretsId>dotnet-IqOptionApi.Samples-DA6CD46B-1B79-4794-96F1-72B38BB40680</UserSecretsId>
+        <StartupObject>IqOptionApiDotNet.Samples.Program</StartupObject>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
+        <PackageReference Include="NUnit" Version="3.13.3" />
+        <PackageReference Include="RestSharp" Version="107.3.0" />
         <PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
+        <PackageReference Include="WebSocketSharp.Standard" Version="1.0.3" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\..\src\IqOptionApiDotNet\IqOptionApiDotNet.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Properties\Resources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Resources.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Properties\Resources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
     </ItemGroup>
 
 </Project>

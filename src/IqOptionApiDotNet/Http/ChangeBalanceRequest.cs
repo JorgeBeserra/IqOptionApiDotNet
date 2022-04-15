@@ -4,9 +4,14 @@ namespace IqOptionApiDotNet.Http
 {
     public class ChangeBalanceRequest : IqOptionRequest
     {
-        public ChangeBalanceRequest(long balanceId) : base("profile/changebalance", Method.POST)
+        public ChangeBalanceRequest(long balanceId) : base("profile/changebalance", Method.Post)
         {
-            AddParameter("balance_id", balanceId, ParameterType.QueryString);
+            var body = new
+            {
+                balance_id = balanceId
+            };
+            
+            this.AddJsonBody(body);
         }
     }
 }

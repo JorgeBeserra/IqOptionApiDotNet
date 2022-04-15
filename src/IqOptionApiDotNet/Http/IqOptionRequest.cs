@@ -4,9 +4,9 @@ namespace IqOptionApiDotNet.Http
 {
     public abstract class IqOptionRequest : RestRequest
     {
-        protected IqOptionRequest(string action, Method method = Method.GET) : base(action, method)
+        protected IqOptionRequest(string action, Method method = Method.Get) : base(action, method)
         {
-            AddHeader("Accept", "application/json");
+            this.AddHeader("Accept", "application/json");
         }
     }
 }

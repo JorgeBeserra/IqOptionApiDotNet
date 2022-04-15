@@ -27,7 +27,7 @@ namespace IqOptionApiDotNet.Models
         [JsonProperty("birthdate")] public bool Birthdate { get; set; }
         [JsonProperty("bonus_total_wager")] public long BonusTotalWager { get; set; }
         [JsonProperty("bonus_wager")] public long BonusWager { get; set; }
-        //[JsonProperty("cashback_level_info")] public CashbackLevelInfo CashbackLevelInfo { get; set; }
+        [JsonProperty("cashback_level_info")] public CashbackLevelInfo CashbackLevelInfo { get; set; }
         [JsonProperty("city")] public string City { get; set; }
         [JsonProperty("client_category_id")] public long ClientCategoryId { get; set; }
         [JsonProperty("company_id")] public long CompanyId { get; set; }

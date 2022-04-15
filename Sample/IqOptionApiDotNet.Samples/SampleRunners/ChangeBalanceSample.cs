@@ -13,6 +13,7 @@ namespace IqOptionApiDotNet.Samples.SampleRunners
             if (await IqClientApiDotNet.ConnectAsync())
             {
                 requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+
                 var profile = await IqClientApiDotNet.GetProfileAsync(requestId);
 
                 var demo = profile.Balances.FirstOrDefault(x => x.Type == BalanceType.Practice);
@@ -29,6 +30,7 @@ namespace IqOptionApiDotNet.Samples.SampleRunners
                 Don't forget to check if it is in the live account or in training 
                 before taking your Balance Changed tests
                 */
+
                 IqClientApiDotNet.BalanceChangedObservable.Subscribe(x => {
                     // values goes here
                     _logger.Information(
