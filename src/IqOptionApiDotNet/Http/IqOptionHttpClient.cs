@@ -61,8 +61,8 @@ namespace IqOptionApiDotNet.Http
             {
                 var body = new
                 {
-                    identifier = "jorgebeserrasouza@gmail.com",
-                    password = "js123@#$DINHEIRO"
+                    identifier = LoginModel.Email,
+                    password = LoginModel.Password
                 };
 
                 var client = new RestClient("https://auth.iqoption.com/api/v2/login");
