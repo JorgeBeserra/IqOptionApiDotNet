@@ -23,5 +23,7 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --configuration Release --no-restore
-    - name: Test
-      run: dotnet test
+    - name: Create the package
+      run: dotnet pack --configuration Release --no-restore
+    #- name: Test
+    #  run: dotnet test
