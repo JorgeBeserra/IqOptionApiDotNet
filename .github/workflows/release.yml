@@ -18,11 +18,13 @@ jobs:
         dotnet-version: |
             3.1.x
             5.0.x
+
     - name: Create Nuget Package
       run: dotnet pack -c Release /p:Version=${{ github.event.release.tag_name }} /p:PackageReleasesNotes="See https://github.com/JorgeBeserra/IqOptionApiDotNet/releases/tag/${{ github.event.release.tag_name }}"
-      working-directory: ./JorgeBeserra.IqOptionApiDotNet
+      #working-directory: ./JorgeBeserra.IqOptionApiDotNet
+
     - name: Archive Nuget Package
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: packages
         path: ./IqOptionApiDotNet/IqOptionApiDotNet/src/IqOptionApiDotNet/bin/Release/IqOptionApiDotNet.${{ github.event.release.tag_name }}.nupkg 
