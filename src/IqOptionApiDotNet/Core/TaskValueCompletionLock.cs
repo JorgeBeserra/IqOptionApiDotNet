@@ -23,9 +23,6 @@ namespace IqOptionApiDotNet.Core
             }
         }
         
-        
-        
-        
         public void Dispose()
         {
             var action = Task.Run(() => { });

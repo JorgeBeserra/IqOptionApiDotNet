@@ -29,8 +29,6 @@ namespace IqOptionApiDotNet.Ws
             _topAssetsUpdatedSubject.OnCompleted();
         }
 
-
-
         /// <summary>
         /// Subscribe to to Live Deal
         /// </summary>

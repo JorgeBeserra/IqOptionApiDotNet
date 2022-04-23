@@ -24,7 +24,6 @@ using IqOptionApiDotNet.Ws.Request;
         {
             _logger = IqOptionApiLog.Logger;
             SecureToken = secureToken;
-            
             InitialSocket(secureToken);
         }
 
@@ -145,7 +144,6 @@ using IqOptionApiDotNet.Ws.Request;
             };
             
             WebSocketClient.Connect();
-
             var scheduler = new EventLoopScheduler();
             MessageReceivedObservable =
                 Observable.Using(
@@ -160,7 +158,6 @@ using IqOptionApiDotNet.Ws.Request;
                     .RefCount();
 
             WebSocketClient.OnMessage += (sender, args) => SubscribeIncomingMessage(args.Data);
-
             SystemReconnectionTimer.AutoReset = true;
             SystemReconnectionTimer.Enabled = true;
             SystemReconnectionTimer.Elapsed += (sender, args) =>
@@ -172,7 +169,14 @@ using IqOptionApiDotNet.Ws.Request;
 
             // send secure token to connect to server
             requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
-            SendMessageAsync(requestId, new SsidWsMessageBase(secureToken), ProfileObservable).Wait();
+
+            SendMessageAsync(requestId, new AuthenticateWsMessageBase(secureToken)).ConfigureAwait(false);
+
+            SendMessageAsync(requestId, new GetCoreProfileClientRequestMessage(), ProfileObservable).Wait();
+
+            BalanceType[] balanceType = new BalanceType[] { BalanceType.Practice, BalanceType.Real };
+
+            SendMessageAsync(requestId, new GetBalancesRequestMessage(balanceType), BalancesObservable).Wait();
 
             // send order changed subscribe
             InitialSubscribeOrderChanged();

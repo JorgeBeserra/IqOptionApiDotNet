@@ -61,7 +61,7 @@ namespace IqOptionApiDotNet.Properties {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a js123@#$DINHEIRO.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a PASSWORD.
         /// </summary>
         internal static string IqOptionPassword {
             get {
@@ -70,7 +70,7 @@ namespace IqOptionApiDotNet.Properties {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a jorgebeserra@gmail.com.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a USER.
         /// </summary>
         internal static string IqOptionUserName {
             get {

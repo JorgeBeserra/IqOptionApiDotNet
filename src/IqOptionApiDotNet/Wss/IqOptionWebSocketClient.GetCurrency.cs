@@ -7,13 +7,11 @@ namespace IqOptionApiDotNet.Ws
 {
     public partial class IqOptionWebSocketClient
     {
-        #region [GetBalancesAsync]
-
-        public Task<IEnumerable<Balance>> GetBalancesAsync(string requestId, IEnumerable<BalanceType> types)
+        #region [GetCurrency]
+        public Task<Currency> GetCurrencyAsync(string requestId, string currencyName)
         {
-            return SendMessageAsync(requestId, new GetBalancesRequestMessage(types), BalancesObservable);
+            return SendMessageAsync(requestId, new GetCurrencyRequestMessage(currencyName), CurrencyObservable);
         }
-
         #endregion
     }
 }

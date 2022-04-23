@@ -12,12 +12,13 @@ namespace IqOptionApiDotNet.Ws.Request
 {
     internal class GetBalancesModel
     {
-        [JsonProperty("types_ids")]
+        [JsonProperty("types_ids", Order = 1)]
+
         [JsonConverter(typeof(TypesConverter))]
         public IEnumerable<BalanceType> TypesIds { get; set; }
 
-        [JsonProperty("tournaments_statuses_ids")]
-        public IEnumerable<int> TournamentsStatusesIds = new int[] { 2, 3 };
+        [JsonProperty("tournaments_statuses_ids", Order = 2)]
+        public IEnumerable<int> TournamentsStatusesIds = new int[] { 3, 2 };
 
         internal class TypesConverter : JsonConverter<IEnumerable<BalanceType>>
         {

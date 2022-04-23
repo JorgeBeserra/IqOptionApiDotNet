@@ -14,7 +14,10 @@ namespace IqOptionApiDotNet
         IqOptionWebSocketClient WsClient { get; }
         IqOptionHttpClient HttpClient { get; }
         IObservable<Profile> ProfileObservable { get; }
+        IObservable<IEnumerable<Balance>> BalancesObservable { get; }
         Profile Profile { get; }
+        BalanceType balanceType { get; }
+        IEnumerable<Balance> Balances { get; }
         bool IsConnected { get; }
         IObservable<bool> ConnectedObservable { get; }
 
@@ -32,9 +35,12 @@ namespace IqOptionApiDotNet
 		Task<FinancialInformationResult> GetFinancialInformationAsync(string requestId, ActivePair pair);
         Task<IEnumerable<Balance>> GetBalancesAsync(string requestId, IEnumerable<BalanceType> types);
         Task<bool> ChangeBalanceAsync(string requestId, long balanceId);
-        Task<BinaryOptionsResult> BuyAsync(string requestId, ActivePair pair, Decimal size, OrderDirection direction, DateTimeOffset expiration);
+        Task<BinaryOptionsResult> BuyAsync(string requestId, BalanceType balanceType, ActivePair pair, Decimal size, OrderDirection direction, DateTimeOffset expiration);
         Task<CandleCollections> GetCandlesAsync(string requestId, ActivePair pair, TimeFrame tf, int count, DateTimeOffset to);
         Task<InitializationData> GetInitializationData(string requestId);
+        Task<UserSettings> GetUserSettings(string requestId);
+        Task<UserSettings> SetUserSettings(string requestId);
+        Task<Currency> GetCurrencyAsync(string requestId, string currencyName);
         Task<double> GetProfitAsync(string requestId, OptionType option, ActivePair pair);
         Task<IObservable<CurrentCandle>> SubscribeRealtimeQuoteAsync(string requestId, ActivePair pair, TimeFrame tf);
 
@@ -79,12 +85,13 @@ namespace IqOptionApiDotNet
         /// Place the DigitalOptions order
         /// </summary>
         /// <param name="requestId">Request identifier<example>5f2c370145a047c7b87f2680556b3b93</example></param>
+        /// <param name="balanceType">The Type balance</param>
         /// <param name="pair">The Active pair, make sure your place with correct active.</param>
         /// <param name="direction">The position direction.</param>
         /// <param name="duration">The duration period in (1Min, 5Min, 15Min) from now</param>
         /// <param name="amount">The Amount of position</param>
         /// <returns></returns>
-        Task<DigitalOptionsPlacedResult> PlaceDigitalOptions(string requestId, ActivePair pair, OrderDirection direction,
+        Task<DigitalOptionsPlacedResult> PlaceDigitalOptions(string requestId, BalanceType balanceType, ActivePair pair, OrderDirection direction,
             DigitalOptionsExpiryDuration duration, double amount);
 
         /// <summary>

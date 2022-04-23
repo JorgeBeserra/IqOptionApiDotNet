@@ -32,6 +32,11 @@ namespace IqOptionApiDotNet.Ws
 
                 switch (msg.Name)
                 {
+                    case MessageType.Authenticated:
+                        var msgAuthenticated = x.JsonAs<WsAuthenticatedMessageBase<object>>();
+                        _logger.LogDebug("Client Session Id: '{0}'", msgAuthenticated.ClientSessionId);
+                        break;
+
                     case MessageType.Heartbeat:
                         SetHeartbeatTick((long) msg.Message);
                         break;
@@ -56,7 +61,6 @@ namespace IqOptionApiDotNet.Ws
                         else // not support subscribers
                             _logger
                                 .LogDebug("Not found handled method to support this kind of message topic '{0}'", msg.Name);
-
 
                         _logger.LogTrace("⬇ {0}", x);
 

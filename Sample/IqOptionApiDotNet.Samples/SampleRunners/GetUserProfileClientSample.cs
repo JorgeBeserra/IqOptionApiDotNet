@@ -14,7 +14,10 @@ namespace IqOptionApiDotNet.Samples.SampleRunners
             if (await IqClientApiDotNet.ConnectAsync())
             {
                 requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
-                var profile = await IqClientApiDotNet.GetUserProfileClientAsync(requestId, 0);
+
+                long userId = '0'; // Change this id to get user infor
+
+                var profile = await IqClientApiDotNet.GetUserProfileClientAsync(requestId, userId);
                 
                 _logger.Information(JsonConvert.SerializeObject(profile));
             }

@@ -15,7 +15,6 @@ namespace IqOptionApiDotNet.Http
     {
         private ILogger _logger;
 
-
         public IqOptionHttpClient(string username, string password, string host = "iqoption.com")
         {
             Client = new RestClient(ApiEndPoint(host));
@@ -91,7 +90,7 @@ namespace IqOptionApiDotNet.Http
 
                                 result.Data = t.Result.Content.JsonAs<SsidResultMessage>();
                                 SecuredToken = resultSsid;
-                                
+
                                 //Client.CookieContainer = new CookieContainer();
                                 Client.CookieContainer.Add(new Cookie("ssid", SecuredToken.Ssid, "/", "iqoption.com"));
                                 result.IsSuccessful = true;

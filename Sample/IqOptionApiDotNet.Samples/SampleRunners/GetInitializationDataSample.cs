@@ -14,6 +14,7 @@ namespace IqOptionApiDotNet.Samples.SampleRunners
             if (await IqClientApiDotNet.ConnectAsync())
             {
                 requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+
                 var initializationData = await IqClientApiDotNet.GetInitializationData(requestId);
 
                 var binarias = initializationData.BinaryOption.Actives;

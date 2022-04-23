@@ -12,9 +12,13 @@ namespace IqOptionApiDotNet.Ws.Request
 
         public const string OpenOptions = "binary-options.open-option";
 
-        public const string GetUserSetting = "get-user-settings";
+        public const string GetUserSettings = "get-user-settings";
+
+        public const string SetUserSettings = "set-user-settings";
 
         public const string CoreChangeLanguage = "core.change-lang";
+
+        public const string CoreGetProfile = "core.get-profile";
 
         public const string GetUserProfileClient = "get-user-profile-client";
 

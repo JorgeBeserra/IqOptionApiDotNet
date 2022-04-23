@@ -44,8 +44,9 @@ namespace IqOptionApiDotNet.Models
         [JsonProperty("is_tradable")]
         public bool IsTradable { get; set; }
 
-        [JsonProperty("code")]
-        public CodeUnion Code { get; set; }
+        // TODO: Verification required CodeUnion in Currencies
+        //[JsonProperty("code")]
+        //public CodeUnion Code { get; set; }
 
         [JsonProperty("unit")]
         public long Unit { get; set; }
@@ -75,7 +76,7 @@ namespace IqOptionApiDotNet.Models
         public bool IsInout { get; set; }
 
         [JsonProperty("interest_rate")]
-        public long InterestRate { get; set; }
+        public decimal InterestRate { get; set; }
     }
 
     public enum CodeEnum { Empty, The0, The000 };

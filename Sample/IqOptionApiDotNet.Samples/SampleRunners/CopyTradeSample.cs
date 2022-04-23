@@ -16,7 +16,7 @@ namespace IqOptionApiDotNet.Samples.SampleRunners
             string requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
             // for binary
             trader.WsClient.OpenOptionObservable().Subscribe(x => {
-                follower.BuyAsync(requestId, x.Active, (int) x.Amount, x.Direction, x.ExpirationTime);
+                follower.BuyAsync(requestId, BalanceType.Practice, x.Active, (int) x.Amount, x.Direction, x.ExpirationTime);
             });
 
             // for digitals forex and others

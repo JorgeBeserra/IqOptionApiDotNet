@@ -2,6 +2,7 @@ using IqOptionApiDotNet.Models;
 using IqOptionApiDotNet.Models.BinaryOptions;
 using IqOptionApiDotNet.Ws.Request;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace IqOptionApiDotNet.Ws
@@ -21,13 +22,14 @@ namespace IqOptionApiDotNet.Ws
         /// <returns></returns>
         public Task<BinaryOptionsResult> BuyAsync(
             string requestId,
+            BalanceType balanceType,
             ActivePair pair,
             decimal size,
             OrderDirection direction,
             DateTimeOffset expiration)
         {
 
-            //reduce second to 00s 
+            // reduce second to 00s 
             if (expiration.Second % 60 != 0)
                 expiration = expiration.AddSeconds(60 - expiration.Second);
 
@@ -35,11 +37,15 @@ namespace IqOptionApiDotNet.Ws
             var optionType = OptionType.Turbo;
             if (expiration.Subtract(ServerTime).Minutes > 5)
                 optionType = OptionType.Binary;
+            
+            var balance = Balances.FirstOrDefault(x => x.Type == balanceType);
+
+            Console.WriteLine(balance.Id);
 
             return SendMessageAsync(
                 requestId,
                 new BuyV2WsMessage(
-                    Profile.BalanceId,
+                    balance.Id,
                     pair,
                     optionType,
                     direction,

@@ -118,9 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="IqOptionPassword" xml:space="preserve">
-    <value>js123@#$DINHEIRO</value>
+    <value>PASSWORD</value>
   </data>
   <data name="IqOptionUserName" xml:space="preserve">
-    <value>jorgebeserra@gmail.com</value>
+    <value>USER</value>
   </data>
 </root>

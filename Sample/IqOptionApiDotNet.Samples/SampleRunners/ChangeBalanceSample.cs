@@ -10,33 +10,28 @@ namespace IqOptionApiDotNet.Samples.SampleRunners
         public override async Task RunSample()
         {
             string requestId;
+
             if (await IqClientApiDotNet.ConnectAsync())
             {
                 requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+                
+                BalanceType[] balanceType = new BalanceType[] { BalanceType.Practice };
 
-                var profile = await IqClientApiDotNet.GetProfileAsync(requestId);
+                var balances = await IqClientApiDotNet.GetBalancesAsync(requestId, balanceType);
 
-                var demo = profile.Balances.FirstOrDefault(x => x.Type == BalanceType.Practice);
+                Balance balance = balances.FirstOrDefault(x => x.Type == BalanceType.Practice);
 
-                requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
-                await IqClientApiDotNet.ChangeBalanceAsync(requestId, demo.Id);
-
-                var real = profile.Balances.FirstOrDefault(x => x.Type == BalanceType.Real);
-
-                requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
-                await IqClientApiDotNet.ChangeBalanceAsync(requestId, real.Id);
+                IqClientApiDotNet.balanceType = BalanceType.Practice;
 
                 /*
                 Don't forget to check if it is in the live account or in training 
                 before taking your Balance Changed tests
                 */
 
-                IqClientApiDotNet.BalanceChangedObservable.Subscribe(x => {
-                    // values goes here
-                    _logger.Information(
-                        $"Balance Changed on UserId: {x.UserId} - Amount: {x.CurrentBalance.Amount}, Enrolled Amount: {x.CurrentBalance.EnrolledAmount}"
+                _logger.Information(
+                        $"Balance Changed on UserId: {balance.UserId} - Amount: {balance.Amount}, Enrolled Amount: {balance.EnrolledAmount}"
                     );
-                });
+
             }
         }
     }

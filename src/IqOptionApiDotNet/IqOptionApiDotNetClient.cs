@@ -17,6 +17,10 @@ namespace IqOptionApiDotNet
     {
         private readonly ILogger _logger;
 
+        public BalanceType balanceType = BalanceType.Practice;
+
+        public long balanceId = 0;
+
         #region [Ctor]
 
         public IqOptionApiDotNetClient(string username, string password)
@@ -36,8 +40,6 @@ namespace IqOptionApiDotNet
             connectedSubject.OnNext(false);
             IsConnected = false;
             
-            
-
             var tcs = new TaskCompletionSource<bool>();
             try
             {
@@ -48,13 +50,13 @@ namespace IqOptionApiDotNet
                         if (t.Result != null && t.Result.IsSuccessful)
                         {
 
-                            _logger.LogInformation($"{Username} logged in success!");
-                            
+                            _logger.LogInformation($"{Username} logged in success !");
+
                             if (WsClient != null) WsClient.Dispose();
+
                             WsClient = new IqOptionWebSocketClient(t.Result.Data.Ssid);
 
                             SubscribeWebSocket();
-
                             IsConnected = true;
                             connectedSubject.OnNext(true);
                             tcs.TrySetResult(true);
@@ -73,10 +75,9 @@ namespace IqOptionApiDotNet
             return tcs.Task;
         }
 
-        public async Task<Profile> GetProfileAsync(string requestId)
+        public Task<Profile> GetProfileAsync(string requestId)
         {
-            var result = await HttpClient.GetProfileAsync(requestId);
-            return result.Result;
+            return WsClient?.GetCoreProfileClientAsync(requestId);
         }
 
         public async void ResetTrainingBalanceAsync(string requestId)
@@ -87,6 +88,11 @@ namespace IqOptionApiDotNet
         public Task<UserProfileClientResult> GetUserProfileClientAsync(string requestId, long userid)
         {
             return WsClient?.GetUserProfileClientAsync(requestId, userid);
+        }
+
+        public Task<Currency> GetCurrencyAsync(string requestId, string currencyName)
+        {
+            return WsClient?.GetCurrencyAsync(requestId, currencyName);
         }
 
         public Task<TopAssets> GetTopAssetsAsync(string requestId, InstrumentType instrumentType)
@@ -167,10 +173,10 @@ namespace IqOptionApiDotNet
             return true;
         }
 
-        public Task<BinaryOptionsResult> BuyAsync(string requestId, ActivePair pair, decimal size, OrderDirection direction,
+        public Task<BinaryOptionsResult> BuyAsync(string requestId, BalanceType balanceType, ActivePair pair, decimal size, OrderDirection direction,
             DateTimeOffset expiration)
         {
-            return WsClient?.BuyAsync(requestId, pair, size, direction, expiration);
+            return WsClient?.BuyAsync(requestId, balanceType, pair, size, direction, expiration);
         }
 
 
@@ -183,6 +189,16 @@ namespace IqOptionApiDotNet
         public Task<InitializationData> GetInitializationData(string requestId)
         {
             return WsClient?.GetInitializationDataAsync(requestId);
+        }
+
+        public Task<UserSettings> GetUserSettings(string requestId)
+        {
+            return WsClient?.GetUserSettingsAsync(requestId);
+        }
+
+        public Task<UserSettings> SetUserSettings(string requestId)
+        {
+            return WsClient?.SetUserSettingsAsync(requestId);
         }
 
         public async Task<double> GetProfitAsync(string requestId, OptionType option, ActivePair pair)
@@ -270,8 +286,10 @@ namespace IqOptionApiDotNet
             WsClient.InstrumentResultSetObservable
                 .Subscribe(x => Instruments = x);
 
-            string requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+            string requestId;
+
             //subscribe for Alerts Changed
+            requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
             WsClient.SubscribeAlertChangedChanged(requestId);
 
             //subscribe for Alerts Triggered
@@ -279,12 +297,20 @@ namespace IqOptionApiDotNet
             WsClient.SubscribeAlertTriggeredChanged(requestId);
         }
 
+        public Task<DigitalOptionsPlacedResult> PlaceDigitalOptions(string requestId, BalanceType balanceType, ActivePair pair, OrderDirection direction, DigitalOptionsExpiryDuration duration, double amount)
+        {
+            throw new NotImplementedException();
+        }
+
         #region [Privates]
 
         private readonly Subject<Profile> _profileSubject = new Subject<Profile>();
+        private readonly Subject<IEnumerable<Balance>> _balancesSubject = new Subject<IEnumerable<Balance>>();
 
         private readonly Subject<bool> connectedSubject = new Subject<bool>();
+
         private Profile _profile;
+        private IEnumerable<Balance> _balances;
 
         #endregion
 
@@ -304,6 +330,16 @@ namespace IqOptionApiDotNet
             }
         }
 
+        public IEnumerable<Balance> Balances
+        {
+            get => _balances;
+            private set
+            {
+                _balancesSubject.OnNext(value);
+                _balances = value;
+            }
+        }
+
         public bool IsConnected { get; private set; }
 
         //clients
@@ -312,11 +348,14 @@ namespace IqOptionApiDotNet
 
         //obs
         public IObservable<Profile> ProfileObservable => _profileSubject.AsObservable();
+        public IObservable<IEnumerable<Balance>> BalancesObservable => _balancesSubject.AsObservable();
         public IObservable<bool> ConnectedObservable => connectedSubject.AsObservable();
         public IObservable<BinaryOptionsResult> BuyResultObservable => WsClient?.BinaryOptionPlacedResultObservable;
         public IObservable<BalanceChanged> BalanceChangedObservable => WsClient?.BalanceChangedObservable;
         public IObservable<AlertChanged> AlertChangedObservable => WsClient?.AlertChangedResultObservable;
         public IObservable<AlertTriggered> AlertTriggeredObservable => WsClient?.AlertTriggeredResultObservable;
+
+        BalanceType IIqOptionApiDotNetClient.balanceType => throw new NotImplementedException();
 
         #endregion
     }

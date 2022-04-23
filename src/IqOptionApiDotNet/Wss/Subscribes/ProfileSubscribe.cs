@@ -12,13 +12,13 @@ namespace IqOptionApiDotNet.Ws
     public partial class IqOptionWebSocketClient
     {
         private readonly Subject<Profile> _profileSubject = new Subject<Profile>();
-        public Profile Profile { get; private set; }
+        public Profile.ProfileResult Profile { get; private set; }
         public IObservable<Profile> ProfileObservable => _profileSubject.AsObservable();
 
         [SubscribeForTopicName(MessageType.Profile, typeof(Profile))]
         public void Subscribe(Profile type)
         {
-            Profile = type;
+            Profile = type.profileResult;
             _profileSubject.OnNext(type);
             
             //invoke subscribe portfolio changed
