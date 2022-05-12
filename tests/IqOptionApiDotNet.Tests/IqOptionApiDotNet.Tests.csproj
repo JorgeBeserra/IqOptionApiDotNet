@@ -14,7 +14,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.SlowCheetah" Version="4.0.8" />
     <PackageReference Include="AutoFixture.AutoMoq" Version="4.17.0" />
-    <PackageReference Include="Moq" Version="4.17.2" />
+    <PackageReference Include="Moq" Version="4.18.0" />
     <PackageReference Include="NUnit" Version="3.13.3" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.2.1" />
     <PackageReference Include="FluentPath" Version="2.0.0" />
