@@ -9,7 +9,6 @@ namespace IqOptionApiDotNet.Samples.SampleRunners
     public class GetBalancesSample : SampleRunner
     {
 
-
         public override async Task RunSample()
         {
             string requestId;

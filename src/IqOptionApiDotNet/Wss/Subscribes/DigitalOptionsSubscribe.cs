@@ -16,13 +16,11 @@ namespace IqOptionApiDotNet.Ws
         private readonly Subject<DigitalOptionsPlacedResult> _placeDigitalOptionResult = new Subject<DigitalOptionsPlacedResult>();
         public IObservable<DigitalOptionsPlacedResult> PlaceDigitalOptionResultObservable => _placeDigitalOptionResult.AsObservable();
         
-
         [SubscribeForTopicName(MessageType.PlacedDigitalOptions, typeof(DigitalOptionsPlacedResult))]
         public void Subscribe(DigitalOptionsPlacedResult type)
         {
             _placeDigitalOptionResult.OnNext(type);
         }
-
 
         #endregion
     }

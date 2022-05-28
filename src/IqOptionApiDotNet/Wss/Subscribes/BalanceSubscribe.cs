@@ -5,6 +5,7 @@ using IqOptionApiDotNet.Models;
 using IqOptionApiDotNet.Models.BinaryOptions;
 using IqOptionApiDotNet.utilities;
 using IqOptionApiDotNet.Ws.Base;
+using IqOptionApiDotNet.Wss.Request.SubscribeMessages;
 
 // ReSharper disable once CheckNamespace
 namespace IqOptionApiDotNet.Ws
@@ -27,6 +28,24 @@ namespace IqOptionApiDotNet.Ws
         {
             _balanceChangedSubject.OnCompleted();
         }
+
+        /// <summary>
+        /// Subscribe to Balance Changed
+        /// </summary>
+        /// <param name="message"></param>        
+        public void SubscribeBalanceChanged(string requestId)
+        {
+            SendMessageAsync(requestId, new SubscribeBalanceChangedRequest(MessageType.BalanceChanged), "s_").ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// UnSubscribe to Balance Changed
+        /// </summary>
+        /// <param name="message">The Request id.</param>      
+        public void UnSubscribeBalanceChanged(string requestId)
+        {
+            SendMessageAsync(requestId, new UnsubscribeBalanceChangedRequest(MessageType.BalanceChanged), "s_").ConfigureAwait(false);
+        }
     }
 
     public partial class IqOptionWebSocketClient
@@ -47,6 +66,7 @@ namespace IqOptionApiDotNet.Ws
         {
             _buyResultSubject.OnCompleted();
         }
-        
+
     }
+
 }

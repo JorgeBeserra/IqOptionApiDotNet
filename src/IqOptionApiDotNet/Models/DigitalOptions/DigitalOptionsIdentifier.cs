@@ -33,13 +33,13 @@ namespace IqOptionApiDotNet.Models.DigitalOptions
 
         public string CreateInstrumentId()
         {
-            var active = Pair.GetEnumMemberValue();
+            var active = ((int)Pair);
             var dateFormat = Expiration.ToString("yyyyMMdd", CultureInfo.CreateSpecificCulture("en-US"));
             var timeFormat = Expiration.ToString("HHmm");
             var duration = Duration.GetEnumMemberValue();
             var action = Direction == OrderDirection.Call ? "C" : "P";
             
-            return $"do{active}{dateFormat}{timeFormat}PT{duration}{action}SPT";
+            return $"do{active}A{dateFormat}D{timeFormat}00T{duration}{action}SPT";
         }
 
         public static DigitalOptionsIdentifier CreateFromInstrumentId(string instrumentId)

@@ -28,14 +28,10 @@ namespace IqOptionApiDotNet.Utilities
             if (exp.AddMinutes(1).ToUnixTimeSeconds() - dt.ToUnixTimeSeconds() > 30)
                 exp = exp.AddMinutes(1);
             else exp = exp.AddMinutes(2);
-
             
             for (var i = 1; i <= 5; i++)
                 dic.Add(i, exp.AddMinutes(i - 1));
             
-            
-            
-
             /*
             var idx = 50;
             var index = 0;

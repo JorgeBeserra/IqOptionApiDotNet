@@ -8,7 +8,7 @@ namespace IqOptionApiDotNet.Ws.Base
     {
         [JsonProperty("name", Order = 1)] public virtual string Name { get; set; }
         [JsonProperty("request_id", Order = 2)] public virtual string RequestId { get; set; }
-        //[JsonProperty("local_time", Order = 3)] public virtual int LocalTime { get; set; }
+        [JsonProperty("local_time", Order = 3)] public virtual int LocalTime { get; set; }
         [JsonProperty("msg", Order = 4)] public virtual T Message { get; set; }
         //[JsonProperty("status", Order = Int32.MaxValue)] public virtual int StatusCode { get; set; }
         //[JsonProperty("microserviceName", Order = 10)] public string MicroserviceName { get; set; }

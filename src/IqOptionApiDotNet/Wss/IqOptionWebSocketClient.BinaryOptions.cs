@@ -38,7 +38,7 @@ namespace IqOptionApiDotNet.Ws
             if (expiration.Subtract(ServerTime).Minutes > 5)
                 optionType = OptionType.Binary;
             
-            var balance = Balances.FirstOrDefault(x => x.Type == balanceType);
+            var balance = balances.FirstOrDefault(x => x.Type == balanceType);
 
             Console.WriteLine(balance.Id);
 

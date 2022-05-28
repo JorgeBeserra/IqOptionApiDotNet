@@ -71,9 +71,24 @@ namespace IqOptionApiDotNet.Ws
 
         #endregion
 
+
+        #region Get Digital Options Instruments
+
+        /// <summary>
+        /// Get instruments for active pair
+        /// </summary>
+        /// <param name="requestId">Request identifier<example>5f2c370145a047c7b87f2680556b3b93</example></param>
+        /// <returns></returns>
+        public Task<InstrumentResult> GetInstrumentsAsync(string requestId, ActivePair activePair)
+        {
+            return SendMessageAsync(requestId, new GetInstrumentsMessageRequest(activePair), InstrumentResultObservable);
+        }
+
+        #endregion
+
         #region Close Digital Options
 
-        
+
 
         #endregion
     }

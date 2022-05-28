@@ -13,6 +13,15 @@ namespace IqOptionApiDotNet.Samples.SampleRunners
 
             if (await IqClientApiDotNet.ConnectAsync())
             {
+
+                // Observable to AlertChanged
+                IqClientApiDotNet.BalanceChangedObservable.Subscribe(x => {
+                    // values goes here
+                    _logger.Information(
+                        $"Alert Changed reason {x.CurrentBalance}"
+                    );
+                });
+
                 requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
                 
                 BalanceType[] balanceType = new BalanceType[] { BalanceType.Practice };

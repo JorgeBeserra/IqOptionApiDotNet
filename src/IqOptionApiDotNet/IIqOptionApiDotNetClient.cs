@@ -39,6 +39,7 @@ namespace IqOptionApiDotNet
         Task<CandleCollections> GetCandlesAsync(string requestId, ActivePair pair, TimeFrame tf, int count, DateTimeOffset to);
         Task<InitializationData> GetInitializationData(string requestId);
         Task<UserSettings> GetUserSettings(string requestId);
+        Task<InstrumentResult> GetInstrumentsAsync(string requestId, ActivePair activePair);
         Task<UserSettings> SetUserSettings(string requestId);
         Task<Currency> GetCurrencyAsync(string requestId, string currencyName);
         Task<double> GetProfitAsync(string requestId, OptionType option, ActivePair pair);
@@ -75,6 +76,18 @@ namespace IqOptionApiDotNet
         /// </summary>
         /// <param name="requestId">Request identifier<example>5f2c370145a047c7b87f2680556b3b93</example></param>
         void UnSubscribeLiveDeal(string requestId, string message, ActivePair pair, DigitalOptionsExpiryType duration);
+
+        /// <summary>
+        /// Subscribe balance changed
+        /// </summary>
+        /// <param name="requestId">Request identifier<example>5f2c370145a047c7b87f2680556b3b93</example></param>
+        void SubscribeBalanceChanged(string requestId);
+
+        /// <summary>
+        /// Unsubscribe balance changed
+        /// </summary>
+        /// <param name="requestId">Request identifier<example>5f2c370145a047c7b87f2680556b3b93</example></param>
+        void UnSubscribeBalanceChanged(string requestId);
 
 
         #endregion

@@ -59,5 +59,23 @@ namespace IqOptionApiDotNet.Samples.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a *.
+        /// </summary>
+        internal static string IqOptionPassword {
+            get {
+                return ResourceManager.GetString("IqOptionPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a *.
+        /// </summary>
+        internal static string IqOptionUserName {
+            get {
+                return ResourceManager.GetString("IqOptionUserName", resourceCulture);
+            }
+        }
     }
 }

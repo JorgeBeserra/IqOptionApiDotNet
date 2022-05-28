@@ -51,7 +51,8 @@ namespace IqOptionApiDotNet.Samples
             Console.WriteLine("21) SubscribeRealtimeCandlesSample");
             Console.WriteLine("22) SubscribeTradersMoodSample");
             Console.WriteLine("23) SetUserSettingsSample");
-            Console.WriteLine("24) CopyTradeSample [NOT WORKING]");
+            Console.WriteLine("24) SubscribeBalanceChangedSample");
+            Console.WriteLine("25) CopyTradeSample [NOT WORKING]");
             Console.WriteLine("-------------------------------------------------");
             Console.WriteLine(" 0) Exit");
             Console.Write("\r\nSelect an option: ");
@@ -128,6 +129,9 @@ namespace IqOptionApiDotNet.Samples
                     return true;
                 case "23":
                     Task.Run(() => new SetUserSettingsSample().RunSample());
+                    return true;
+                case "25":
+                    Task.Run(() => new SubscribeBalanceChangedSample().RunSample());
                     return true;
                 case "24":
                     Task.Run(() => new CopyTradeSample().RunSample());  //-> Not Working IqOption has disabled Features necessary

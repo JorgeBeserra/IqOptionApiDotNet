@@ -6,7 +6,7 @@
  using IqOptionApiDotNet.Logging;
  using IqOptionApiDotNet.Models;
  using IqOptionApiDotNet.Ws.Base;
-using IqOptionApiDotNet.Ws.Request;
+ using IqOptionApiDotNet.Ws.Request;
  using Microsoft.Extensions.Logging;
  using WebSocketSharp;
  using AsyncLock = IqOptionApiDotNet.Core.AsyncLock;
@@ -33,6 +33,7 @@ using IqOptionApiDotNet.Ws.Request;
         #region [Public's]
 
         public IObservable<string> MessageReceivedObservable { get; private set; }
+
         private readonly AsyncLock _asyncLock = new AsyncLock();
 
         private string _requestCounter;
@@ -176,7 +177,7 @@ using IqOptionApiDotNet.Ws.Request;
 
             BalanceType[] balanceType = new BalanceType[] { BalanceType.Practice, BalanceType.Real };
 
-            SendMessageAsync(requestId, new GetBalancesRequestMessage(balanceType), BalancesObservable).Wait();
+            SendMessageAsync(requestId, new GetBalancesRequestMessage(balanceType), BalancesObservable);
 
             // send order changed subscribe
             InitialSubscribeOrderChanged();

@@ -5,6 +5,7 @@ using System.Reactive.Subjects;
 using IqOptionApiDotNet.Models;
 using IqOptionApiDotNet.utilities;
 using IqOptionApiDotNet.Ws.Base;
+using IqOptionApiDotNet.Logging;
 
 // ReSharper disable once CheckNamespace
 namespace IqOptionApiDotNet.Ws
@@ -12,14 +13,16 @@ namespace IqOptionApiDotNet.Ws
     public partial class IqOptionWebSocketClient
     {
         private readonly Subject<IEnumerable<Balance>> _balancesSubject = new Subject<IEnumerable<Balance>>();
-        public IEnumerable<Balance> Balances { get; private set; }
+        
+        
+        public IEnumerable<Balance> balances { get; private set; }
         public BalanceType balanceType { get; set; }
         public IObservable<IEnumerable<Balance>> BalancesObservable => _balancesSubject.AsObservable();
 
         [SubscribeForTopicName(MessageType.Balances, typeof(IEnumerable<Balance>))]
+        
         public void Subscribe(IEnumerable<Balance> value)
         {
-            Balances = value;
             _balancesSubject.OnNext(value);
         }
 
@@ -30,4 +33,6 @@ namespace IqOptionApiDotNet.Ws
         }
 
     }
+
+
 }

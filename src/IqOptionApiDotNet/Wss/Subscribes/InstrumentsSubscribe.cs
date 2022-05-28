@@ -14,6 +14,7 @@ namespace IqOptionApiDotNet.Ws
         #region [Instruments]
 
         private InstrumentResultSet _instrumentResultSet = new InstrumentResultSet();
+
         private readonly Subject<InstrumentResultSet> _instrumentResultSetSubject = new Subject<InstrumentResultSet>();
 
         public IObservable<InstrumentResultSet> InstrumentResultSetObservable =>
@@ -33,8 +34,8 @@ namespace IqOptionApiDotNet.Ws
                 _instrumentResultSet = new InstrumentResultSet();
                 
                 Task.WhenAll(
-                    SendMessageAsync(requestId, new GetInstrumentWsRequest(InstrumentType.Forex)),
                     SendMessageAsync(requestId, new GetInstrumentWsRequest(InstrumentType.CFD)),
+                    SendMessageAsync(requestId, new GetInstrumentWsRequest(InstrumentType.Forex)),
                     SendMessageAsync(requestId, new GetInstrumentWsRequest(InstrumentType.Crypto))
                 );
             }

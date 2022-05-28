@@ -196,6 +196,11 @@ namespace IqOptionApiDotNet
             return WsClient?.GetUserSettingsAsync(requestId);
         }
 
+        public Task<InstrumentResult> GetInstrumentsAsync(string requestId, ActivePair activePair)
+        {
+            return WsClient?.GetInstrumentsAsync(requestId, activePair);
+        }
+
         public Task<UserSettings> SetUserSettings(string requestId)
         {
             return WsClient?.SetUserSettingsAsync(requestId);
@@ -261,6 +266,11 @@ namespace IqOptionApiDotNet
         /// <inheritdoc/>
         public void UnSubscribeLiveDeal(string requestId, String message, ActivePair pair, DigitalOptionsExpiryType duration)
             => WsClient?.UnSubscribeLiveDeal(requestId, message, pair, duration);
+
+        public void SubscribeBalanceChanged(string requestId) => WsClient?.SubscribeBalanceChanged(requestId);
+
+        /// <inheritdoc/>
+        public void UnSubscribeBalanceChanged(string requestId) => WsClient?.UnSubscribeBalanceChanged(requestId);
 
 
         public void Dispose()
@@ -354,7 +364,6 @@ namespace IqOptionApiDotNet
         public IObservable<BalanceChanged> BalanceChangedObservable => WsClient?.BalanceChangedObservable;
         public IObservable<AlertChanged> AlertChangedObservable => WsClient?.AlertChangedResultObservable;
         public IObservable<AlertTriggered> AlertTriggeredObservable => WsClient?.AlertTriggeredResultObservable;
-
         BalanceType IIqOptionApiDotNetClient.balanceType => throw new NotImplementedException();
 
         #endregion
