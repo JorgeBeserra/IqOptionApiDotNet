@@ -18,7 +18,7 @@
     <PackageReference Include="NUnit" Version="3.13.3" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.2.1" />
     <PackageReference Include="FluentPath" Version="2.0.0" />
-    <PackageReference Include="RestSharp" Version="107.3.0" />
+    <PackageReference Include="RestSharp" Version="108.0.2" />
     <PackageReference Include="WebSocketSharp.Standard" Version="1.0.3" />
   </ItemGroup>
 
