@@ -5,6 +5,7 @@
         <TargetFramework>net9.0</TargetFramework>
         <UserSecretsId>dotnet-IqOptionApi.Samples-DA6CD46B-1B79-4794-96F1-72B38BB40680</UserSecretsId>
         <StartupObject>IqOptionApiDotNet.Samples.Program</StartupObject>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
     <ItemGroup>
@@ -14,6 +15,7 @@
         <PackageReference Include="RestSharp" Version="112.1.0" />
         <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
         <PackageReference Include="WebSocketSharp.Standard" Version="1.0.3" />
+		<None Include="README.md" Pack="true" PackagePath="\"/>
     </ItemGroup>
 
     <ItemGroup>
