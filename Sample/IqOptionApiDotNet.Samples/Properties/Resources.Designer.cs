@@ -61,7 +61,7 @@ namespace IqOptionApiDotNet.Samples.Properties {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a *.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a PASSWORD.
         /// </summary>
         internal static string IqOptionPassword {
             get {
@@ -70,7 +70,7 @@ namespace IqOptionApiDotNet.Samples.Properties {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a *.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a USER.
         /// </summary>
         internal static string IqOptionUserName {
             get {

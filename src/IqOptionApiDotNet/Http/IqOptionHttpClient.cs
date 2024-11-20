@@ -64,7 +64,15 @@ namespace IqOptionApiDotNet.Http
                     password = LoginModel.Password
                 };
 
-                var client = new RestClient("https://auth.iqoption.com/api/v2/login");
+                var cookieContainer = new CookieContainer();
+
+                var options = new RestClientOptions("https://auth.iqoption.com/api/v2/login")
+                {
+                    CookieContainer = cookieContainer
+                };
+
+                var client = new RestClient(options);
+
                 var request = new RestRequest() { RequestFormat = DataFormat.Json }
                     .AddHeader("Accept", "application/json")
                     .AddHeader("Accept-Encoding", "gzip, deflate, br")
@@ -72,7 +80,7 @@ namespace IqOptionApiDotNet.Http
                     .AddHeader("content-type", "application/json")
                     .AddHeader("Host", "auth.iqoption.com")
                     .AddHeader("Origin", "login.iqoption.com")
-                    .AddHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:98.0) Gecko/20100101 Firefox/98.0")
+                    .AddHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:132.0) Gecko/20100101 Firefox/132.0")
                     .AddJsonBody(body);               
 
                 client.PostAsync(request)
@@ -92,7 +100,7 @@ namespace IqOptionApiDotNet.Http
                                 SecuredToken = resultSsid;
 
                                 //Client.CookieContainer = new CookieContainer();
-                                Client.CookieContainer.Add(new Cookie("ssid", SecuredToken.Ssid, "/", "iqoption.com"));
+                                cookieContainer.Add(new Cookie("ssid", SecuredToken.Ssid, "/", "iqoption.com"));
                                 result.IsSuccessful = true;
                                 tcs.TrySetResult(result);
                                 break;
