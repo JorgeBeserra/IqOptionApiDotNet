@@ -153,6 +153,17 @@ namespace IqOptionApiDotNet.Models
         [EnumMember(Value = "CHFNOK-OTC")] CHFNOK_OTC = 2200,
         [EnumMember(Value = "NZDCHF-OTC")] NZDCHF_OTC = 2202,
 
+        [EnumMember(Value = "EURUSD-op")] EURUSD_op = 1861,
+        [EnumMember(Value = "EURGBP-op")] EURGBP_op = 1862,
+        [EnumMember(Value = "EURJPY-op")] EURJPY_op = 1864,
+        [EnumMember(Value = "USDJPY-op")] USDJPY_op = 1865,
+        [EnumMember(Value = "GBPJPY_op")] GBPJPY_op = 1866,
+        [EnumMember(Value = "GBPUSD-op")] GBPUSD_op = 1867,
+        [EnumMember(Value = "AUDCAD-op")] AUDCAD_op = 1868,
+        [EnumMember(Value = "AUDJPY-op")] AUDJPY_op = 1869,
+        [EnumMember(Value = "AUDUSD-op")] AUDUSD_op = 1870,
+        [EnumMember(Value = "NZDUSD-op")] NZDUSD_op = 1896,
+
         YANDEX = 95,
 
         PAN = 97,
@@ -165,6 +176,10 @@ namespace IqOptionApiDotNet.Models
 
         SMI_INDEX = 166,
         SSE_INDEX = 169,
+
+        [EnumMember(Value = "Yen-Index")] Yen_Index = 104,
+        [EnumMember(Value = "Dollar-Index")] Dollar_Index = 2062,
+
         HANG_SENG = 170,
 
         SPASX200 = 208,
