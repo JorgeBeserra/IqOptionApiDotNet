@@ -49,95 +49,192 @@ var client = new IqOptionApiDotNetClient("emailIqOption", "passwordIqOption");
 
 string requestId; // this is new
 
-//begin connect
-if(await client.ConnectAsync()){
+try
+{
 
-  //get user profile
-  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // New
-  var profile = await client.GetProfileAsync(requestId);
+    //begin connect
+    if(await client.ConnectAsync())
+    {
+        try
+        {
+          //get user profile
+          requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // New
+          var profile = await client.GetProfileAsync(requestId);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error getting profile: {ex.Message}");
+        }
+        
+        try
+        {
+          // Reset Training Balance
+          requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+          client.ResetTrainingBalanceAsync(requestId);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error when resetting training balance: {ex.Message}");
+        }
+        
+        try
+        {
+          //Get Profile from User ID.
+          requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // New
+          var userId = ""; // <-- Id User in Here!
+          var profile = await client.GetUserProfileClientAsync(requestId, userId);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error getting user profile: {ex.Message}");
+        }
+        
+        try
+        {
+          //Get Status from users id array.
+          requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // New
+          long[] userId = { 0, 0, 0 }; // Substituir os zeros por IDS de usuarios
+          var profile = await client.GetUsersAvailabilityAsync(requestId, userId);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error getting user status: {ex.Message}");
+        }
+        
+        try
+        {
+          //Get Top Traders.
+          requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // New
+          CountryType country = CountryType.Worldwide;
+          long from_position = 1;
+          long to_position = 10;
+          var leader = await client.RequestLeaderboardDealsClientAsync(requestId, country, from_position, to_position);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error getting data from top traders: {ex.Message}");
+        }
+
+        try
+        {
+          //Get Top Traders Details from User Id.
+          requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // New
+          CountryType[] countryes = {CountryType.Worldwide, };
+          var userId = ""; // <-- User ID here!
+          var leader = await client.RequestLeaderboardUserinfoDealsClientAsync(requestId, countryes, userId);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error getting data from top trader by id: {ex.Message}");
+        }
+
+        try
+        {
+          // open order EurUsd in smallest period (1min)
+          requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // New
+          var exp = DateTime.Now.AddMinutes(1);
+          var buyResult = await api.BuyAsync(requestId, ActivePair.EURUSD, (decimal)1.5, OrderDirection.Call, exp);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error opening order: {ex.Message}");
+        }
+
+        try
+        {
+          // get candles data
+          requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // New
+          var candles = await api.GetCandlesAsync(requestId, ActivePair.EURUSD, TimeFrame.Min1, 100, DateTimeOffset.Now);
+          _logger.LogInformation($"CandleCollections received {candles.Count}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error getting candles: {ex.Message}");
+        }
+
+
+          // subscribe to pair to get real-time data for tf1min and tf5min
+          requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // New
+          var streamMin1 = await api.SubscribeRealtimeDataAsync(requestId, ActivePair.EURUSD, TimeFrame.Min1);
+          requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // New
+          var streamMin5 = await api.SubscribeRealtimeDataAsync(requestId, ActivePair.EURUSD, TimeFrame.Min5);
+
+          streamMin5.Merge(streamMin1)
+              .Subscribe(candleInfo => {
+                  _logger.LogInformation($"Now {ActivePair.EURUSD} {candleInfo.TimeFrame} : Bid={candleInfo.Bid}\t Ask={candleInfo.Ask}\t");
+          });
+
+          // after this line no-more realtime data for min5 print on console
+          requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+          await api.UnSubscribeRealtimeData(requestId, ActivePair.EURUSD, TimeFrame.Min5);
+
+        try
+        {
+          // Get list Alerts
+          requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+          var alerts = await IqClientApiDotNet.GetAlerts(requestId);
+          _logger.Information(JsonConvert.SerializeObject(alerts));
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error getting alerts: {ex.Message}");
+        }
+
+        try
+        {
+          // Create Alert
+          requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+          ActivePair activeId = ActivePair.EURAUD;
+          InstrumentType instrumentType = InstrumentType.DigitalOption;
+          double value = 200.10;
+          int activations = 0; // 1 - For one time OR 2 - For all time
+          var alertCreated = await client.CreateAlert(requestId
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error creating alert: {ex.Message}");
+        }
+
+        try
+        {
+          // Update Alert
+          requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+          long alertId = alertCreated.Id; // Get id alert created this sample
+          ActivePair newActiveId = ActivePair.EURAUD;
+          InstrumentType newInstrumentType = InstrumentType.DigitalOption;
+          double newValue = 300.51;
+          int newActivations = 0; // 1 - For one time OR 2 - For all time
+          var alertUpdated = await client.UpdateAlert(requestId, alertId, newActiveId, newInstrumentType, newValue, newActivations);
+          _logger.Information(JsonConvert.SerializeObject(alertUpdated));
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error updating alert: {ex.Message}");
+        }
+
+        try
+        {
+          // Delete Alert
+          requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
+          alertId = alertCreated.Id; // Get id alert created this sample
+          var alertDelete = await client.DeleteAlert(requestId, alertId);
+          _logger.Information(JsonConvert.SerializeObject(alertDelete));
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error deleting alert: {ex.Message}");
+        }
+
   
-  // Reset Training Balance
-  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
-  client.ResetTrainingBalanceAsync(requestId);
-  
-  //Get Profile from User ID.
-  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // New
-  var userId = ""; // <-- Id User in Here!
-  var profile = await client.GetUserProfileClientAsync(requestId, userId);
-  
-  //Get Status from users id array.
-  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // New
-  long[] userId = { 0, 0, 0 }; // Substituir os zeros por IDS de usuarios
-  var profile = await client.GetUsersAvailabilityAsync(requestId, userId);
-  
-  //Get Top Traders.
-  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // New
-  CountryType country = CountryType.Worldwide;
-  long from_position = 1;
-  long to_position = 10;
-  var leader = await client.RequestLeaderboardDealsClientAsync(requestId, country, from_position, to_position);
-
-  //Get Top Traders Details from User Id.
-  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // New
-  CountryType[] countryes = {CountryType.Worldwide, };
-  var userId = ""; // <-- User ID here!
-  var leader = await client.RequestLeaderboardUserinfoDealsClientAsync(requestId, countryes, userId);
-
-  // open order EurUsd in smallest period (1min)
-  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // New
-  var exp = DateTime.Now.AddMinutes(1);
-  var buyResult = await api.BuyAsync(requestId, ActivePair.EURUSD, (decimal)1.5, OrderDirection.Call, exp);
-
-  // get candles data
-  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // New
-  var candles = await api.GetCandlesAsync(requestId, ActivePair.EURUSD, TimeFrame.Min1, 100, DateTimeOffset.Now);
-  _logger.LogInformation($"CandleCollections received {candles.Count}");
-
-  // subscribe to pair to get real-time data for tf1min and tf5min
-  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // New
-  var streamMin1 = await api.SubscribeRealtimeDataAsync(requestId, ActivePair.EURUSD, TimeFrame.Min1);
-  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty); // New
-  var streamMin5 = await api.SubscribeRealtimeDataAsync(requestId, ActivePair.EURUSD, TimeFrame.Min5);
-
-  streamMin5.Merge(streamMin1)
-      .Subscribe(candleInfo => {
-          _logger.LogInformation($"Now {ActivePair.EURUSD} {candleInfo.TimeFrame} : Bid={candleInfo.Bid}\t Ask={candleInfo.Ask}\t");
-  });
-
-  // after this line no-more realtime data for min5 print on console
-  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
-  await api.UnSubscribeRealtimeData(requestId, ActivePair.EURUSD, TimeFrame.Min5);
-
-  // Get list Alerts
-  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
-  var alerts = await IqClientApiDotNet.GetAlerts(requestId);
-  _logger.Information(JsonConvert.SerializeObject(alerts))
-
-  // Create Alert
-  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
-  ActivePair activeId = ActivePair.EURAUD;
-  InstrumentType instrumentType = InstrumentType.DigitalOption;
-  double value = 200.10;
-  int activations = 0; // 1 - For one time OR 2 - For all time
-  var alertCreated = await client.CreateAlert(requestId
-
-  // Update Alert
-  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
-  long alertId = alertCreated.Id; // Get id alert created this sample
-  ActivePair newActiveId = ActivePair.EURAUD;
-  InstrumentType newInstrumentType = InstrumentType.DigitalOption;
-  double newValue = 300.51;
-  int newActivations = 0; // 1 - For one time OR 2 - For all time
-  var alertUpdated = await client.UpdateAlert(requestId, alertId, newActiveId, newInstrumentType, newValue, newActivations);
-  _logger.Information(JsonConvert.SerializeObject(alertUpdated));
-
-  // Delete Alert
-  requestId = Guid.NewGuid().ToString().Replace("-", string.Empty);
-  alertId = alertCreated.Id; // Get id alert created this sample
-  var alertDelete = await client.DeleteAlert(requestId, alertId);
-  _logger.Information(JsonConvert.SerializeObject(alertDelete));
-
-  
+    }
+    else
+    {
+        Console.WriteLine("Error connecting to API!")    
+    }
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Erro: {ex.Message}")
 }
 ```
 
@@ -234,7 +331,7 @@ finally {
 
 ![PrintCopyTrader](img/TraderMoodChanged.png)
 
-### Copy Trade
+### ~~Copy Trade~~ This option no longer works, time has passed...! :~(
 
 now using ReactiveUI way for subscribe the changing of model following this
 
