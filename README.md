@@ -4,7 +4,7 @@
 
 <p align="center">
 <a href="https://github.com/JorgeBeserra/IqOptionApiDotNet/actions"><img src="https://github.com/JorgeBeserra/IqOptionApiDotNet/workflows/.NET%20Core/badge.svg" alt="Action Build"></a>
-<a href="https://www.nuget.org/packages/IqOptionApiDotNet/"><img src="[https://buildstats.info/nuget/iqoptionapidotnet?includePreReleases=true](https://img.shields.io/nuget/dt/IqOptionApiDotNet)" alt="Nuget Downloads"></a>
+<img alt="NuGet Downloads" src="https://img.shields.io/nuget/dt/IqOptionApiDotNet">
 <a href="https://gitter.im/IqOptionApiDotNet/Developers"><img src="https://badges.gitter.im/IqOptionApiDotNet/Developers.svg" alt="Nuget Downloads"></a>
 </p>
 
