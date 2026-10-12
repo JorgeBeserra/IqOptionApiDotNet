@@ -17,16 +17,17 @@
     <RepositoryUrl>https://github.com/JorgeBeserra/IqOptionApiDotNet</RepositoryUrl>
     <PackageProjectUrl>https://github.com/JorgeBeserra/IqOptionApiDotNet</PackageProjectUrl>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <PackageReleaseNotes>Fix balance initialization and BuyAsync null errors; correct digital expiration times and order payloads; enable option result notifications.</PackageReleaseNotes>
+    <PackageReleaseNotes>Include package README with installation, quick start and documentation links.</PackageReleaseNotes>
     <NoWarn>1701;1702;1705;1591</NoWarn>
     <RootNamespace>IqOptionApiDotNet</RootNamespace>
     <AssemblyName>IqOptionApiDotNet</AssemblyName>
     <PackageId>IqOptionApiDotNet</PackageId>
     <AssemblyVersion>3.0.0.2</AssemblyVersion>
-    <FileVersion>3.0.0.3</FileVersion>
-    <Version>3.0.3</Version>
+    <FileVersion>3.0.0.4</FileVersion>
+    <Version>3.0.4</Version>
     <ApplicationIcon>logoapi.ico</ApplicationIcon>
 	<PackageIcon>LogoApi128x128.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
 	<AnalysisLevel>latest</AnalysisLevel>
 	<RunAnalyzersDuringLiveAnalysis>True</RunAnalyzersDuringLiveAnalysis>
 	<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
@@ -64,6 +65,8 @@
   </ItemGroup>
   
   <ItemGroup>
+    <None Remove="README.md" />
+    <None Include="README.md" Pack="true" PackagePath="/" />
     <None Include="LogoApi128x128.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
