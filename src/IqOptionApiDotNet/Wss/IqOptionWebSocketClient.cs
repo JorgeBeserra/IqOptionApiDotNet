@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
  using System.Reactive.Concurrency;
  using System.Reactive.Linq;
  using System.Threading;
@@ -18,7 +18,7 @@
     {
         public WebSocket WebSocketClient { get; private set; }
         private readonly ILogger _logger;
-        private readonly Timer SystemReconnectionTimer = new Timer(TimeSpan.FromMinutes(3).Ticks);
+        private readonly Timer SystemReconnectionTimer = new Timer(TimeSpan.FromMinutes(3).TotalMilliseconds);
 
         public IqOptionWebSocketClient(string secureToken)
         {
@@ -62,40 +62,20 @@
         /// <param name="observableResult">The target observable that will trigger after message was incomming</param>
         /// <typeparam name="TResult">The expected result</typeparam>
         /// <returns></returns>
-        public Task<TResult> SendMessageAsync<TResult>(
+        public async Task<TResult> SendMessageAsync<TResult>(
             string requestId,
             IWsIqOptionMessageCreator messageCreator,
             IObservable<TResult> observableResult)
         {
-            var tcs = new TaskCompletionSource<TResult>();
-            var token = new CancellationTokenSource(60000).Token;
+            var completion = new TaskCompletionSource<TResult>(TaskCreationOptions.RunContinuationsAsynchronously);
+            using var timeout = new CancellationTokenSource(TimeSpan.FromSeconds(60));
+            using var registration = timeout.Token.Register(() => completion.TrySetCanceled(timeout.Token));
+            using var subscription = observableResult.FirstAsync().Subscribe(
+                result => completion.TrySetResult(result),
+                error => completion.TrySetException(error));
 
-            try
-            {
-                token.ThrowIfCancellationRequested();
-                token.Register(() =>
-                {
-                    if (tcs.TrySetCanceled())
-                    {
-                        _logger.LogWarning(string.Format(
-                            "Wait result for type '{0}', took long times {1} seconds. The result will send back with default {0}\n{2}",
-                            typeof(TResult), 60000, messageCreator));
-                    }
-                });
-                
-                observableResult
-                    .FirstAsync()
-                    .Subscribe(x => { tcs.TrySetResult(x); }, token);
-
-                // send message
-                SendMessageAsync(requestId, messageCreator).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                tcs.TrySetException(ex);
-            }
-            
-            return tcs.Task;
+            await SendMessageAsync(requestId, messageCreator).ConfigureAwait(false);
+            return await completion.Task.ConfigureAwait(false);
         }
 
         #endregion
@@ -177,7 +157,7 @@
 
             BalanceType[] balanceType = new BalanceType[] { BalanceType.Practice, BalanceType.Real };
 
-            SendMessageAsync(requestId, new GetBalancesRequestMessage(balanceType), BalancesObservable);
+            SendMessageAsync(Guid.NewGuid().ToString("N"), new GetBalancesRequestMessage(balanceType), BalancesObservable).GetAwaiter().GetResult();
 
             // send order changed subscribe
             InitialSubscribeOrderChanged();

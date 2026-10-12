@@ -35,44 +35,25 @@ namespace IqOptionApiDotNet
 
         #endregion
 
-        public Task<bool> ConnectAsync()
+        public async Task<bool> ConnectAsync()
         {
             connectedSubject.OnNext(false);
             IsConnected = false;
-            
-            var tcs = new TaskCompletionSource<bool>();
-            try
+            var result = await HttpClient.LoginAsync().ConfigureAwait(false);
+            if (result == null || !result.IsSuccessful)
             {
-                HttpClient
-                    .LoginAsync()
-                    .ContinueWith(t =>
-                    {
-                        if (t.Result != null && t.Result.IsSuccessful)
-                        {
-
-                            _logger.LogInformation($"{Username} logged in success !");
-
-                            if (WsClient != null) WsClient.Dispose();
-
-                            WsClient = new IqOptionWebSocketClient(t.Result.Data.Ssid);
-
-                            SubscribeWebSocket();
-                            IsConnected = true;
-                            connectedSubject.OnNext(true);
-                            tcs.TrySetResult(true);
-                            return;
-                        }
-                        _logger.LogInformation(
-                            $"{Username} logged in failed due to {t.Result?.Errors?.GetErrorMessage()}");
-                        tcs.TrySetResult(false);
-                    }).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                tcs.TrySetException(ex);
+                _logger.LogInformation("{Username} logged in failed due to {Error}",
+                    Username, result?.Errors?.GetErrorMessage());
+                return false;
             }
 
-            return tcs.Task;
+            _logger.LogInformation("{Username} logged in success !", Username);
+            WsClient?.Dispose();
+            WsClient = new IqOptionWebSocketClient(result.Data.Ssid);
+            SubscribeWebSocket();
+            IsConnected = true;
+            connectedSubject.OnNext(true);
+            return true;
         }
 
         public Task<Profile> GetProfileAsync(string requestId)

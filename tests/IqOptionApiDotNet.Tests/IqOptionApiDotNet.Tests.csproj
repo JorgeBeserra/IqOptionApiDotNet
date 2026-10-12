@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\IqOptionApiDotNet\IqOptionApiDotNet.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" SetTargetFramework="TargetFramework=netstandard2.0" />
+    <ProjectReference Include="..\..\src\IqOptionApiDotNet\IqOptionApiDotNet.csproj" />
   </ItemGroup>
 
   <ItemGroup>
