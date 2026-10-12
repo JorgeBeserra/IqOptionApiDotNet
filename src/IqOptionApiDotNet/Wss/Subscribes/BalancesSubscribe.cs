@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using IqOptionApiDotNet.Models;
@@ -23,7 +24,18 @@ namespace IqOptionApiDotNet.Ws
         
         public void Subscribe(IEnumerable<Balance> value)
         {
-            _balancesSubject.OnNext(value);
+            balances = value?.ToArray() ?? Array.Empty<Balance>();
+            if (Profile != null)
+            {
+                Profile.Balances = balances.ToArray();
+                var selected = balances.FirstOrDefault(x => x.Id == Profile.BalanceId);
+                if (selected != null)
+                {
+                    Profile.Balance = selected.Amount;
+                    Profile.BalanceType = selected.Type;
+                }
+            }
+            _balancesSubject.OnNext(balances);
         }
 
         [Predisposable]

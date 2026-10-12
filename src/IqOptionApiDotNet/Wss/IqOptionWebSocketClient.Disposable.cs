@@ -21,6 +21,8 @@ namespace IqOptionApiDotNet.Ws
             foreach (var disposableMethodInfo in _disposableMethodInfos)
                 disposableMethodInfo.TargetMethod.Invoke(this, null);
 
+            SystemReconnectionTimer.Stop();
+            SystemReconnectionTimer.Dispose();
             WebSocketClient?.Close();
             WebSocketClient = null;
         }

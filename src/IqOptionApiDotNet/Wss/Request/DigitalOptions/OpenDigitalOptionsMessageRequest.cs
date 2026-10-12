@@ -1,3 +1,4 @@
+using System.Globalization;
 using IqOptionApiDotNet.Models.DigitalOptions;
 using IqOptionApiDotNet.Models;
 using IqOptionApiDotNet.Ws.Base;
@@ -34,12 +35,11 @@ namespace IqOptionApiDotNet.Wss.Request.DigitalOptions
     
     internal sealed class PlaceDigitalOptionsMessageRequest : WsSendMessageBase<OpenDigitalOptionsBody>
     {
-        ActivePair _activePair;
         internal PlaceDigitalOptionsMessageRequest(DigitalOptionsIdentifier positionIdentifier, int userbalanceId,
             double amount)
             : this(positionIdentifier.CreateInstrumentId(), userbalanceId, amount)
         {
-            this._activePair = positionIdentifier.Pair;
+            Message.Body.AssetId = positionIdentifier.Pair;
         }
 
         internal PlaceDigitalOptionsMessageRequest(string positionIdentifier, int userbalanceId, double amount)
@@ -52,9 +52,8 @@ namespace IqOptionApiDotNet.Wss.Request.DigitalOptions
                 {
                     UserBalanceId = userbalanceId,
                     InstrumentId = positionIdentifier,
-                    Amount = amount.ToString(),
+                    Amount = amount.ToString(CultureInfo.InvariantCulture),
                     InstrumentIndex = 797064,
-                    AssetId = _activePair,
                 }
             };
         }

@@ -35,12 +35,12 @@ namespace IqOptionApiDotNet.Ws
 
             // incasse of non-binary options
             var optionType = OptionType.Turbo;
-            if (expiration.Subtract(ServerTime).Minutes > 5)
+            if (expiration.Subtract(ServerTime).TotalMinutes > 5)
                 optionType = OptionType.Binary;
             
-            var balance = balances.FirstOrDefault(x => x.Type == balanceType);
-
-            Console.WriteLine(balance.Id);
+            var balance = balances?.FirstOrDefault(x => x.Type == balanceType);
+            if (balance == null)
+                throw new InvalidOperationException($"No {balanceType} balance is available. Connect and load balances before placing an order.");
 
             return SendMessageAsync(
                 requestId,

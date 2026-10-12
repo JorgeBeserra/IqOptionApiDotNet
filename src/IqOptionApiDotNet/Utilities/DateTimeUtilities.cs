@@ -10,7 +10,18 @@ namespace IqOptionApiDotNet.Utilities
     {
         public static DateTimeOffset GetExpirationTime(DateTimeOffset dt, DigitalOptionsExpiryDuration duration)
         {
-            return ExpirationTimeTable(dt)[(int) duration];
+            if (duration != DigitalOptionsExpiryDuration.M1 &&
+                duration != DigitalOptionsExpiryDuration.M5 &&
+                duration != DigitalOptionsExpiryDuration.M15)
+                throw new ArgumentOutOfRangeException(nameof(duration));
+
+            var utc = dt.ToUniversalTime();
+            var minutes = (int)duration;
+            var minuteStart = new DateTimeOffset(utc.Year, utc.Month, utc.Day, utc.Hour, utc.Minute, 0, TimeSpan.Zero);
+            var expiration = minuteStart.AddMinutes(minutes - utc.Minute % minutes);
+            if (expiration - utc <= TimeSpan.FromSeconds(30))
+                expiration = expiration.AddMinutes(minutes);
+            return expiration;
         }
 
         public static DateTimeOffset GetExpirationTime(DateTimeOffset dt, BinaryOptionsDuration duration)

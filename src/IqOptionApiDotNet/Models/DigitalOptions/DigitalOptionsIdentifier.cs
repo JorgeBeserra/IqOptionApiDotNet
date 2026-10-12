@@ -33,6 +33,9 @@ namespace IqOptionApiDotNet.Models.DigitalOptions
 
         public string CreateInstrumentId()
         {
+            if (!string.IsNullOrWhiteSpace(InstrumentId))
+                return InstrumentId;
+
             var active = ((int)Pair);
             var dateFormat = Expiration.ToString("yyyyMMdd", CultureInfo.CreateSpecificCulture("en-US"));
             var timeFormat = Expiration.ToString("HHmm");

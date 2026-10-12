@@ -54,7 +54,7 @@ namespace IqOptionApiDotNet.Ws
         /// <returns></returns>
         public Task GetPositionsAsync(string requestId, long blanceId)
         {
-           return SendMessageAsync(requestId, new GetPositionsMessageRequest(Profile.BalanceId));
+           return SendMessageAsync(requestId, new GetPositionsMessageRequest(blanceId));
         }
 
         /// <summary>
