@@ -14,10 +14,20 @@ salvar artefato → publicar no NuGet.org. Falhas interrompem a publicação.
 
 ## Configuração necessária
 
-Em Settings → Secrets and variables → Actions, cadastre o secret de repositório
-`NUGET_API_KEY`. Seu valor deve ser uma API key do NuGet.org autorizada a publicar
-novas versões de `IqOptionApiDotNet`. Não adicione essa chave ao código.
-`GITHUB_TOKEN` não autentica publicação no NuGet.org.
+Cadastre uma política em https://www.nuget.org/account/trustedpublishing:
+
+- Repository Owner: `JorgeBeserra`
+- Repository: `IqOptionApiDotNet`
+- Workflow File: `release.yml` (somente o nome)
+- Environment: vazio (o job não usa um environment)
+- Proprietário NuGet: a conta que tem permissão sobre `IqOptionApiDotNet`
+
+O workflow usa `NuGet/login@v1` e `id-token: write` para obter uma chave temporária
+imediatamente antes do push. Não exige o secret `NUGET_API_KEY`.
+O usuário NuGet padrão é `Sabidos`, conforme a política informada. Caso o nome de
+login seja outro (por exemplo, proprietário é uma organização), defina a variável
+de repositório `NUGET_USER` em Settings → Secrets and variables → Actions →
+Variables. Use o nome de usuário NuGet, não o e-mail.
 
 Para publicar, altere `<Version>3.0.2</Version>` para uma nova versão no projeto e
 mescle a alteração na `master`. A versão 3.0.2 já foi publicada e não será
