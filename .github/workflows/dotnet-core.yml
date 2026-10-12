@@ -2,29 +2,29 @@ name: .NET Core
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
+
+permissions:
+  contents: read
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET Core 
-      uses: actions/setup-dotnet@v2
-      with:
-        dotnet-version: |
-            3.1.x
-            5.0.x
-            9.0.x
-    - name: Install dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
-    - name: Create the package
-      run: dotnet pack --configuration Release --no-restore
-    #- name: Test
-    #  run: dotnet test
+      - uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+      - name: Test NuGet version detector
+        run: python3 .github/scripts/test_nuget_version.py
+      - name: Restore
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+      - name: Test
+        run: dotnet test tests/IqOptionApiDotNet.Tests/IqOptionApiDotNet.Tests.csproj --configuration Release --no-restore
+      - name: Pack library
+        run: dotnet pack src/IqOptionApiDotNet/IqOptionApiDotNet.csproj --configuration Release --no-restore --output artifacts
