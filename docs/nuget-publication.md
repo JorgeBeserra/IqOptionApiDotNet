@@ -41,3 +41,16 @@ publicação em andamento não é cancelada por um novo push.
 
 O workflow não publica a partir de pull requests nem de outras branches. Os
 pacotes produzidos ficam disponíveis no artefato `nuget-package` da execução.
+
+## Tag e artefatos no GitHub
+
+Depois do push no NuGet, o workflow cria a tag `v<versão>` e a GitHub Release
+`Version <versão>`, anexando o mesmo `.nupkg` enviado ao NuGet. A tag aponta para
+o commit usado pelo workflow. Releases e tags existentes são preservadas.
+Execuções repetidas conferem os bytes de um artefato existente antes de aceitá-lo.
+
+Alterações no workflow ou no script de release também iniciam uma sincronização:
+se não houve nova versão, o pacote é baixado do NuGet para completar os artefatos
+da release existente, sem autenticar/publicar de novo no NuGet. O disparo manual
+também permite repetir o processo. Se o pacote não estiver disponível no NuGet,
+a sincronização falha sem criar uma release incompleta.

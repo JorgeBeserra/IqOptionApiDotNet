@@ -5,6 +5,8 @@ on:
     branches: [master]
     paths:
       - src/IqOptionApiDotNet/IqOptionApiDotNet.csproj
+      - .github/workflows/release.yml
+      - .github/scripts/github-release.sh
   workflow_dispatch:
 
 permissions:
@@ -20,7 +22,7 @@ jobs:
     if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       id-token: write
     steps:
       - uses: actions/checkout@v4
@@ -66,3 +68,9 @@ jobs:
         env:
           NUGET_API_KEY: ${{ steps.nuget-login.outputs.NUGET_API_KEY }}
         run: dotnet nuget push "artifacts/*.nupkg" --source https://api.nuget.org/v3/index.json --api-key "$NUGET_API_KEY" --skip-duplicate
+      - name: Create GitHub release and attach package
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PACKAGE_ID: ${{ steps.version.outputs.package_id }}
+          PACKAGE_VERSION: ${{ steps.version.outputs.version }}
+        run: bash .github/scripts/github-release.sh
