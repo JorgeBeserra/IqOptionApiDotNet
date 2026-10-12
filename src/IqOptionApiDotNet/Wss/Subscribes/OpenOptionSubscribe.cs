@@ -1,4 +1,6 @@
 using System;
+using System.Threading.Tasks;
+using IqOptionApiDotNet.Ws.Request;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using IqOptionApiDotNet.Models;
@@ -17,6 +19,15 @@ namespace IqOptionApiDotNet.Ws
         public IObservable<OptionOpened> OpenOptionObservable()
         {
             return _openOptionSubject.AsObservable();
+        }
+
+        /// <summary>
+        /// Enable or disable option results for the current WebSocket session.
+        /// Enabled automatically during initialization. Re-enable after reconnecting the socket.
+        /// </summary>
+        public Task SetOptionResultsAsync(string requestId, bool sendResults = true)
+        {
+            return SendMessageAsync(requestId, new SetOptionsRequestMessage(sendResults));
         }
 
         public IObservable<OptionClosed> ClosedOptionObservable()

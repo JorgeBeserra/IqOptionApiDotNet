@@ -159,6 +159,9 @@
 
             SendMessageAsync(Guid.NewGuid().ToString("N"), new GetBalancesRequestMessage(balanceType), BalancesObservable).GetAwaiter().GetResult();
 
+            // Enable option-opened/option-closed notifications for this socket session.
+            SetOptionResultsAsync(Guid.NewGuid().ToString("N"), true).GetAwaiter().GetResult();
+
             // send order changed subscribe
             InitialSubscribeOrderChanged();
         }
