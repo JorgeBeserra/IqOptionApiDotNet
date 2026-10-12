@@ -1,39 +1,68 @@
-name: Release to Nuget
+name: Publish to NuGet.org
 
 on:
-  release:
-    types: [published]
+  push:
+    branches: [master]
+    paths:
+      - src/IqOptionApiDotNet/IqOptionApiDotNet.csproj
+  workflow_dispatch:
 
+permissions:
+  contents: read
+
+# Serialize publication attempts; never cancel a package upload in progress.
+concurrency:
+  group: nuget-publish
+  cancel-in-progress: false
 
 jobs:
-  build:
-
+  publish:
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      contents: read
-
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET Core 
-      uses: actions/setup-dotnet@v2
-      with:
-        dotnet-version: |
-            3.1.x
-            5.0.x
-            9.0.x
-        source-url: https://nuget.pkg.github.com/<owner>/index.json
-      env:
-          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-    - run: dotnet build --configuration Release <my project>
-    - name: Create the package
-      run: dotnet pack --configuration Release
-    #- name: Create Nuget Package
-    #  run: dotnet pack -c Release /p:Version=${{ github.event.release.tag_name }} /p:PackageReleasesNotes="See https://github.com/JorgeBeserra/IqOptionApiDotNet/releases/tag/${{ github.event.release.tag_name }}"
-    #  #working-directory: ./JorgeBeserra.IqOptionApiDotNet
-
-    #- name: Archive Nuget Package
-    #  uses: actions/upload-artifact@v3
-    #  with:
-    #    name: packages
-    #    path: ./IqOptionApiDotNet/IqOptionApiDotNet/src/IqOptionApiDotNet/bin/Release/IqOptionApiDotNet.${{ github.event.release.tag_name }}.nupkg 
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Test version detector
+        run: python3 .github/scripts/test_nuget_version.py
+      - name: Detect package version change
+        id: version
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BEFORE_SHA: ${{ github.event.before }}
+        run: python3 .github/scripts/nuget-version.py
+      - name: Setup .NET
+        if: steps.version.outputs.publish == 'true'
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 9.0.x
+      - name: Check publication credential
+        if: steps.version.outputs.publish == 'true'
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: |
+          if [ -z "$NUGET_API_KEY" ]; then
+            echo '::error::Configure the repository Actions secret NUGET_API_KEY with a NuGet.org API key authorized for IqOptionApiDotNet.'
+            exit 1
+          fi
+      - name: Restore
+        if: steps.version.outputs.publish == 'true'
+        run: dotnet restore tests/IqOptionApiDotNet.Tests/IqOptionApiDotNet.Tests.csproj
+      - name: Test
+        if: steps.version.outputs.publish == 'true'
+        run: dotnet test tests/IqOptionApiDotNet.Tests/IqOptionApiDotNet.Tests.csproj --configuration Release --no-restore
+      - name: Pack
+        if: steps.version.outputs.publish == 'true'
+        run: dotnet pack src/IqOptionApiDotNet/IqOptionApiDotNet.csproj --configuration Release --no-restore --output artifacts
+      - name: Save package
+        if: steps.version.outputs.publish == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuget-package
+          path: artifacts/*.nupkg
+          if-no-files-found: error
+      - name: Publish to NuGet.org
+        if: steps.version.outputs.publish == 'true'
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: dotnet nuget push "artifacts/*.nupkg" --source https://api.nuget.org/v3/index.json --api-key "$NUGET_API_KEY" --skip-duplicate
