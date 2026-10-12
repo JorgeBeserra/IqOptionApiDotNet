@@ -19,6 +19,9 @@ jobs:
   publish:
     if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -36,15 +39,6 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 9.0.x
-      - name: Check publication credential
-        if: steps.version.outputs.publish == 'true'
-        env:
-          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
-        run: |
-          if [ -z "$NUGET_API_KEY" ]; then
-            echo '::error::Configure the repository Actions secret NUGET_API_KEY with a NuGet.org API key authorized for IqOptionApiDotNet.'
-            exit 1
-          fi
       - name: Restore
         if: steps.version.outputs.publish == 'true'
         run: dotnet restore tests/IqOptionApiDotNet.Tests/IqOptionApiDotNet.Tests.csproj
@@ -61,8 +55,14 @@ jobs:
           name: nuget-package
           path: artifacts/*.nupkg
           if-no-files-found: error
+      - name: Authenticate with NuGet Trusted Publishing
+        if: steps.version.outputs.publish == 'true'
+        id: nuget-login
+        uses: NuGet/login@v1
+        with:
+          user: ${{ vars.NUGET_USER || 'Sabidos' }}
       - name: Publish to NuGet.org
         if: steps.version.outputs.publish == 'true'
         env:
-          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+          NUGET_API_KEY: ${{ steps.nuget-login.outputs.NUGET_API_KEY }}
         run: dotnet nuget push "artifacts/*.nupkg" --source https://api.nuget.org/v3/index.json --api-key "$NUGET_API_KEY" --skip-duplicate
